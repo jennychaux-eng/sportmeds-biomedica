@@ -24,39 +24,40 @@ st.markdown("""
 
 * { font-family: 'DM Sans', sans-serif !important; }
 
-/* Fondo principal */
+/* Fondo principal AZUL */
 .main .block-container {
-    background-color: #F0F4F9;
+    background-color: #0D2B52;
     padding-top: 1.2rem !important;
     max-width: 100% !important;
 }
 
-/* ── SIDEBAR NATIVO ── */
+/* ── SIDEBAR BLANCO ── */
 section[data-testid="stSidebar"] {
-    background: linear-gradient(175deg, #0D2B52 0%, #0a1e3d 100%) !important;
+    background: white !important;
+    border-right: 1px solid #e8edf5 !important;
 }
 section[data-testid="stSidebar"] * {
-    color: rgba(255,255,255,0.88) !important;
+    color: #0D2B52 !important;
 }
 section[data-testid="stSidebar"] .stSelectbox > div > div {
-    background: rgba(255,255,255,0.08) !important;
-    border: 1px solid rgba(255,255,255,0.15) !important;
+    background: #F0F4F9 !important;
+    border: 1px solid #dce5f0 !important;
     border-radius: 8px !important;
-    color: white !important;
+    color: #0D2B52 !important;
 }
 section[data-testid="stSidebar"] label {
     font-size: 0.72rem !important;
     text-transform: uppercase;
     letter-spacing: 0.08em;
-    color: rgba(255,255,255,0.45) !important;
+    color: #8a9bb5 !important;
 }
 section[data-testid="stSidebar"] hr {
-    border-color: rgba(255,255,255,0.12) !important;
+    border-color: #e8edf5 !important;
     margin: 0.6rem 0 !important;
 }
-section[data-testid="stSidebar"] h2, 
+section[data-testid="stSidebar"] h2,
 section[data-testid="stSidebar"] h3 {
-    color: white !important;
+    color: #0D2B52 !important;
     font-size: 0.95rem !important;
     margin: 0.3rem 0 !important;
 }
