@@ -167,6 +167,28 @@ section[data-testid="stSidebar"] h3 {
     border: 1px solid #dce5f0 !important;
 }
 
+/* Labels blancos en panel principal */
+.main .stTextInput label,
+.main .stTextArea label,
+.main .stSelectbox label,
+.main .stNumberInput label,
+.main .stDateInput label,
+.main .stSlider label,
+.main .stMarkdown p,
+.main h4, .main h3, .main h2,
+[data-testid="stForm"] label,
+[data-testid="stForm"] p {
+    color: white !important;
+}
+
+/* Tabs texto blanco */
+[data-testid="stTabs"] button {
+    color: rgba(255,255,255,0.7) !important;
+}
+[data-testid="stTabs"] button[aria-selected="true"] {
+    color: white !important;
+}
+
 /* NPR badge */
 .npr-box {
     border-radius: 10px;
