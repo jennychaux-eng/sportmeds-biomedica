@@ -3,7 +3,6 @@ import os
 import pandas as pd
 import plotly.graph_objects as go
 from datetime import date, timedelta
-import random
 from supabase import create_client, Client
 
 # ─────────────────────────────────────────
@@ -36,33 +35,21 @@ st.markdown("""
 
 * { font-family: 'DM Sans', sans-serif !important; }
 
-/* Fondo principal BLANCO */
 .main .block-container {
     background-color: #ffffff !important;
     padding-top: 1.2rem !important;
     max-width: 100% !important;
 }
-.main {
-    background-color: #ffffff !important;
-}
-[data-testid="stAppViewContainer"] {
-    background-color: #ffffff !important;
-}
-[data-testid="stAppViewBlockContainer"] {
-    background-color: #ffffff !important;
-}
-section.main {
-    background-color: #ffffff !important;
-}
+.main { background-color: #ffffff !important; }
+[data-testid="stAppViewContainer"] { background-color: #ffffff !important; }
+[data-testid="stAppViewBlockContainer"] { background-color: #ffffff !important; }
+section.main { background-color: #ffffff !important; }
 
-/* ── SIDEBAR BLANCO ── */
 section[data-testid="stSidebar"] {
     background: white !important;
     border-right: 1px solid #e8edf5 !important;
 }
-section[data-testid="stSidebar"] * {
-    color: #0D2B52 !important;
-}
+section[data-testid="stSidebar"] * { color: #0D2B52 !important; }
 section[data-testid="stSidebar"] .stSelectbox > div > div {
     background: #F0F4F9 !important;
     border: 1px solid #dce5f0 !important;
@@ -75,18 +62,10 @@ section[data-testid="stSidebar"] label {
     letter-spacing: 0.08em;
     color: #8a9bb5 !important;
 }
-section[data-testid="stSidebar"] hr {
-    border-color: #e8edf5 !important;
-    margin: 0.6rem 0 !important;
-}
+section[data-testid="stSidebar"] hr { border-color: #e8edf5 !important; margin: 0.6rem 0 !important; }
 section[data-testid="stSidebar"] h2,
-section[data-testid="stSidebar"] h3 {
-    color: #0D2B52 !important;
-    font-size: 0.95rem !important;
-    margin: 0.3rem 0 !important;
-}
+section[data-testid="stSidebar"] h3 { color: #0D2B52 !important; font-size: 0.95rem !important; margin: 0.3rem 0 !important; }
 
-/* Topbar */
 .topbar {
     display: flex;
     align-items: center;
@@ -101,7 +80,6 @@ section[data-testid="stSidebar"] h3 {
 .topbar-crumb { font-size: 0.72rem; color: #8a9bb5; margin-top: 1px; }
 .topbar-user  { font-size: 0.83rem; font-weight: 600; color: #0D2B52; }
 
-/* KPI Cards */
 .kpi-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -134,7 +112,6 @@ section[data-testid="stSidebar"] h3 {
 .up   { color: #27ae60; }
 .down { color: #e74c3c; }
 
-/* Cards de contenido */
 .card {
     background: white;
     border-radius: 12px;
@@ -150,7 +127,6 @@ section[data-testid="stSidebar"] h3 {
     margin-bottom: 0.5rem;
 }
 
-/* Botones */
 .stButton > button {
     background: linear-gradient(135deg, #0D2B52, #1a8fd1) !important;
     color: white !important;
@@ -161,13 +137,11 @@ section[data-testid="stSidebar"] h3 {
 }
 .stButton > button:hover { opacity: 0.85 !important; }
 
-/* Inputs */
 .stTextInput input, .stTextArea textarea {
     border-radius: 8px !important;
     border: 1px solid #dce5f0 !important;
 }
 
-/* Labels azul navy sobre fondo blanco */
 .main .stTextInput label,
 .main .stTextArea label,
 .main .stSelectbox label,
@@ -182,16 +156,12 @@ section[data-testid="stSidebar"] h3 {
     font-weight: 500 !important;
 }
 
-/* Tabs texto navy */
-[data-testid="stTabs"] button {
-    color: #8a9bb5 !important;
-}
+[data-testid="stTabs"] button { color: #8a9bb5 !important; }
 [data-testid="stTabs"] button[aria-selected="true"] {
     color: #0D2B52 !important;
     font-weight: 700 !important;
 }
 
-/* NPR badge */
 .npr-box {
     border-radius: 10px;
     padding: 1rem;
@@ -202,7 +172,6 @@ section[data-testid="stSidebar"] h3 {
 #MainMenu { visibility: hidden; }
 footer    { visibility: hidden; }
 
-/* ── Botón reapertura sidebar: ocultar texto y mostrar ☰ ── */
 [data-testid="collapsedControl"] {
     background: #0D2B52 !important;
     border-radius: 0 10px 10px 0 !important;
@@ -214,15 +183,9 @@ footer    { visibility: hidden; }
     align-items: center !important;
     justify-content: center !important;
 }
-[data-testid="collapsedControl"]:hover {
-    background: #1a8fd1 !important;
-}
-/* Ocultar el ícono/texto original */
+[data-testid="collapsedControl"]:hover { background: #1a8fd1 !important; }
 [data-testid="collapsedControl"] svg,
-[data-testid="collapsedControl"] span {
-    display: none !important;
-}
-/* Insertar ☰ con CSS puro */
+[data-testid="collapsedControl"] span { display: none !important; }
 [data-testid="collapsedControl"]::after {
     content: "";
     display: block;
@@ -243,9 +206,8 @@ BASE_DIR  = os.path.dirname(os.path.abspath(__file__))
 LOGO_PATH = os.path.join(BASE_DIR, "assets", "Logo_sportmeds.png")
 
 # ─────────────────────────────────────────
-# SIDEBAR — nativo st.sidebar (siempre funciona)
+# SIDEBAR
 # ─────────────────────────────────────────
-# Logo
 if os.path.exists(LOGO_PATH):
     st.sidebar.image(LOGO_PATH, width=190)
 else:
@@ -271,15 +233,15 @@ modulo = st.sidebar.selectbox(
 st.sidebar.markdown("<hr>", unsafe_allow_html=True)
 st.sidebar.markdown("""
 <div style='padding: 0.2rem 0;'>
-    <div style='font-size:0.67rem;color:rgba(255,255,255,0.38);
+    <div style='font-size:0.67rem;color:rgba(13,43,82,0.5);
                 text-transform:uppercase;letter-spacing:.08em;'>Usuario</div>
     <div style='font-size:0.9rem;font-weight:600;margin-top:3px;'>Ing. Biomédico</div>
-    <div style='font-size:0.7rem;color:rgba(255,255,255,0.42);'>Administrador</div>
+    <div style='font-size:0.7rem;color:rgba(13,43,82,0.45);'>Administrador</div>
 </div>
 """, unsafe_allow_html=True)
 st.sidebar.markdown("<hr>", unsafe_allow_html=True)
 st.sidebar.markdown(
-    "<div style='font-size:0.65rem;color:rgba(255,255,255,0.25);text-align:center;'>"
+    "<div style='font-size:0.65rem;color:rgba(13,43,82,0.35);text-align:center;'>"
     "Gestión Biomédica v1.0<br>© 2025 SPORTMEDS Centro Médico</div>",
     unsafe_allow_html=True
 )
@@ -310,11 +272,9 @@ def topbar(titulo, ruta):
 if "Panel" in modulo:
     topbar("Panel de Control", "Panel de Control")
 
-    # ── Datos reales desde Supabase ──
     try:
         inv_data = supabase.table("Inventario").select("*").execute().data
         df_inv   = pd.DataFrame(inv_data) if inv_data else pd.DataFrame()
-
         total_equipos  = len(df_inv)
         riesgo_alto    = len(df_inv[df_inv["clase_riesgo"] == "Clase III"]) if not df_inv.empty and "clase_riesgo" in df_inv.columns else 0
         fuera_servicio = len(df_inv[df_inv["estado"].str.contains("Fuera", na=False)]) if not df_inv.empty and "estado" in df_inv.columns else 0
@@ -322,7 +282,6 @@ if "Panel" in modulo:
         total_equipos = riesgo_alto = fuera_servicio = 0
         df_inv = pd.DataFrame()
 
-    # KPIs dinámicos
     st.markdown(f"""
     <div class="kpi-grid">
       <div class="kpi-card">
@@ -360,7 +319,6 @@ if "Panel" in modulo:
     </div>
     """, unsafe_allow_html=True)
 
-    # Fila 1: 3 gráficas con datos reales
     c1, c2, c3 = st.columns([1.4, 1.1, 1.4])
 
     with c1:
@@ -425,7 +383,6 @@ if "Panel" in modulo:
 
     st.markdown("<br>", unsafe_allow_html=True)
 
-    # Fila 2: línea + tabla
     c4, c5 = st.columns([1.6, 1])
 
     with c4:
@@ -495,23 +452,16 @@ elif "Inventario" in modulo:
                 ])
                 descripcion = st.text_input("Descripción del equipo *")
             with c2:
-                fabricante = st.text_input("Fabricante *")
-                modelo     = st.text_input("Modelo / N° catálogo")
+                fabricante   = st.text_input("Fabricante *")
+                modelo       = st.text_input("Modelo / N° catálogo")
                 numero_serie = st.text_input("N° de serie")
             with c3:
-                numero_lote = st.text_input("N° de lote")
+                numero_lote  = st.text_input("N° de lote")
                 clase_riesgo = st.selectbox("Clase de riesgo INVIMA", [
-                    "Clase I",
-                    "Clase IIa",
-                    "Clase IIb",
-                    "Clase III"
+                    "Clase I", "Clase IIa", "Clase IIb", "Clase III"
                 ])
                 alimentacion = st.selectbox("Alimentación eléctrica", [
-                    "110V",
-                    "220V",
-                    "380V",
-                    "Trifásica",
-                    "No aplica"
+                    "110V", "220V", "380V", "Trifásica", "No aplica"
                 ])
 
             st.markdown("---")
@@ -519,14 +469,8 @@ elif "Inventario" in modulo:
             c4, c5, c6 = st.columns(3)
             with c4:
                 servicio = st.selectbox("Servicio / Ubicación *", [
-                    "UCI",
-                    "Urgencias",
-                    "Hospitalización",
-                    "Consulta externa",
-                    "Imágenes diagnósticas",
-                    "Cirugía",
-                    "Laboratorio",
-                    "Rehabilitación"
+                    "UCI", "Urgencias", "Hospitalización", "Consulta externa",
+                    "Imágenes diagnósticas", "Cirugía", "Laboratorio", "Rehabilitación"
                 ])
                 ubicacion = st.text_input("Habitación / Área específica")
             with c5:
@@ -546,8 +490,8 @@ elif "Inventario" in modulo:
             st.markdown("#### 📅 Fechas y costos")
             c7, c8, c9 = st.columns(3)
             with c7:
-                fecha_compra   = st.date_input("Fecha de compra", value=date.today())
-                fecha_registro = st.date_input("Fecha de registro", value=date.today())
+                fecha_compra   = st.date_input("Fecha de compra",   value=date.today())
+                fecha_registro = st.date_input("Fecha de registro",  value=date.today())
             with c8:
                 garantia_inicio = st.date_input("Garantía — fecha inicio", value=date.today())
                 garantia_fin    = st.date_input("Garantía — fecha fin",    value=date.today())
@@ -564,26 +508,26 @@ elif "Inventario" in modulo:
                 if numero_inventario and descripcion and fabricante:
                     try:
                         data = {
-                            "numero_inventario": numero_inventario,
-                            "tipo_equipo":       tipo_equipo,
-                            "descripcion":       descripcion,
-                            "fabricante":        fabricante,
-                            "modelo":            modelo,
-                            "numero_serie":      numero_serie,
-                            "numero_lote":       numero_lote,
-                            "clase_riesgo":      clase_riesgo,
-                            "alimentacion_electrica": alimentacion,
-                            "servicio":          servicio,
-                            "Ubicación":         ubicacion,
-                            "estado":            estado,
-                            "proveedor_compra":  proveedor_compra,
+                            "numero_inventario":       numero_inventario,
+                            "tipo_equipo":             tipo_equipo,
+                            "descripcion":             descripcion,
+                            "fabricante":              fabricante,
+                            "modelo":                  modelo,
+                            "numero_serie":            numero_serie,
+                            "numero_lote":             numero_lote,
+                            "clase_riesgo":            clase_riesgo,
+                            "alimentacion_electrica":  alimentacion,
+                            "servicio":                servicio,
+                            "Ubicación":               ubicacion,
+                            "estado":                  estado,
+                            "proveedor_compra":        proveedor_compra,
                             "proveedor_mantenimiento": proveedor_mant,
-                            "fecha_compra":      str(fecha_compra),
-                            "fecha_registro":    str(fecha_registro),
-                            "garantia_inicio":   str(garantia_inicio),
-                            "garantia_fin":      str(garantia_fin),
-                            "costo":             float(costo),
-                            "observaciones":     obs,
+                            "fecha_compra":            str(fecha_compra),
+                            "fecha_registro":          str(fecha_registro),
+                            "garantia_inicio":         str(garantia_inicio),
+                            "garantia_fin":            str(garantia_fin),
+                            "costo":                   float(costo),
+                            "observaciones":           obs,
                         }
                         supabase.table("Inventario").insert(data).execute()
                         st.success(f"✅ **{descripcion}** registrado correctamente en el inventario.")
@@ -600,13 +544,10 @@ elif "Inventario" in modulo:
             response = supabase.table("Inventario").select("*").execute()
             if response.data:
                 df = pd.DataFrame(response.data)
-                # Columnas a mostrar
                 cols_show = ["numero_inventario","descripcion","fabricante","modelo",
                              "clase_riesgo","servicio","estado","fecha_compra"]
                 cols_available = [c for c in cols_show if c in df.columns]
                 st.dataframe(df[cols_available], use_container_width=True, hide_index=True)
-
-                # Botón exportar
                 csv = df.to_csv(index=False).encode("utf-8")
                 st.download_button("📥 Exportar a CSV", csv,
                                    "inventario_sportmeds.csv", "text/csv")
@@ -616,65 +557,585 @@ elif "Inventario" in modulo:
             st.error(f"❌ Error al cargar datos: {e}")
         st.markdown('</div>', unsafe_allow_html=True)
 
-
 # ══════════════════════════════════════════
-# MÓDULO: TECNOVIGILANCIA
+# MÓDULO: TECNOVIGILANCIA — FOREIA001
 # ══════════════════════════════════════════
 elif "Tecnovigilancia" in modulo:
-    topbar("Tecnovigilancia", "Tecnovigilancia")
-    cf, cs = st.columns([1.6, 1])
+    topbar("Tecnovigilancia — FOREIA001", "Tecnovigilancia")
 
-    with cf:
-        st.markdown('<div class="card"><div class="card-title">Registro de evento adverso</div>', unsafe_allow_html=True)
-        with st.form("form_tv", clear_on_submit=True):
-            c1, c2 = st.columns(2)
-            with c1:
-                equipo_tv   = st.text_input("Equipo involucrado *")
-                tipo_ev     = st.selectbox("Tipo de evento",
-                    ["Incidente","Casi incidente","Evento adverso serio",
-                     "Falla del equipo","Alerta de seguridad"])
-                fecha_ev    = st.date_input("Fecha del evento", value=date.today())
-            with c2:
-                reportador  = st.text_input("Reportador")
-                cargo       = st.text_input("Cargo")
-                servicio_tv = st.selectbox("Servicio",
-                    ["UCI","Urgencias","Hospitalización","Consulta externa"])
-            descripcion = st.text_area("Descripción detallada *", height=100)
-            accion      = st.text_area("Acción inmediata tomada", height=60)
-            if st.form_submit_button("📋 Guardar reporte"):
-                if equipo_tv and descripcion:
-                    st.success("✅ Evento registrado. Se notificará al coordinador biomédico.")
-                else:
-                    st.error("Complete los campos obligatorios (*).")
+    tab_nuevo, tab_historial = st.tabs(["📋  Nuevo reporte FOREIA001", "📊  Historial de reportes"])
+
+    # ── Cargar inventario (con caché corto para reflejar cambios) ──
+    @st.cache_data(ttl=60)
+    def cargar_inventario():
+        try:
+            data = supabase.table("Inventario").select("*").execute().data
+            return pd.DataFrame(data) if data else pd.DataFrame()
+        except:
+            return pd.DataFrame()
+
+    df_inv = cargar_inventario()
+
+    # ══════════════════════════════
+    # TAB 1 — NUEVO REPORTE
+    # ══════════════════════════════
+    with tab_nuevo:
+
+        # ── Selector fuera del form para que el autocompletado funcione ──
+        st.markdown('<div class="card"><div class="card-title">🔍 Selección del equipo involucrado</div>', unsafe_allow_html=True)
+
+        if df_inv.empty:
+            st.warning("⚠️ No hay equipos registrados en el inventario. Registra equipos primero en el módulo 📦 Inventario.")
+            equipo_sel = None
+        else:
+            opciones = ["— Seleccione un equipo —"] + [
+                f"{row['numero_inventario']} — {row['descripcion']}"
+                for _, row in df_inv.iterrows()
+            ]
+            equipo_label = st.selectbox(
+                "Equipo involucrado en el evento *",
+                opciones,
+                help="Al seleccionar el equipo, los campos del dispositivo médico se llenarán automáticamente."
+            )
+            equipo_sel = None
+            if equipo_label != "— Seleccione un equipo —":
+                inv_id  = equipo_label.split(" — ")[0].strip()
+                matches = df_inv[df_inv["numero_inventario"] == inv_id]
+                if not matches.empty:
+                    equipo_sel = matches.iloc[0]
+
         st.markdown('</div>', unsafe_allow_html=True)
 
-    with cs:
-        st.markdown('<div class="card"><div class="card-title">Eventos por tipo (30 días)</div>', unsafe_allow_html=True)
-        fig_tv = go.Figure(go.Bar(
-            x=["Incidente","Casi inc.","Adverso","Falla","Alerta"],
-            y=[3,5,1,4,2],
-            marker_color=["#1a8fd1","#e67e22","#e74c3c","#9b59b6","#27ae60"]
-        ))
-        lay_tv = base_layout(190)
-        lay_tv.update(xaxis=dict(showgrid=False, tickfont_size=9),
-                      yaxis=dict(gridcolor="#f0f4f9"))
-        fig_tv.update_layout(lay_tv)
-        st.plotly_chart(fig_tv, use_container_width=True, config=PLOT_CFG)
-        st.markdown('</div>', unsafe_allow_html=True)
+        # Mostrar preview de datos autocompletados cuando hay equipo seleccionado
+        if equipo_sel is not None:
+            with st.expander("👁️ Vista previa — datos del dispositivo que se autocompletarán", expanded=False):
+                prev1, prev2, prev3, prev4 = st.columns(4)
+                prev1.metric("Nombre genérico",  str(equipo_sel.get("descripcion", "—")))
+                prev2.metric("Fabricante",        str(equipo_sel.get("fabricante", "—")))
+                prev3.metric("Servicio / Área",   str(equipo_sel.get("servicio", "—")))
+                prev4.metric("Estado actual",     str(equipo_sel.get("estado", "—")))
 
         st.markdown("<br>", unsafe_allow_html=True)
-        st.markdown('<div class="card"><div class="card-title">Últimos reportes</div>', unsafe_allow_html=True)
+
+        # ── Formulario principal FOREIA001 ──
+        with st.form("form_foreia001", clear_on_submit=True):
+
+            # ════════════════════════════════
+            # SECCIÓN A — Lugar de ocurrencia
+            # ════════════════════════════════
+            st.markdown("#### 🏥 A. Lugar de ocurrencia del evento o incidente")
+            ca1, ca2, ca3 = st.columns(3)
+            with ca1:
+                st.text_input("A1. Nombre de la institución",
+                              value="SPORTMEDS Centro Médico", disabled=True)
+                st.text_input("A4. NIT",
+                              value="900.XXX.XXX-X", disabled=True)
+            with ca2:
+                st.text_input("A2. Departamento",
+                              value="Valle del Cauca", disabled=True)
+                st.text_input("A5. Nivel de complejidad",
+                              value="2", disabled=True)
+            with ca3:
+                st.text_input("A3. Ciudad",
+                              value="Cali", disabled=True)
+                st.text_input("A6. Naturaleza",
+                              value="Privada", disabled=True)
+
+            st.markdown("---")
+
+            # ════════════════════════════════
+            # SECCIÓN B — Información del paciente
+            # ════════════════════════════════
+            st.markdown("#### 🧑‍⚕️ B. Información del paciente")
+            cb1, cb2, cb3, cb4 = st.columns([1.2, 0.8, 0.8, 1.5])
+            with cb1:
+                pac_id = st.text_input(
+                    "B1. Identificación del paciente *",
+                    placeholder="Iniciales o N° historia clínica",
+                    help="Las iniciales o número de HC permiten trazabilidad interna. "
+                         "El INVIMA mantiene confidencialidad del paciente."
+                )
+            with cb2:
+                pac_sexo = st.selectbox("B2. Sexo *",
+                                        ["— Seleccione —", "Femenino", "Masculino"])
+            with cb3:
+                pac_edad = st.text_input("B3. Edad *",
+                                         placeholder="ej. 45 años / 3 meses")
+            with cb4:
+                pac_dx = st.text_input(
+                    "B4. Diagnóstico inicial *",
+                    placeholder="Causa de atención que originó el uso del dispositivo"
+                )
+
+            st.markdown("---")
+
+            # ════════════════════════════════
+            # SECCIÓN C — Identificación del dispositivo médico
+            # ════════════════════════════════
+            st.markdown("#### 🩺 C. Identificación del dispositivo médico")
+            st.caption("Los campos a continuación se llenan automáticamente desde el inventario y no son editables.")
+
+            # Extraer datos del equipo seleccionado (o vacíos si no hay selección)
+            if equipo_sel is not None:
+                nombre_generico  = str(equipo_sel.get("descripcion",             "") or "")
+                nombre_comercial = str(equipo_sel.get("modelo",                  "") or "")
+                registro_san     = str(equipo_sel.get("clase_riesgo",            "") or "")
+                lote_val         = str(equipo_sel.get("numero_lote",             "") or "")
+                modelo_val       = str(equipo_sel.get("modelo",                  "") or "")
+                serial_val       = str(equipo_sel.get("numero_serie",            "") or "")
+                fabricante_val   = str(equipo_sel.get("fabricante",              "") or "")
+                importador_val   = str(equipo_sel.get("proveedor_compra",        "") or "")
+                area_val         = str(equipo_sel.get("servicio",                "") or "")
+                num_inv_val      = str(equipo_sel.get("numero_inventario",       "") or "")
+            else:
+                nombre_generico = nombre_comercial = registro_san = ""
+                lote_val = modelo_val = serial_val = ""
+                fabricante_val = importador_val = area_val = num_inv_val = ""
+
+            cc1, cc2 = st.columns(2)
+            with cc1:
+                st.text_input("C1. Nombre genérico del dispositivo médico",
+                              value=nombre_generico, disabled=True)
+                st.text_input("C3. Registro sanitario / permiso de comercialización",
+                              value=registro_san, disabled=True,
+                              help="Clase de riesgo INVIMA registrada en inventario")
+                st.text_input("C5. Nombre o razón social del fabricante",
+                              value=fabricante_val, disabled=True)
+                st.text_input("C7. Área de funcionamiento del dispositivo",
+                              value=area_val, disabled=True)
+
+            with cc2:
+                st.text_input("C2. Nombre comercial del dispositivo",
+                              value=nombre_comercial, disabled=True)
+                c_lote, c_mod = st.columns(2)
+                with c_lote:
+                    st.text_input("Lote", value=lote_val, disabled=True)
+                with c_mod:
+                    st.text_input("Modelo", value=modelo_val, disabled=True)
+                c_ref, c_ser = st.columns(2)
+                with c_ref:
+                    st.text_input("Referencia", value=modelo_val, disabled=True)
+                with c_ser:
+                    st.text_input("Serial", value=serial_val, disabled=True)
+                st.text_input("C6. Nombre o razón social del importador / distribuidor",
+                              value=importador_val, disabled=True)
+                uso_multiple = st.radio(
+                    "C8. ¿El dispositivo médico ha sido utilizado más de una vez?",
+                    ["No", "Sí"],
+                    horizontal=True
+                )
+
+            st.markdown("---")
+
+            # ════════════════════════════════
+            # SECCIÓN D — Evento o incidente adverso
+            # ════════════════════════════════
+            st.markdown("#### ⚠️ D. Evento o incidente adverso")
+
+            cd1, cd2, cd3 = st.columns(3)
+            with cd1:
+                fecha_evento = st.date_input("D1. Fecha del evento / incidente *",
+                                             value=date.today())
+            with cd2:
+                fecha_reporte = st.date_input("D2. Fecha de elaboración del reporte",
+                                              value=date.today())
+            with cd3:
+                deteccion = st.selectbox("D3. Detección del evento / incidente", [
+                    "Antes del uso del dispositivo médico",
+                    "Durante el uso del dispositivo médico",
+                    "Después del uso del dispositivo médico"
+                ])
+
+            clasificacion = st.radio(
+                "D4. Clasificación *",
+                [
+                    "Evento adverso serio",
+                    "Evento adverso no serio",
+                    "Incidente adverso serio",
+                    "Incidente adverso no serio"
+                ],
+                horizontal=True,
+                help="Serio: pudo llevar a muerte o deterioro grave. "
+                     "Incidente: riesgo potencial que no generó desenlace adverso."
+            )
+
+            descripcion_ev = st.text_area(
+                "D5. Descripción detallada del evento o incidente adverso *",
+                height=130,
+                placeholder=(
+                    "Describa: estado de salud del paciente antes del evento, signos y síntomas, "
+                    "condiciones relevantes (hipertensión, diabetes, alergias), "
+                    "diagnóstico diferencial, curso clínico, tratamiento administrado y resultados..."
+                )
+            )
+
+            st.markdown("**D6. Desenlace del evento o incidente adverso** — seleccione todas las que apliquen:")
+            dc1, dc2, dc3 = st.columns(3)
+            with dc1:
+                d_muerte   = st.checkbox("☐ Muerte")
+                d_amenaza  = st.checkbox("☐ Enfermedad o daño que amenace la vida")
+            with dc2:
+                d_funcion  = st.checkbox("☐ Daño de una función o estructura corporal")
+                d_hosp     = st.checkbox("☐ Hospitalización inicial o prolongada")
+            with dc3:
+                d_interv   = st.checkbox("☐ Requiere intervención médica o quirúrgica")
+                d_sin_dano = st.checkbox("☐ No hubo daño")
+                d_otro     = st.checkbox("☐ Otro")
+
+            d_otro_cual = ""
+            if d_otro:
+                d_otro_cual = st.text_input("Especifique el otro desenlace:")
+
+            st.markdown("---")
+
+            # ════════════════════════════════
+            # SECCIÓN E — Gestión realizada
+            # ════════════════════════════════
+            st.markdown("#### 🔧 E. Gestión realizada")
+
+            ce1, ce2 = st.columns(2)
+            with ce1:
+                causa_codigo = st.selectbox(
+                    "E1. Código y causa probable (NTC 5736:2009)",
+                    [
+                        "500 — Uso anormal",
+                        "510 — Respuesta fisiológica anormal o inesperada",
+                        "520 — Falla en la alarma",
+                        "530 — Uso de material biológico",
+                        "540 — Calibración incorrecta",
+                        "550 — Hardware del computador",
+                        "560 — Contaminación durante la producción",
+                        "570 — Contaminación postproducción",
+                        "580 — Diseño inadecuado",
+                        "590 — Desconexión imprevista",
+                        "600 — Componente eléctrico defectuoso",
+                        "610 — Circuito eléctrico",
+                        "620 — Contacto eléctrico defectuoso",
+                        "630 — Interferencia Electromagnética (IEM)",
+                        "640 — Fecha de expiración vencida",
+                        "650 — Falso negativo",
+                        "660 — Falso positivo",
+                        "670 — Resultado falso de la prueba",
+                        "680 — Falla en dispositivo implantable",
+                        "690 — Ambiente inapropiado",
+                        "700 — Incompatibilidad entre dispositivos",
+                        "710 — Instrucciones para uso / etiquetado inadecuados",
+                        "720 — Escape / falla en sellado",
+                        "730 — Mantenimiento inadecuado",
+                        "740 — Falla en fabricación",
+                        "750 — Material de durabilidad limitada",
+                        "760 — Componentes mecánicos",
+                        "770 — Condiciones no higiénicas",
+                        "780 — No relacionado con el dispositivo",
+                        "790 — Otros",
+                        "800 — Empaque inadecuado",
+                        "810 — Anatomía / fisiología del paciente",
+                        "820 — Condición del paciente",
+                        "830 — Fuente de energía deficiente",
+                        "840 — Falla en medidas de protección",
+                        "850 — Aseguramiento de calidad en la institución",
+                        "860 — Radiación",
+                        "870 — Software inadecuado",
+                        "880 — Esterilización / desinfección / limpieza inadecuada",
+                        "890 — Condiciones de almacenamiento inapropiadas",
+                        "900 — Alteración, falsificación o sabotaje",
+                        "910 — Entrenamiento inadecuado",
+                        "920 — Transporte y entrega",
+                        "930 — Sin identificar",
+                        "940 — Capacidad de uso",
+                        "950 — Error de uso",
+                        "960 — Desgaste",
+                    ]
+                )
+                causa_descripcion = st.text_area(
+                    "Descripción de la causa probable",
+                    height=90,
+                    placeholder="Describa la causa identificada según el análisis realizado..."
+                )
+
+            with ce2:
+                acciones = st.text_area(
+                    "E2. Acciones correctivas y preventivas iniciadas",
+                    height=90,
+                    placeholder="Describa las acciones implementadas para corregir y prevenir la recurrencia..."
+                )
+
+                st.markdown("**E3. ¿Reportó al importador / distribuidor?**")
+                col_rep1, col_rep2 = st.columns(2)
+                with col_rep1:
+                    reporto_imp = st.radio("Reportó al importador",
+                                           ["No", "Sí"], horizontal=True,
+                                           label_visibility="collapsed")
+                with col_rep2:
+                    fecha_rep_imp = st.date_input("Fecha del reporte al importador",
+                                                   value=date.today())
+
+                disp_disponible = st.radio(
+                    "E4. ¿Dispositivo médico disponible para evaluación? (no enviar al INVIMA)",
+                    ["No", "Sí"], horizontal=True
+                )
+                disp_enviado = st.radio(
+                    "E5. ¿Se envió el dispositivo al distribuidor / importador?",
+                    ["No", "Sí"], horizontal=True
+                )
+                fecha_envio_disp = st.date_input("Fecha de envío del dispositivo",
+                                                  value=date.today())
+
+            st.markdown("---")
+
+            # ════════════════════════════════
+            # SECCIÓN F — Información del reportante
+            # ════════════════════════════════
+            st.markdown("#### 👤 F. Información del reportante")
+
+            cf1, cf2, cf3 = st.columns(3)
+            with cf1:
+                rep_nombre = st.text_input("F1. Nombre completo *")
+                rep_prof   = st.text_input("F2. Profesión *",
+                                            placeholder="ej. Médico, Enfermero, Ing. Biomédico")
+                rep_org    = st.text_input("F3. Organización o área a la que pertenece")
+            with cf2:
+                rep_dir   = st.text_input("F4. Dirección de la organización")
+                rep_tel   = st.text_input("F5. Teléfono de contacto")
+                rep_depto = st.text_input("F6. Departamento", value="Valle del Cauca")
+            with cf3:
+                rep_ciudad = st.text_input("F7. Ciudad", value="Cali")
+                rep_email  = st.text_input("F8. Correo electrónico institucional")
+                fecha_noti = st.date_input("F9. Fecha de notificación", value=date.today())
+                autoriza   = st.radio(
+                    "F10. ¿Autoriza divulgación del origen del reporte al fabricante o importador?",
+                    ["No", "Sí"], horizontal=True
+                )
+
+            st.markdown("<br>", unsafe_allow_html=True)
+
+            # ── Botón de envío ──
+            submitted = st.form_submit_button(
+                "📋 Guardar reporte FOREIA001 en base de datos",
+                use_container_width=True
+            )
+
+            # ── Validación y guardado ──
+            if submitted:
+                errores = []
+                if equipo_sel is None:
+                    errores.append("Debe seleccionar un equipo del inventario (campo fuera del formulario).")
+                if not pac_id:
+                    errores.append("La identificación del paciente es obligatoria (campo B1).")
+                if pac_sexo == "— Seleccione —":
+                    errores.append("El sexo del paciente es obligatorio (campo B2).")
+                if not pac_edad:
+                    errores.append("La edad del paciente es obligatoria (campo B3).")
+                if not pac_dx:
+                    errores.append("El diagnóstico inicial es obligatorio (campo B4).")
+                if not descripcion_ev:
+                    errores.append("La descripción del evento es obligatoria (campo D5).")
+                if not rep_nombre:
+                    errores.append("El nombre del reportante es obligatorio (campo F1).")
+                if not rep_prof:
+                    errores.append("La profesión del reportante es obligatoria (campo F2).")
+
+                if errores:
+                    st.error("Por favor corrija los siguientes errores antes de guardar:")
+                    for e in errores:
+                        st.error(f"❌ {e}")
+                else:
+                    # Construir lista de desenlaces seleccionados
+                    desenlaces = []
+                    if d_muerte:   desenlaces.append("Muerte")
+                    if d_amenaza:  desenlaces.append("Enfermedad o daño que amenace la vida")
+                    if d_funcion:  desenlaces.append("Daño de una función o estructura corporal")
+                    if d_hosp:     desenlaces.append("Hospitalización inicial o prolongada")
+                    if d_interv:   desenlaces.append("Requiere intervención médica o quirúrgica")
+                    if d_sin_dano: desenlaces.append("No hubo daño")
+                    if d_otro:     desenlaces.append(f"Otro: {d_otro_cual}")
+
+                    try:
+                        data_tv = {
+                            # Sección A — fijos
+                            "nombre_institucion":        "SPORTMEDS Centro Médico",
+                            "departamento":              "Valle del Cauca",
+                            "ciudad":                    "Cali",
+                            "nit":                       "900.XXX.XXX-X",
+                            "nivel_complejidad":         "2",
+                            "naturaleza":                "Privada",
+                            # Sección B — paciente
+                            "paciente_identificacion":   pac_id,
+                            "paciente_sexo":             pac_sexo,
+                            "paciente_edad":             pac_edad,
+                            "paciente_diagnostico":      pac_dx,
+                            # Sección C — dispositivo (desde inventario)
+                            "numero_inventario":         num_inv_val,
+                            "nombre_generico":           nombre_generico,
+                            "nombre_comercial":          nombre_comercial,
+                            "registro_sanitario":        registro_san,
+                            "lote":                      lote_val,
+                            "modelo":                    modelo_val,
+                            "referencia":                modelo_val,
+                            "serial":                    serial_val,
+                            "fabricante":                fabricante_val,
+                            "importador":                importador_val,
+                            "area_funcionamiento":       area_val,
+                            "uso_multiple":              uso_multiple == "Sí",
+                            # Sección D — evento
+                            "fecha_evento":              str(fecha_evento),
+                            "fecha_elaboracion_reporte": str(fecha_reporte),
+                            "deteccion":                 deteccion,
+                            "clasificacion":             clasificacion,
+                            "descripcion_evento":        descripcion_ev,
+                            "desenlace":                 desenlaces,
+                            "desenlace_otro":            d_otro_cual,
+                            # Sección E — gestión
+                            "causa_probable":            causa_descripcion,
+                            "causa_codigo":              causa_codigo.split(" — ")[0],
+                            "acciones_correctivas":      acciones,
+                            "reporto_importador":        reporto_imp == "Sí",
+                            "fecha_reporte_importador":  str(fecha_rep_imp) if reporto_imp == "Sí" else None,
+                            "dispositivo_disponible":    disp_disponible == "Sí",
+                            "dispositivo_enviado":       disp_enviado == "Sí",
+                            "fecha_envio_dispositivo":   str(fecha_envio_disp) if disp_enviado == "Sí" else None,
+                            # Sección F — reportante
+                            "reportante_nombre":         rep_nombre,
+                            "reportante_profesion":      rep_prof,
+                            "reportante_organizacion":   rep_org,
+                            "reportante_direccion":      rep_dir,
+                            "reportante_telefono":       rep_tel,
+                            "reportante_departamento":   rep_depto,
+                            "reportante_ciudad":         rep_ciudad,
+                            "reportante_email":          rep_email,
+                            "fecha_notificacion":        str(fecha_noti),
+                            "autoriza_divulgacion":      autoriza == "Sí",
+                        }
+
+                        supabase.table("Tecnovigilancia").insert(data_tv).execute()
+
+                        st.success(
+                            f"✅ Reporte FOREIA001 guardado correctamente para el equipo "
+                            f"**{nombre_generico}** (Inventario: {num_inv_val})."
+                        )
+
+                        # Alerta automática para eventos/incidentes serios
+                        if clasificacion in ["Evento adverso serio", "Incidente adverso serio"]:
+                            st.warning(
+                                "⚠️ **EVENTO / INCIDENTE SERIO detectado.**  \n"
+                                "Según la Resolución 4816 de 2008, debe notificar al INVIMA "
+                                "dentro de las **72 horas** siguientes al conocimiento del caso.  \n"
+                                "📧 tecnovigilancia@invima.gov.co  \n"
+                                "📠 Fax: 4235656 ext. 104  \n"
+                                "📍 Carrera 68D 17-11/21, Bogotá D.C."
+                            )
+
+                        st.balloons()
+
+                    except Exception as e:
+                        st.error(f"❌ Error al guardar en Supabase: {e}")
+
+    # ══════════════════════════════
+    # TAB 2 — HISTORIAL
+    # ══════════════════════════════
+    with tab_historial:
+        st.markdown('<div class="card"><div class="card-title">Reportes FOREIA001 registrados</div>', unsafe_allow_html=True)
+
         try:
-            tv_data = supabase.table("Tecnovigilancia").select("*").order("created_at", desc=True).limit(5).execute().data
+            tv_data = supabase.table("Tecnovigilancia").select("*").order("created_at", desc=True).execute().data
+
             if tv_data:
                 df_tv = pd.DataFrame(tv_data)
-                cols = ["equipo","tipo_evento","fecha_evento","servicio"]
-                cols_ok = [c for c in cols if c in df_tv.columns]
-                st.dataframe(df_tv[cols_ok], use_container_width=True, hide_index=True)
+
+                # ── KPIs rápidos ──
+                total     = len(df_tv)
+                serios    = len(df_tv[df_tv["clasificacion"].str.contains("serio", case=False, na=False)]) \
+                            if "clasificacion" in df_tv.columns else 0
+                no_serios = total - serios
+
+                kc1, kc2, kc3, kc4 = st.columns(4)
+                kc1.metric("Total reportes", total)
+                kc2.metric("Serios", serios,
+                           delta="Requieren notif. INVIMA <72h" if serios > 0 else None,
+                           delta_color="inverse")
+                kc3.metric("No serios", no_serios)
+
+                # Último reporte
+                if "fecha_evento" in df_tv.columns and not df_tv["fecha_evento"].isna().all():
+                    ultimo = df_tv["fecha_evento"].dropna().iloc[0]
+                    kc4.metric("Último evento", str(ultimo)[:10])
+
+                st.markdown("<br>", unsafe_allow_html=True)
+
+                # ── Tabla resumen ──
+                cols_show = [
+                    "created_at",
+                    "numero_inventario",
+                    "nombre_generico",
+                    "clasificacion",
+                    "fecha_evento",
+                    "deteccion",
+                    "desenlace",
+                    "reportante_nombre",
+                    "reportante_profesion",
+                ]
+                cols_ok = [c for c in cols_show if c in df_tv.columns]
+
+                rename_map = {
+                    "created_at":           "Fecha registro",
+                    "numero_inventario":     "Inventario",
+                    "nombre_generico":       "Dispositivo",
+                    "clasificacion":         "Clasificación",
+                    "fecha_evento":          "Fecha evento",
+                    "deteccion":             "Detección",
+                    "desenlace":             "Desenlace",
+                    "reportante_nombre":     "Reportante",
+                    "reportante_profesion":  "Profesión",
+                }
+
+                df_show = df_tv[cols_ok].rename(columns=rename_map)
+                st.dataframe(df_show, use_container_width=True, hide_index=True)
+
+                # ── Gráfica de clasificaciones ──
+                st.markdown("<br>", unsafe_allow_html=True)
+                if "clasificacion" in df_tv.columns:
+                    cl_counts = df_tv["clasificacion"].value_counts()
+                    col_colors = {
+                        "Evento adverso serio":       "#e74c3c",
+                        "Evento adverso no serio":    "#e67e22",
+                        "Incidente adverso serio":    "#9b59b6",
+                        "Incidente adverso no serio": "#1a8fd1",
+                    }
+                    bar_colors = [col_colors.get(c, "#8a9bb5") for c in cl_counts.index]
+
+                    fig_cl = go.Figure(go.Bar(
+                        x=cl_counts.index.tolist(),
+                        y=cl_counts.values.tolist(),
+                        marker_color=bar_colors,
+                        text=cl_counts.values.tolist(),
+                        textposition="outside"
+                    ))
+                    fig_cl.update_layout(
+                        height=240,
+                        margin=dict(l=0, r=0, t=4, b=0),
+                        plot_bgcolor="white",
+                        paper_bgcolor="white",
+                        xaxis=dict(showgrid=False, tickfont_size=10),
+                        yaxis=dict(gridcolor="#f0f4f9", tickfont_size=10, dtick=1)
+                    )
+                    st.markdown('<div class="card-title">Reportes por clasificación</div>', unsafe_allow_html=True)
+                    st.plotly_chart(fig_cl, use_container_width=True, config=PLOT_CFG)
+
+                # ── Exportar ──
+                csv = df_tv.to_csv(index=False).encode("utf-8")
+                st.download_button(
+                    "📥 Exportar todos los reportes a CSV",
+                    csv,
+                    "tecnovigilancia_foreia001.csv",
+                    "text/csv"
+                )
+
             else:
-                st.info("No hay reportes aún.")
+                st.info("No hay reportes registrados aún. Usa la pestaña 📋 Nuevo reporte FOREIA001.")
+
         except Exception as e:
-            st.error(f"❌ Error: {e}")
+            st.error(f"❌ Error al cargar historial: {e}")
+
         st.markdown('</div>', unsafe_allow_html=True)
 
 # ══════════════════════════════════════════
@@ -748,16 +1209,18 @@ elif "Mantenimiento" in modulo:
             c1, c2, c3 = st.columns(3)
             with c1:
                 eq_m    = st.text_input("Equipo biomédico *")
-                tipo_m  = st.selectbox("Tipo",
-                    ["Preventivo","Correctivo","Calibración","Verificación metrológica"])
+                tipo_m  = st.selectbox("Tipo", [
+                    "Preventivo","Correctivo","Calibración","Verificación metrológica"
+                ])
                 fecha_m = st.date_input("Fecha programada", value=date.today())
             with c2:
                 tecnico_m   = st.text_input("Técnico responsable")
                 prioridad_m = st.selectbox("Prioridad", ["🔴 Alta","🟡 Media","🟢 Baja"])
                 costo_m     = st.number_input("Costo estimado (COP)", min_value=0, step=10000)
             with c3:
-                servicio_m = st.selectbox("Servicio",
-                    ["UCI","Urgencias","Hospitalización","Consulta externa"])
+                servicio_m = st.selectbox("Servicio", [
+                    "UCI","Urgencias","Hospitalización","Consulta externa"
+                ])
                 duracion_m = st.number_input("Duración estimada (h)",
                     min_value=0.5, max_value=48.0, step=0.5, value=2.0)
                 repuestos  = st.text_input("Repuestos requeridos")
