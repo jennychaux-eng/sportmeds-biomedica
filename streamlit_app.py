@@ -24,23 +24,11 @@ st.markdown("""
 
 * { font-family: 'DM Sans', sans-serif !important; }
 
-/* Fondo principal AZUL NAVY */
+/* Fondo principal AZUL */
 .main .block-container {
-    background-color: #0D2B52 !important;
+    background-color: #0D2B52;
     padding-top: 1.2rem !important;
     max-width: 100% !important;
-}
-.main {
-    background-color: #0D2B52 !important;
-}
-[data-testid="stAppViewContainer"] {
-    background-color: #0D2B52 !important;
-}
-[data-testid="stAppViewBlockContainer"] {
-    background-color: #0D2B52 !important;
-}
-section.main {
-    background-color: #0D2B52 !important;
 }
 
 /* ── SIDEBAR BLANCO ── */
