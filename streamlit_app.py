@@ -9,7 +9,7 @@ import random
 # CONFIGURACIÓN
 # ─────────────────────────────────────────
 st.set_page_config(
-    page_title="Gestión Biomédica SPORTMEDS",
+    page_title="SPORTMEDS",
     page_icon="⚕️",
     layout="wide",
     initial_sidebar_state="expanded"
@@ -24,40 +24,39 @@ st.markdown("""
 
 * { font-family: 'DM Sans', sans-serif !important; }
 
-/* Fondo principal AZUL */
+/* Fondo principal */
 .main .block-container {
-    background-color: #0D2B52;
+    background-color: #F0F4F9;
     padding-top: 1.2rem !important;
     max-width: 100% !important;
 }
 
-/* ── SIDEBAR BLANCO ── */
+/* ── SIDEBAR NATIVO ── */
 section[data-testid="stSidebar"] {
-    background: white !important;
-    border-right: 1px solid #e8edf5 !important;
+    background: linear-gradient(175deg, #0D2B52 0%, #0a1e3d 100%) !important;
 }
 section[data-testid="stSidebar"] * {
-    color: #0D2B52 !important;
+    color: rgba(255,255,255,0.88) !important;
 }
 section[data-testid="stSidebar"] .stSelectbox > div > div {
-    background: #F0F4F9 !important;
-    border: 1px solid #dce5f0 !important;
+    background: rgba(255,255,255,0.08) !important;
+    border: 1px solid rgba(255,255,255,0.15) !important;
     border-radius: 8px !important;
-    color: #0D2B52 !important;
+    color: white !important;
 }
 section[data-testid="stSidebar"] label {
     font-size: 0.72rem !important;
     text-transform: uppercase;
     letter-spacing: 0.08em;
-    color: #8a9bb5 !important;
+    color: rgba(255,255,255,0.45) !important;
 }
 section[data-testid="stSidebar"] hr {
-    border-color: #e8edf5 !important;
+    border-color: rgba(255,255,255,0.12) !important;
     margin: 0.6rem 0 !important;
 }
-section[data-testid="stSidebar"] h2,
+section[data-testid="stSidebar"] h2, 
 section[data-testid="stSidebar"] h3 {
-    color: #0D2B52 !important;
+    color: white !important;
     font-size: 0.95rem !important;
     margin: 0.3rem 0 !important;
 }
@@ -153,38 +152,6 @@ section[data-testid="stSidebar"] h3 {
 
 #MainMenu { visibility: hidden; }
 footer    { visibility: hidden; }
-
-/* ── Botón reapertura sidebar: ocultar texto y mostrar ☰ ── */
-[data-testid="collapsedControl"] {
-    background: #0D2B52 !important;
-    border-radius: 0 10px 10px 0 !important;
-    padding: 14px 10px !important;
-    box-shadow: 3px 0 12px rgba(0,0,0,0.25) !important;
-    overflow: hidden !important;
-    width: 44px !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-}
-[data-testid="collapsedControl"]:hover {
-    background: #1a8fd1 !important;
-}
-/* Ocultar el ícono/texto original */
-[data-testid="collapsedControl"] svg,
-[data-testid="collapsedControl"] span {
-    display: none !important;
-}
-/* Insertar ☰ con CSS puro */
-[data-testid="collapsedControl"]::after {
-    content: "";
-    display: block;
-    width: 22px;
-    height: 2px;
-    background: white;
-    border-radius: 2px;
-    box-shadow: 0 7px 0 white, 0 14px 0 white;
-    margin: 0 auto;
-}
 </style>
 """, unsafe_allow_html=True)
 
@@ -192,7 +159,7 @@ footer    { visibility: hidden; }
 # RUTAS
 # ─────────────────────────────────────────
 BASE_DIR  = os.path.dirname(os.path.abspath(__file__))
-LOGO_PATH = os.path.join(BASE_DIR, "assets", "Logo_sportmeds.png")
+LOGO_PATH = os.path.join(BASE_DIR, "assets", "logo_sportmeds.png")
 
 # ─────────────────────────────────────────
 # SIDEBAR — nativo st.sidebar (siempre funciona)
