@@ -606,15 +606,6 @@ elif "Tecnovigilancia" in modulo:
 
         st.markdown('</div>', unsafe_allow_html=True)
 
-        # Mostrar preview de datos autocompletados cuando hay equipo seleccionado
-        if equipo_sel is not None:
-            with st.expander("👁️ Vista previa — datos del dispositivo que se autocompletarán", expanded=False):
-                prev1, prev2, prev3, prev4 = st.columns(4)
-                prev1.metric("Nombre genérico",  str(equipo_sel.get("descripcion", "—")))
-                prev2.metric("Fabricante",        str(equipo_sel.get("fabricante", "—")))
-                prev3.metric("Servicio / Área",   str(equipo_sel.get("servicio", "—")))
-                prev4.metric("Estado actual",     str(equipo_sel.get("estado", "—")))
-
         st.markdown("<br>", unsafe_allow_html=True)
 
         # ── Formulario principal FOREIA001 ──
