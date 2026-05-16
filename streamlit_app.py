@@ -558,12 +558,12 @@ elif "Inventario" in modulo:
         st.markdown('</div>', unsafe_allow_html=True)
 
 # ══════════════════════════════════════════
-# MÓDULO: TECNOVIGILANCIA — FOREIA001
+# MÓDULO: TECNOVIGILANCIA —
 # ══════════════════════════════════════════
 elif "Tecnovigilancia" in modulo:
-    topbar("Tecnovigilancia — FOREIA001", "Tecnovigilancia")
+    topbar("Tecnovigilancia", "Tecnovigilancia")
 
-    tab_nuevo, tab_historial = st.tabs(["📋  Nuevo reporte FOREIA001", "📊  Historial de reportes"])
+    tab_nuevo, tab_historial = st.tabs(["📋  Nuevo reporte", "📊  Historial de reportes"])
 
     # ── Cargar inventario (con caché corto para reflejar cambios) ──
     @st.cache_data(ttl=60)
@@ -614,13 +614,13 @@ elif "Tecnovigilancia" in modulo:
             # ════════════════════════════════
             # SECCIÓN A — Lugar de ocurrencia
             # ════════════════════════════════
-            st.markdown("#### 🏥 A. Lugar de ocurrencia del evento o incidente")
+            st.markdown("#### 🏥 Lugar de ocurrencia del evento o incidente")
             ca1, ca2, ca3 = st.columns(3)
             with ca1:
                 st.text_input("A1. Nombre de la institución",
-                              value="SPORTMEDS Centro Médico", disabled=True)
+                              value="SPORTMEDS Centro Médico S.A.S", disabled=True)
                 st.text_input("A4. NIT",
-                              value="900.XXX.XXX-X", disabled=True)
+                              value="901.002.107-7", disabled=True)
             with ca2:
                 st.text_input("A2. Departamento",
                               value="Valle del Cauca", disabled=True)
@@ -637,7 +637,7 @@ elif "Tecnovigilancia" in modulo:
             # ════════════════════════════════
             # SECCIÓN B — Información del paciente
             # ════════════════════════════════
-            st.markdown("#### 🧑‍⚕️ B. Información del paciente")
+            st.markdown("#### 🧑‍⚕️ Información del paciente")
             cb1, cb2, cb3, cb4 = st.columns([1.2, 0.8, 0.8, 1.5])
             with cb1:
                 pac_id = st.text_input(
@@ -663,7 +663,7 @@ elif "Tecnovigilancia" in modulo:
             # ════════════════════════════════
             # SECCIÓN C — Identificación del dispositivo médico
             # ════════════════════════════════
-            st.markdown("#### 🩺 C. Identificación del dispositivo médico")
+            st.markdown("#### 🩺 Identificación del dispositivo médico")
             st.caption("Los campos a continuación se llenan automáticamente desde el inventario y no son editables.")
 
             # Extraer datos del equipo seleccionado (o vacíos si no hay selección)
@@ -687,7 +687,7 @@ elif "Tecnovigilancia" in modulo:
             with cc1:
                 st.text_input("C1. Nombre genérico del dispositivo médico",
                               value=nombre_generico, disabled=True)
-                st.text_input("C3. Registro sanitario / permiso de comercialización",
+                st.text_input("C3. Registro sanitario",
                               value=registro_san, disabled=True,
                               help="Clase de riesgo INVIMA registrada en inventario")
                 st.text_input("C5. Nombre o razón social del fabricante",
@@ -721,7 +721,7 @@ elif "Tecnovigilancia" in modulo:
             # ════════════════════════════════
             # SECCIÓN D — Evento o incidente adverso
             # ════════════════════════════════
-            st.markdown("#### ⚠️ D. Evento o incidente adverso")
+            st.markdown("#### ⚠️ Evento o incidente adverso")
 
             cd1, cd2, cd3 = st.columns(3)
             with cd1:
@@ -764,15 +764,15 @@ elif "Tecnovigilancia" in modulo:
             st.markdown("**D6. Desenlace del evento o incidente adverso** — seleccione todas las que apliquen:")
             dc1, dc2, dc3 = st.columns(3)
             with dc1:
-                d_muerte   = st.checkbox("☐ Muerte")
-                d_amenaza  = st.checkbox("☐ Enfermedad o daño que amenace la vida")
+                d_muerte   = st.checkbox("Muerte")
+                d_amenaza  = st.checkbox("Enfermedad o daño que amenace la vida")
             with dc2:
-                d_funcion  = st.checkbox("☐ Daño de una función o estructura corporal")
-                d_hosp     = st.checkbox("☐ Hospitalización inicial o prolongada")
+                d_funcion  = st.checkbox("Daño de una función o estructura corporal")
+                d_hosp     = st.checkbox("Hospitalización inicial o prolongada")
             with dc3:
-                d_interv   = st.checkbox("☐ Requiere intervención médica o quirúrgica")
-                d_sin_dano = st.checkbox("☐ No hubo daño")
-                d_otro     = st.checkbox("☐ Otro")
+                d_interv   = st.checkbox("Requiere intervención médica o quirúrgica")
+                d_sin_dano = st.checkbox("No hubo daño")
+                d_otro     = st.checkbox("Otro")
 
             d_otro_cual = ""
             if d_otro:
@@ -780,105 +780,11 @@ elif "Tecnovigilancia" in modulo:
 
             st.markdown("---")
 
-            # ════════════════════════════════
-            # SECCIÓN E — Gestión realizada
-            # ════════════════════════════════
-            st.markdown("#### 🔧 E. Gestión realizada")
-
-            ce1, ce2 = st.columns(2)
-            with ce1:
-                causa_codigo = st.selectbox(
-                    "E1. Código y causa probable (NTC 5736:2009)",
-                    [
-                        "500 — Uso anormal",
-                        "510 — Respuesta fisiológica anormal o inesperada",
-                        "520 — Falla en la alarma",
-                        "530 — Uso de material biológico",
-                        "540 — Calibración incorrecta",
-                        "550 — Hardware del computador",
-                        "560 — Contaminación durante la producción",
-                        "570 — Contaminación postproducción",
-                        "580 — Diseño inadecuado",
-                        "590 — Desconexión imprevista",
-                        "600 — Componente eléctrico defectuoso",
-                        "610 — Circuito eléctrico",
-                        "620 — Contacto eléctrico defectuoso",
-                        "630 — Interferencia Electromagnética (IEM)",
-                        "640 — Fecha de expiración vencida",
-                        "650 — Falso negativo",
-                        "660 — Falso positivo",
-                        "670 — Resultado falso de la prueba",
-                        "680 — Falla en dispositivo implantable",
-                        "690 — Ambiente inapropiado",
-                        "700 — Incompatibilidad entre dispositivos",
-                        "710 — Instrucciones para uso / etiquetado inadecuados",
-                        "720 — Escape / falla en sellado",
-                        "730 — Mantenimiento inadecuado",
-                        "740 — Falla en fabricación",
-                        "750 — Material de durabilidad limitada",
-                        "760 — Componentes mecánicos",
-                        "770 — Condiciones no higiénicas",
-                        "780 — No relacionado con el dispositivo",
-                        "790 — Otros",
-                        "800 — Empaque inadecuado",
-                        "810 — Anatomía / fisiología del paciente",
-                        "820 — Condición del paciente",
-                        "830 — Fuente de energía deficiente",
-                        "840 — Falla en medidas de protección",
-                        "850 — Aseguramiento de calidad en la institución",
-                        "860 — Radiación",
-                        "870 — Software inadecuado",
-                        "880 — Esterilización / desinfección / limpieza inadecuada",
-                        "890 — Condiciones de almacenamiento inapropiadas",
-                        "900 — Alteración, falsificación o sabotaje",
-                        "910 — Entrenamiento inadecuado",
-                        "920 — Transporte y entrega",
-                        "930 — Sin identificar",
-                        "940 — Capacidad de uso",
-                        "950 — Error de uso",
-                        "960 — Desgaste",
-                    ]
-                )
-                causa_descripcion = st.text_area(
-                    "Descripción de la causa probable",
-                    height=90,
-                    placeholder="Describa la causa identificada según el análisis realizado..."
-                )
-
-            with ce2:
-                acciones = st.text_area(
-                    "E2. Acciones correctivas y preventivas iniciadas",
-                    height=90,
-                    placeholder="Describa las acciones implementadas para corregir y prevenir la recurrencia..."
-                )
-
-                st.markdown("**E3. ¿Reportó al importador / distribuidor?**")
-                col_rep1, col_rep2 = st.columns(2)
-                with col_rep1:
-                    reporto_imp = st.radio("Reportó al importador",
-                                           ["No", "Sí"], horizontal=True,
-                                           label_visibility="collapsed")
-                with col_rep2:
-                    fecha_rep_imp = st.date_input("Fecha del reporte al importador",
-                                                   value=date.today())
-
-                disp_disponible = st.radio(
-                    "E4. ¿Dispositivo médico disponible para evaluación? (no enviar al INVIMA)",
-                    ["No", "Sí"], horizontal=True
-                )
-                disp_enviado = st.radio(
-                    "E5. ¿Se envió el dispositivo al distribuidor / importador?",
-                    ["No", "Sí"], horizontal=True
-                )
-                fecha_envio_disp = st.date_input("Fecha de envío del dispositivo",
-                                                  value=date.today())
-
-            st.markdown("---")
-
+           
             # ════════════════════════════════
             # SECCIÓN F — Información del reportante
             # ════════════════════════════════
-            st.markdown("#### 👤 F. Información del reportante")
+            st.markdown("#### 👤 Información del reportante")
 
             cf1, cf2, cf3 = st.columns(3)
             with cf1:
@@ -1002,7 +908,7 @@ elif "Tecnovigilancia" in modulo:
                         supabase.table("Tecnovigilancia").insert(data_tv).execute()
 
                         st.success(
-                            f"✅ Reporte FOREIA001 guardado correctamente para el equipo "
+                            f"✅ Reporte guardado correctamente para el equipo "
                             f"**{nombre_generico}** (Inventario: {num_inv_val})."
                         )
 
