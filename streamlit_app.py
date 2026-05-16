@@ -308,57 +308,73 @@ def topbar(titulo, ruta):
 if "Panel" in modulo:
     topbar("Panel de Control", "Panel de Control")
 
-    # KPIs
-    st.markdown("""
+    # ── Datos reales desde Supabase ──
+    try:
+        inv_data = supabase.table("Inventario").select("*").execute().data
+        df_inv   = pd.DataFrame(inv_data) if inv_data else pd.DataFrame()
+
+        total_equipos  = len(df_inv)
+        riesgo_alto    = len(df_inv[df_inv["clase_riesgo"] == "Clase III"]) if not df_inv.empty and "clase_riesgo" in df_inv.columns else 0
+        fuera_servicio = len(df_inv[df_inv["estado"].str.contains("Fuera", na=False)]) if not df_inv.empty and "estado" in df_inv.columns else 0
+    except:
+        total_equipos = riesgo_alto = fuera_servicio = 0
+        df_inv = pd.DataFrame()
+
+    # KPIs dinámicos
+    st.markdown(f"""
     <div class="kpi-grid">
       <div class="kpi-card">
         <div class="kpi-icon">🩺</div>
         <div>
-          <div class="kpi-val">245</div>
+          <div class="kpi-val">{total_equipos}</div>
           <div class="kpi-label">Equipos registrados</div>
-          <div class="kpi-delta up">▲ +3 este mes</div>
+          <div class="kpi-delta up">Base de datos activa</div>
         </div>
       </div>
       <div class="kpi-card" style="border-top-color:#e74c3c;">
         <div class="kpi-icon" style="background:rgba(231,76,60,.1);">⚠️</div>
         <div>
-          <div class="kpi-val">18</div>
-          <div class="kpi-label">Equipos riesgo alto</div>
-          <div class="kpi-delta down">▼ -2 vs mes anterior</div>
+          <div class="kpi-val">{riesgo_alto}</div>
+          <div class="kpi-label">Equipos Clase III</div>
+          <div class="kpi-delta down">Riesgo alto</div>
         </div>
       </div>
       <div class="kpi-card" style="border-top-color:#e67e22;">
         <div class="kpi-icon" style="background:rgba(230,126,34,.1);">🔧</div>
         <div>
-          <div class="kpi-val">12</div>
-          <div class="kpi-label">Mantenimientos próximos</div>
-          <div class="kpi-delta" style="color:#e67e22;">● 3 urgentes</div>
+          <div class="kpi-val">{fuera_servicio}</div>
+          <div class="kpi-label">Fuera de servicio</div>
+          <div class="kpi-delta" style="color:#e67e22;">● Requieren atención</div>
         </div>
       </div>
       <div class="kpi-card" style="border-top-color:#27ae60;">
-        <div class="kpi-icon" style="background:rgba(39,174,96,.1);">📋</div>
+        <div class="kpi-icon" style="background:rgba(39,174,96,.1);">✅</div>
         <div>
-          <div class="kpi-val">5</div>
-          <div class="kpi-label">Eventos tecnovigilancia</div>
-          <div class="kpi-delta down">▲ +1 esta semana</div>
+          <div class="kpi-val">{total_equipos - fuera_servicio}</div>
+          <div class="kpi-label">En servicio</div>
+          <div class="kpi-delta up">Operativos</div>
         </div>
       </div>
     </div>
     """, unsafe_allow_html=True)
 
-    # Fila 1: 3 gráficas
+    # Fila 1: 3 gráficas con datos reales
     c1, c2, c3 = st.columns([1.4, 1.1, 1.4])
 
     with c1:
-        st.markdown('<div class="card"><div class="card-title">Mantenimientos por mes (2025)</div>', unsafe_allow_html=True)
-        meses = ["Ene","Feb","Mar","Abr","May","Jun","Jul"]
-        fig = go.Figure()
-        fig.add_bar(name="Preventivo", x=meses, y=[8,10,7,12,9,14,11], marker_color="#1a8fd1")
-        fig.add_bar(name="Correctivo", x=meses, y=[3,5,2,4,6,3,5],    marker_color="#e74c3c")
+        st.markdown('<div class="card"><div class="card-title">Equipos por estado</div>', unsafe_allow_html=True)
+        if not df_inv.empty and "estado" in df_inv.columns:
+            estado_counts = df_inv["estado"].value_counts()
+            fig = go.Figure(go.Bar(
+                x=estado_counts.index.tolist(),
+                y=estado_counts.values.tolist(),
+                marker_color=["#27ae60" if "En servicio" in e else "#e74c3c" for e in estado_counts.index],
+                text=estado_counts.values.tolist(), textposition="outside"
+            ))
+        else:
+            fig = go.Figure(go.Bar(x=["Sin datos"], y=[0], marker_color="#8a9bb5"))
         lay = base_layout()
-        lay.update(barmode="group",
-                   legend=dict(orientation="h", y=1.05, x=1, xanchor="right", font_size=10),
-                   xaxis=dict(showgrid=False, tickfont_size=10),
+        lay.update(xaxis=dict(showgrid=False, tickfont_size=9),
                    yaxis=dict(gridcolor="#f0f4f9", tickfont_size=10))
         fig.update_layout(lay)
         st.plotly_chart(fig, use_container_width=True, config=PLOT_CFG)
@@ -366,12 +382,18 @@ if "Panel" in modulo:
 
     with c2:
         st.markdown('<div class="card"><div class="card-title">Equipos por clase INVIMA</div>', unsafe_allow_html=True)
-        fig2 = go.Figure(go.Pie(
-            labels=["Clase I","Clase IIa","Clase IIb","Clase III"],
-            values=[45,80,72,48], hole=0.52,
-            marker_colors=["#27ae60","#1a8fd1","#e67e22","#e74c3c"],
-            textfont_size=10
-        ))
+        if not df_inv.empty and "clase_riesgo" in df_inv.columns:
+            clase_counts = df_inv["clase_riesgo"].value_counts()
+            fig2 = go.Figure(go.Pie(
+                labels=clase_counts.index.tolist(),
+                values=clase_counts.values.tolist(),
+                hole=0.52,
+                marker_colors=["#27ae60","#1a8fd1","#e67e22","#e74c3c"],
+                textfont_size=10
+            ))
+        else:
+            fig2 = go.Figure(go.Pie(labels=["Sin datos"], values=[1], hole=0.52,
+                                    marker_colors=["#8a9bb5"]))
         fig2.update_layout(height=220, margin=dict(l=0,r=0,t=4,b=0),
                            paper_bgcolor="white", showlegend=True,
                            legend=dict(orientation="h", y=-0.28, font_size=9))
@@ -380,13 +402,18 @@ if "Panel" in modulo:
 
     with c3:
         st.markdown('<div class="card"><div class="card-title">Equipos por servicio</div>', unsafe_allow_html=True)
-        fig3 = go.Figure(go.Bar(
-            x=[68,52,89,36,20],
-            y=["UCI","Urgencias","Hospitalización","Consulta ext.","Imágenes"],
-            orientation="h",
-            marker_color=["#0D2B52","#1a8fd1","#2eaff5","#8bc4e8","#c5e1f5"],
-            text=[68,52,89,36,20], textposition="outside"
-        ))
+        if not df_inv.empty and "servicio" in df_inv.columns:
+            serv_counts = df_inv["servicio"].value_counts()
+            fig3 = go.Figure(go.Bar(
+                x=serv_counts.values.tolist(),
+                y=serv_counts.index.tolist(),
+                orientation="h",
+                marker_color="#1a8fd1",
+                text=serv_counts.values.tolist(), textposition="outside"
+            ))
+        else:
+            fig3 = go.Figure(go.Bar(x=[0], y=["Sin datos"], orientation="h",
+                                    marker_color="#8a9bb5"))
         lay3 = base_layout()
         lay3.update(xaxis=dict(showgrid=False, visible=False),
                     yaxis=dict(showgrid=False, tickfont_size=10))
@@ -418,12 +445,14 @@ if "Panel" in modulo:
         st.markdown('</div>', unsafe_allow_html=True)
 
     with c5:
-        st.markdown('<div class="card"><div class="card-title">Próximos mantenimientos</div>', unsafe_allow_html=True)
-        st.dataframe(pd.DataFrame({
-            "Equipo": ["Ventilador UCI-03","Monitor Urg-07","Desfibrilador","Bomba Inf-12","Rayos X"],
-            "Fecha":  ["17/05","19/05","22/05","28/05","30/05"],
-            "Estado": ["🔴 Urgente","🔴 Urgente","🟡 Próximo","🟡 Próximo","🟢 Programado"],
-        }), use_container_width=True, hide_index=True, height=210)
+        st.markdown('<div class="card"><div class="card-title">Últimos equipos registrados</div>', unsafe_allow_html=True)
+        if not df_inv.empty:
+            cols = ["numero_inventario","descripcion","servicio","estado"]
+            cols_ok = [c for c in cols if c in df_inv.columns]
+            st.dataframe(df_inv[cols_ok].tail(5), use_container_width=True,
+                         hide_index=True, height=210)
+        else:
+            st.info("Sin registros aún.")
         st.markdown('</div>', unsafe_allow_html=True)
 
 # ══════════════════════════════════════════
