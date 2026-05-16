@@ -932,7 +932,7 @@ elif "Tecnovigilancia" in modulo:
     # TAB 2 — HISTORIAL
     # ══════════════════════════════
     with tab_historial:
-        st.markdown('<div class="card"><div class="card-title">Reportes FOREIA001 registrados</div>', unsafe_allow_html=True)
+        st.markdown('<div class="card"><div class="card-title">Reportes registrados</div>', unsafe_allow_html=True)
 
         try:
             tv_data = supabase.table("Tecnovigilancia").select("*").order("created_at", desc=True).execute().data
@@ -1029,7 +1029,7 @@ elif "Tecnovigilancia" in modulo:
                 )
 
             else:
-                st.info("No hay reportes registrados aún. Usa la pestaña 📋 Nuevo reporte FOREIA001.")
+                st.info("No hay reportes registrados aún. Usa la pestaña 📋 Nuevo reporte.")
 
         except Exception as e:
             st.error(f"❌ Error al cargar historial: {e}")
