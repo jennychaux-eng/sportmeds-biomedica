@@ -728,8 +728,9 @@ elif "Tecnovigilancia" in modulo:
                 fecha_evento = st.date_input("D1. Fecha del evento / incidente *",
                                              value=date.today())
             with cd2:
-                fecha_reporte = st.date_input("D2. Fecha de elaboración del reporte",
-                                              value=date.today())
+                fecha_reporte = date.today()
+                st.text_input("D2. Fecha de elaboración del reporte",
+                              value=fecha_reporte.strftime("%d/%m/%Y"), disabled=True)
             with cd3:
                 deteccion = st.selectbox("D3. Detección del evento / incidente", [
                     "Antes del uso del dispositivo médico",
