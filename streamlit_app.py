@@ -36,23 +36,23 @@ st.markdown("""
 
 * { font-family: 'DM Sans', sans-serif !important; }
 
-/* Fondo principal AZUL NAVY */
+/* Fondo principal BLANCO */
 .main .block-container {
-    background-color: #0D2B52 !important;
+    background-color: #F0F4F9 !important;
     padding-top: 1.2rem !important;
     max-width: 100% !important;
 }
 .main {
-    background-color: #0D2B52 !important;
+    background-color: #F0F4F9 !important;
 }
 [data-testid="stAppViewContainer"] {
-    background-color: #0D2B52 !important;
+    background-color: #F0F4F9 !important;
 }
 [data-testid="stAppViewBlockContainer"] {
-    background-color: #0D2B52 !important;
+    background-color: #F0F4F9 !important;
 }
 section.main {
-    background-color: #0D2B52 !important;
+    background-color: #F0F4F9 !important;
 }
 
 /* ── SIDEBAR BLANCO ── */
@@ -650,11 +650,17 @@ elif "Tecnovigilancia" in modulo:
 
         st.markdown("<br>", unsafe_allow_html=True)
         st.markdown('<div class="card"><div class="card-title">Últimos reportes</div>', unsafe_allow_html=True)
-        st.dataframe(pd.DataFrame({
-            "Equipo": ["Ventilador","Monitor","Bomba"],
-            "Tipo":   ["Falla","Incidente","Casi inc."],
-            "Fecha":  ["14/05","10/05","08/05"],
-        }), use_container_width=True, hide_index=True)
+        try:
+            tv_data = supabase.table("Tecnovigilancia").select("*").order("created_at", desc=True).limit(5).execute().data
+            if tv_data:
+                df_tv = pd.DataFrame(tv_data)
+                cols = ["equipo","tipo_evento","fecha_evento","servicio"]
+                cols_ok = [c for c in cols if c in df_tv.columns]
+                st.dataframe(df_tv[cols_ok], use_container_width=True, hide_index=True)
+            else:
+                st.info("No hay reportes aún.")
+        except Exception as e:
+            st.error(f"❌ Error: {e}")
         st.markdown('</div>', unsafe_allow_html=True)
 
 # ══════════════════════════════════════════
@@ -702,15 +708,17 @@ elif "Riesgos" in modulo:
 
     st.markdown("<br>", unsafe_allow_html=True)
     st.markdown('<div class="card"><div class="card-title">Equipos con riesgo alto — Seguimiento</div>', unsafe_allow_html=True)
-    st.dataframe(pd.DataFrame({
-        "Equipo":          ["Ventilador UCI-01","Desfibrilador Urg-03","Ventilador UCI-04",
-                            "Monitor UCI-02","Bomba Inf-07"],
-        "Servicio":        ["UCI","Urgencias","UCI","UCI","Hospitalización"],
-        "NPR":             [75, 60, 80, 50, 45],
-        "Último control":  ["10/04/2025","15/04/2025","02/05/2025","08/05/2025","12/05/2025"],
-        "Acción requerida":["Revisión programada","Calibración urgente","Cambio de pieza",
-                            "Monitoreo","Verificación"],
-    }), use_container_width=True, hide_index=True)
+    try:
+        riesgo_data = supabase.table("Riesgos").select("*").order("npr", desc=True).execute().data
+        if riesgo_data:
+            df_r2 = pd.DataFrame(riesgo_data)
+            cols = ["equipo","servicio","npr","nivel_riesgo","fecha_evaluacion","accion_requerida"]
+            cols_ok = [c for c in cols if c in df_r2.columns]
+            st.dataframe(df_r2[cols_ok], use_container_width=True, hide_index=True)
+        else:
+            st.info("No hay evaluaciones de riesgo registradas aún.")
+    except Exception as e:
+        st.error(f"❌ Error al cargar riesgos: {e}")
     st.markdown('</div>', unsafe_allow_html=True)
 
 # ══════════════════════════════════════════
@@ -803,14 +811,16 @@ elif "Mantenimiento" in modulo:
 
     with tab3:
         st.markdown('<div class="card"><div class="card-title">Historial de mantenimientos</div>', unsafe_allow_html=True)
-        st.dataframe(pd.DataFrame({
-            "Equipo":    ["Ventilador Mecánico","Monitor Multiparámetro","Desfibrilador",
-                          "Bomba de Infusión","Ecógrafo"],
-            "Tipo":      ["Preventivo","Correctivo","Calibración","Preventivo","Verificación"],
-            "Fecha":     ["10/04/2025","22/03/2025","15/02/2025","05/04/2025","28/03/2025"],
-            "Técnico":   ["J. García","M. López","C. Ruiz","J. García","A. Torres"],
-            "Costo COP": ["$320.000","$850.000","$120.000","$280.000","$95.000"],
-            "Estado":    ["✅ Completado","✅ Completado","✅ Completado",
-                          "✅ Completado","✅ Completado"],
-        }), use_container_width=True, hide_index=True)
+        try:
+            mant_data = supabase.table("Mantenimiento").select("*").execute().data
+            if mant_data:
+                df_mant = pd.DataFrame(mant_data)
+                cols = ["equipo","tipo_mantenimiento","fecha_programada",
+                        "tecnico","costo","estado"]
+                cols_ok = [c for c in cols if c in df_mant.columns]
+                st.dataframe(df_mant[cols_ok], use_container_width=True, hide_index=True)
+            else:
+                st.info("No hay mantenimientos registrados aún.")
+        except Exception as e:
+            st.error(f"❌ Error al cargar historial: {e}")
         st.markdown('</div>', unsafe_allow_html=True)
