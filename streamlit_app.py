@@ -159,7 +159,7 @@ footer    { visibility: hidden; }
 # RUTAS
 # ─────────────────────────────────────────
 BASE_DIR  = os.path.dirname(os.path.abspath(__file__))
-LOGO_PATH = os.path.join(BASE_DIR, "assets", "logo_sportmeds.png")
+LOGO_PATH = os.path.join(BASE_DIR, "assets", "Logo_sportmeds.png")
 
 # ─────────────────────────────────────────
 # SIDEBAR — nativo st.sidebar (siempre funciona)
