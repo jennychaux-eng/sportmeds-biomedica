@@ -809,7 +809,7 @@ elif "Tecnovigilancia" in modulo:
 
             # ── Botón de envío ──
             submitted = st.form_submit_button(
-                "📋 Guardar reporte FOREIA001 en base de datos",
+                "📋 Guardar reporte en base de datos",
                 use_container_width=True
             )
 
