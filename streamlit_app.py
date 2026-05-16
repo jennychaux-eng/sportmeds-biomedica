@@ -38,21 +38,21 @@ st.markdown("""
 
 /* Fondo principal BLANCO */
 .main .block-container {
-    background-color: #F0F4F9 !important;
+    background-color: #ffffff !important;
     padding-top: 1.2rem !important;
     max-width: 100% !important;
 }
 .main {
-    background-color: #F0F4F9 !important;
+    background-color: #ffffff !important;
 }
 [data-testid="stAppViewContainer"] {
-    background-color: #F0F4F9 !important;
+    background-color: #ffffff !important;
 }
 [data-testid="stAppViewBlockContainer"] {
-    background-color: #F0F4F9 !important;
+    background-color: #ffffff !important;
 }
 section.main {
-    background-color: #F0F4F9 !important;
+    background-color: #ffffff !important;
 }
 
 /* ── SIDEBAR BLANCO ── */
@@ -167,7 +167,7 @@ section[data-testid="stSidebar"] h3 {
     border: 1px solid #dce5f0 !important;
 }
 
-/* Labels blancos en panel principal */
+/* Labels azul navy sobre fondo blanco */
 .main .stTextInput label,
 .main .stTextArea label,
 .main .stSelectbox label,
@@ -178,15 +178,17 @@ section[data-testid="stSidebar"] h3 {
 .main h4, .main h3, .main h2,
 [data-testid="stForm"] label,
 [data-testid="stForm"] p {
-    color: white !important;
+    color: #0D2B52 !important;
+    font-weight: 500 !important;
 }
 
-/* Tabs texto blanco */
+/* Tabs texto navy */
 [data-testid="stTabs"] button {
-    color: rgba(255,255,255,0.7) !important;
+    color: #8a9bb5 !important;
 }
 [data-testid="stTabs"] button[aria-selected="true"] {
-    color: white !important;
+    color: #0D2B52 !important;
+    font-weight: 700 !important;
 }
 
 /* NPR badge */
