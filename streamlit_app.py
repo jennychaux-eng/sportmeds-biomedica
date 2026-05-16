@@ -9,7 +9,7 @@ import random
 # CONFIGURACIÓN
 # ─────────────────────────────────────────
 st.set_page_config(
-    page_title="SPORTMEDS",
+    page_title="Gestión Biomédica SPORTMEDS",
     page_icon="⚕️",
     layout="wide",
     initial_sidebar_state="expanded"
@@ -152,6 +152,38 @@ section[data-testid="stSidebar"] h3 {
 
 #MainMenu { visibility: hidden; }
 footer    { visibility: hidden; }
+
+/* ── Botón reapertura sidebar: ocultar texto y mostrar ☰ ── */
+[data-testid="collapsedControl"] {
+    background: #0D2B52 !important;
+    border-radius: 0 10px 10px 0 !important;
+    padding: 14px 10px !important;
+    box-shadow: 3px 0 12px rgba(0,0,0,0.25) !important;
+    overflow: hidden !important;
+    width: 44px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+[data-testid="collapsedControl"]:hover {
+    background: #1a8fd1 !important;
+}
+/* Ocultar el ícono/texto original */
+[data-testid="collapsedControl"] svg,
+[data-testid="collapsedControl"] span {
+    display: none !important;
+}
+/* Insertar ☰ con CSS puro */
+[data-testid="collapsedControl"]::after {
+    content: "";
+    display: block;
+    width: 22px;
+    height: 2px;
+    background: white;
+    border-radius: 2px;
+    box-shadow: 0 7px 0 white, 0 14px 0 white;
+    margin: 0 auto;
+}
 </style>
 """, unsafe_allow_html=True)
 
@@ -159,7 +191,7 @@ footer    { visibility: hidden; }
 # RUTAS
 # ─────────────────────────────────────────
 BASE_DIR  = os.path.dirname(os.path.abspath(__file__))
-LOGO_PATH = os.path.join(BASE_DIR, "assets", "logo_sportmeds.png")
+LOGO_PATH = os.path.join(BASE_DIR, "assets", "Logo_sportmeds.png")
 
 # ─────────────────────────────────────────
 # SIDEBAR — nativo st.sidebar (siempre funciona)
