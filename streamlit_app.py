@@ -1,23 +1,27 @@
-from supabase import create_client
-import os
-
-# Conexión con Supabase
-SUPABASE_URL = st.secrets["SUPABASE_URL"]
-SUPABASE_KEY = st.secrets["SUPABASE_KEY"]
-supabase = create_client(SUPABASE_URL, SUPABASE_KEY)
-
 import streamlit as st
 import os
 import pandas as pd
 import plotly.graph_objects as go
 from datetime import date, timedelta
 import random
+from supabase import create_client, Client
+
+# ─────────────────────────────────────────
+# CONEXIÓN SUPABASE
+# ─────────────────────────────────────────
+@st.cache_resource
+def init_supabase():
+    url = st.secrets["SUPABASE_URL"]
+    key = st.secrets["SUPABASE_KEY"]
+    return create_client(url, key)
+
+supabase: Client = init_supabase()
 
 # ─────────────────────────────────────────
 # CONFIGURACIÓN
 # ─────────────────────────────────────────
 st.set_page_config(
-    page_title="SPORTMEDS",
+    page_title="Gestión Biomédica SPORTMEDS",
     page_icon="⚕️",
     layout="wide",
     initial_sidebar_state="expanded"
@@ -32,39 +36,52 @@ st.markdown("""
 
 * { font-family: 'DM Sans', sans-serif !important; }
 
-/* Fondo principal */
+/* Fondo principal AZUL NAVY */
 .main .block-container {
-    background-color: #F0F4F9;
+    background-color: #0D2B52 !important;
     padding-top: 1.2rem !important;
     max-width: 100% !important;
 }
+.main {
+    background-color: #0D2B52 !important;
+}
+[data-testid="stAppViewContainer"] {
+    background-color: #0D2B52 !important;
+}
+[data-testid="stAppViewBlockContainer"] {
+    background-color: #0D2B52 !important;
+}
+section.main {
+    background-color: #0D2B52 !important;
+}
 
-/* ── SIDEBAR NATIVO ── */
+/* ── SIDEBAR BLANCO ── */
 section[data-testid="stSidebar"] {
-    background: linear-gradient(175deg, #0D2B52 0%, #0a1e3d 100%) !important;
+    background: white !important;
+    border-right: 1px solid #e8edf5 !important;
 }
 section[data-testid="stSidebar"] * {
-    color: rgba(255,255,255,0.88) !important;
+    color: #0D2B52 !important;
 }
 section[data-testid="stSidebar"] .stSelectbox > div > div {
-    background: rgba(255,255,255,0.08) !important;
-    border: 1px solid rgba(255,255,255,0.15) !important;
+    background: #F0F4F9 !important;
+    border: 1px solid #dce5f0 !important;
     border-radius: 8px !important;
-    color: white !important;
+    color: #0D2B52 !important;
 }
 section[data-testid="stSidebar"] label {
     font-size: 0.72rem !important;
     text-transform: uppercase;
     letter-spacing: 0.08em;
-    color: rgba(255,255,255,0.45) !important;
+    color: #8a9bb5 !important;
 }
 section[data-testid="stSidebar"] hr {
-    border-color: rgba(255,255,255,0.12) !important;
+    border-color: #e8edf5 !important;
     margin: 0.6rem 0 !important;
 }
-section[data-testid="stSidebar"] h2, 
+section[data-testid="stSidebar"] h2,
 section[data-testid="stSidebar"] h3 {
-    color: white !important;
+    color: #0D2B52 !important;
     font-size: 0.95rem !important;
     margin: 0.3rem 0 !important;
 }
@@ -160,6 +177,38 @@ section[data-testid="stSidebar"] h3 {
 
 #MainMenu { visibility: hidden; }
 footer    { visibility: hidden; }
+
+/* ── Botón reapertura sidebar: ocultar texto y mostrar ☰ ── */
+[data-testid="collapsedControl"] {
+    background: #0D2B52 !important;
+    border-radius: 0 10px 10px 0 !important;
+    padding: 14px 10px !important;
+    box-shadow: 3px 0 12px rgba(0,0,0,0.25) !important;
+    overflow: hidden !important;
+    width: 44px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+[data-testid="collapsedControl"]:hover {
+    background: #1a8fd1 !important;
+}
+/* Ocultar el ícono/texto original */
+[data-testid="collapsedControl"] svg,
+[data-testid="collapsedControl"] span {
+    display: none !important;
+}
+/* Insertar ☰ con CSS puro */
+[data-testid="collapsedControl"]::after {
+    content: "";
+    display: block;
+    width: 22px;
+    height: 2px;
+    background: white;
+    border-radius: 2px;
+    box-shadow: 0 7px 0 white, 0 14px 0 white;
+    margin: 0 auto;
+}
 </style>
 """, unsafe_allow_html=True)
 
@@ -365,41 +414,143 @@ elif "Inventario" in modulo:
     with tab1:
         st.markdown('<div class="card">', unsafe_allow_html=True)
         with st.form("form_inv", clear_on_submit=True):
+
+            st.markdown("#### 🔖 Identificación del equipo")
             c1, c2, c3 = st.columns(3)
             with c1:
-                nombre   = st.text_input("Nombre del equipo *")
-                marca    = st.text_input("Marca *")
-                modelo   = st.text_input("Modelo")
+                numero_inventario = st.text_input("N° de inventario *")
+                tipo_equipo       = st.selectbox("Tipo de equipo *", [
+                    "Equipo de diagnóstico por imagen",
+                    "Equipo de monitoreo",
+                    "Equipo de soporte vital",
+                    "Equipo de laboratorio",
+                    "Equipo quirúrgico",
+                    "Equipo de rehabilitación",
+                    "Otro"
+                ])
+                descripcion = st.text_input("Descripción del equipo *")
             with c2:
-                serie    = st.text_input("N° de serie")
-                servicio = st.selectbox("Servicio *",
-                    ["UCI","Urgencias","Hospitalización","Consulta externa","Imágenes diagnósticas"])
-                clase    = st.selectbox("Clase de riesgo INVIMA",
-                    ["Clase I","Clase IIa","Clase IIb","Clase III"])
+                fabricante = st.text_input("Fabricante *")
+                modelo     = st.text_input("Modelo / N° catálogo")
+                numero_serie = st.text_input("N° de serie")
             with c3:
-                fecha_adq = st.date_input("Fecha adquisición", value=date.today())
-                vida_util = st.number_input("Vida útil (años)", 1, 30, 5)
-                costo     = st.number_input("Costo (COP)", min_value=0, step=100000)
-            obs = st.text_area("Observaciones")
-            if st.form_submit_button("✅ Registrar equipo"):
-                if nombre and marca:
-                    st.success(f"✅ **{nombre}** ({marca}) registrado en **{servicio}**.")
+                numero_lote = st.text_input("N° de lote")
+                clase_riesgo = st.selectbox("Clase de riesgo INVIMA", [
+                    "Clase I",
+                    "Clase IIa",
+                    "Clase IIb",
+                    "Clase III"
+                ])
+                alimentacion = st.selectbox("Alimentación eléctrica", [
+                    "110V",
+                    "220V",
+                    "380V",
+                    "Trifásica",
+                    "No aplica"
+                ])
+
+            st.markdown("---")
+            st.markdown("#### 📍 Ubicación y estado")
+            c4, c5, c6 = st.columns(3)
+            with c4:
+                servicio = st.selectbox("Servicio / Ubicación *", [
+                    "UCI",
+                    "Urgencias",
+                    "Hospitalización",
+                    "Consulta externa",
+                    "Imágenes diagnósticas",
+                    "Cirugía",
+                    "Laboratorio",
+                    "Rehabilitación"
+                ])
+                ubicacion = st.text_input("Habitación / Área específica")
+            with c5:
+                estado = st.selectbox("Estado operativo *", [
+                    "En servicio",
+                    "Fuera de servicio - Mantenimiento preventivo",
+                    "Fuera de servicio - En reparación",
+                    "Fuera de servicio - Pendiente calibración",
+                    "Fuera de servicio - Dado de baja"
+                ])
+                requisitos = st.text_input("Requisitos especiales de funcionamiento")
+            with c6:
+                proveedor_compra = st.text_input("Proveedor de compra")
+                proveedor_mant   = st.text_input("Proveedor de mantenimiento")
+
+            st.markdown("---")
+            st.markdown("#### 📅 Fechas y costos")
+            c7, c8, c9 = st.columns(3)
+            with c7:
+                fecha_compra   = st.date_input("Fecha de compra", value=date.today())
+                fecha_registro = st.date_input("Fecha de registro", value=date.today())
+            with c8:
+                garantia_inicio = st.date_input("Garantía — fecha inicio", value=date.today())
+                garantia_fin    = st.date_input("Garantía — fecha fin",    value=date.today())
+            with c9:
+                costo     = st.number_input("Costo de adquisición (COP)", min_value=0, step=100000)
+                vida_util = st.number_input("Vida útil estimada (años)", 1, 30, 5)
+
+            st.markdown("---")
+            obs = st.text_area("Observaciones adicionales")
+
+            submitted = st.form_submit_button("✅ Registrar equipo en base de datos",
+                                              use_container_width=True)
+            if submitted:
+                if numero_inventario and descripcion and fabricante:
+                    try:
+                        data = {
+                            "numero_inventario": numero_inventario,
+                            "tipo_equipo":       tipo_equipo,
+                            "descripcion":       descripcion,
+                            "fabricante":        fabricante,
+                            "modelo":            modelo,
+                            "numero_serie":      numero_serie,
+                            "numero_lote":       numero_lote,
+                            "clase_riesgo":      clase_riesgo,
+                            "alimentacion_electrica": alimentacion,
+                            "servicio":          servicio,
+                            "Ubicación":         ubicacion,
+                            "estado":            estado,
+                            "proveedor_compra":  proveedor_compra,
+                            "proveedor_mantenimiento": proveedor_mant,
+                            "fecha_compra":      str(fecha_compra),
+                            "fecha_registro":    str(fecha_registro),
+                            "garantia_inicio":   str(garantia_inicio),
+                            "garantia_fin":      str(garantia_fin),
+                            "costo":             float(costo),
+                            "observaciones":     obs,
+                        }
+                        supabase.table("Inventario").insert(data).execute()
+                        st.success(f"✅ **{descripcion}** registrado correctamente en el inventario.")
+                        st.balloons()
+                    except Exception as e:
+                        st.error(f"❌ Error al guardar: {e}")
                 else:
-                    st.error("Complete los campos obligatorios (*).")
+                    st.error("Complete los campos obligatorios: N° inventario, Descripción y Fabricante.")
         st.markdown('</div>', unsafe_allow_html=True)
 
     with tab2:
-        st.markdown('<div class="card"><div class="card-title">Equipos registrados</div>', unsafe_allow_html=True)
-        st.dataframe(pd.DataFrame({
-            "Equipo":   ["Ventilador Mecánico","Monitor Multiparámetro","Desfibrilador",
-                         "Bomba de Infusión","Ecógrafo","Electrobisturí"],
-            "Marca":    ["Dräger","Mindray","Zoll","Fresenius","GE","Covidien"],
-            "Servicio": ["UCI","Urgencias","UCI","Hospitalización","Imágenes","Cirugía"],
-            "Clase":    ["Clase III","Clase IIb","Clase III","Clase IIa","Clase IIb","Clase III"],
-            "Estado":   ["✅ Operativo","✅ Operativo","🔧 Mantenimiento",
-                         "✅ Operativo","✅ Operativo","⚠️ Alerta"],
-        }), use_container_width=True, hide_index=True)
+        st.markdown('<div class="card"><div class="card-title">Equipos registrados en base de datos</div>', unsafe_allow_html=True)
+        try:
+            response = supabase.table("Inventario").select("*").execute()
+            if response.data:
+                df = pd.DataFrame(response.data)
+                # Columnas a mostrar
+                cols_show = ["numero_inventario","descripcion","fabricante","modelo",
+                             "clase_riesgo","servicio","estado","fecha_compra"]
+                cols_available = [c for c in cols_show if c in df.columns]
+                st.dataframe(df[cols_available], use_container_width=True, hide_index=True)
+
+                # Botón exportar
+                csv = df.to_csv(index=False).encode("utf-8")
+                st.download_button("📥 Exportar a CSV", csv,
+                                   "inventario_sportmeds.csv", "text/csv")
+            else:
+                st.info("No hay equipos registrados aún. Usa la pestaña ➕ Registrar equipo.")
+        except Exception as e:
+            st.error(f"❌ Error al cargar datos: {e}")
         st.markdown('</div>', unsafe_allow_html=True)
+
 
 # ══════════════════════════════════════════
 # MÓDULO: TECNOVIGILANCIA
