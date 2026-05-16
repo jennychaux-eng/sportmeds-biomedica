@@ -430,18 +430,30 @@ if "Panel" in modulo:
 
     with c4:
         st.markdown('<div class="card"><div class="card-title">Eventos tecnovigilancia — últimos 30 días</div>', unsafe_allow_html=True)
-        dias    = [(date.today()-timedelta(days=i)).strftime("%d/%m") for i in range(29,-1,-1)]
-        eventos = [random.randint(0,3) for _ in dias]
+        dias = [(date.today()-timedelta(days=i)).strftime("%Y-%m-%d") for i in range(29,-1,-1)]
+        dias_label = [(date.today()-timedelta(days=i)).strftime("%d/%m") for i in range(29,-1,-1)]
+        try:
+            tv_todos = supabase.table("Tecnovigilancia").select("fecha_evento").execute().data
+            conteo_dias = {d: 0 for d in dias}
+            if tv_todos:
+                for row in tv_todos:
+                    f = row.get("fecha_evento","")
+                    if f and f[:10] in conteo_dias:
+                        conteo_dias[f[:10]] += 1
+            valores = list(conteo_dias.values())
+        except:
+            valores = [0] * 30
+
         fig4 = go.Figure(go.Scatter(
-            x=dias, y=eventos, mode="lines+markers",
+            x=dias_label, y=valores, mode="lines+markers",
             line=dict(color="#1a8fd1", width=2),
             marker=dict(color="#0D2B52", size=5),
             fill="tozeroy", fillcolor="rgba(26,143,209,0.07)"
         ))
         lay4 = base_layout(210)
         lay4.update(xaxis=dict(showgrid=False, tickangle=-45, tickfont_size=8,
-                               tickvals=dias[::5], ticktext=dias[::5]),
-                    yaxis=dict(gridcolor="#f0f4f9", tickfont_size=10))
+                               tickvals=dias_label[::5], ticktext=dias_label[::5]),
+                    yaxis=dict(gridcolor="#f0f4f9", tickfont_size=10, dtick=1))
         fig4.update_layout(lay4)
         st.plotly_chart(fig4, use_container_width=True, config=PLOT_CFG)
         st.markdown('</div>', unsafe_allow_html=True)
