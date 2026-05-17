@@ -1102,7 +1102,7 @@ elif "Casos reportados" in modulo:
         caso_id    = caso_sel["id"]
 
         # ── Resumen del caso ──
-        with st.expander("📄 Resumen del caso seleccionado", expanded=True):
+        with st.expander("Resumen del caso seleccionado", expanded=True):
             r1, r2, r3, r4 = st.columns(4)
             r1.info(f"**Dispositivo:** {caso_sel.get('nombre_generico','—')}")
             r2.info(f"**Clasificación:** {caso_sel.get('clasificacion','—')}")
