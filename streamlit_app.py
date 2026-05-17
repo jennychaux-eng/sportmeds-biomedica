@@ -800,9 +800,11 @@ elif "Tecnovigilancia" in modulo:
                 d_sin_dano = st.checkbox("No hubo daño")
                 d_otro     = st.checkbox("Otro")
 
-            d_otro_cual = ""
-            if d_otro:
-                d_otro_cual = st.text_input("Especifique el otro desenlace:")
+            d_otro_cual = st.text_input(
+                "Si marcó Otro, especifique el desenlace:",
+                placeholder="Describa el otro desenlace aquí...",
+                disabled=not d_otro
+            )
 
             st.markdown("---")
 
@@ -1102,20 +1104,19 @@ elif "Casos reportados" in modulo:
         caso_id    = caso_sel["id"]
 
         # ── Resumen del caso ──
-        with st.expander("Resumen del caso seleccionado", expanded=True):
-            r1, r2, r3, r4 = st.columns(4)
-            r1.info(f"**Dispositivo:** {caso_sel.get('nombre_generico','—')}")
-            r2.info(f"**Clasificación:** {caso_sel.get('clasificacion','—')}")
-            r3.info(f"**Fecha evento:** {caso_sel.get('fecha_evento','—')}")
-            r4.info(f"**Reportante:** {caso_sel.get('reportante_nombre','—')}")
-
-            st.markdown("**Descripción del evento:**")
-            st.write(caso_sel.get("descripcion_evento", "—"))
-
-            desenlace_val = caso_sel.get("desenlace", [])
-            if desenlace_val:
-                texto_des = ", ".join(desenlace_val) if isinstance(desenlace_val, list) else str(desenlace_val)
-                st.markdown(f"**Desenlace:** {texto_des}")
+        st.markdown('<div class="card" style="margin-bottom:0.8rem;"><div class="card-title">Resumen del caso seleccionado</div>', unsafe_allow_html=True)
+        r1, r2, r3, r4 = st.columns(4)
+        r1.info(f"**Dispositivo:** {caso_sel.get('nombre_generico','—')}")
+        r2.info(f"**Clasificación:** {caso_sel.get('clasificacion','—')}")
+        r3.info(f"**Fecha evento:** {caso_sel.get('fecha_evento','—')}")
+        r4.info(f"**Reportante:** {caso_sel.get('reportante_nombre','—')}")
+        st.markdown("**Descripción del evento:**")
+        st.write(caso_sel.get("descripcion_evento", "—"))
+        desenlace_val = caso_sel.get("desenlace", [])
+        if desenlace_val:
+            texto_des = ", ".join(desenlace_val) if isinstance(desenlace_val, list) else str(desenlace_val)
+            st.markdown(f"**Desenlace:** {texto_des}")
+        st.markdown('</div>', unsafe_allow_html=True)
 
         st.markdown("<br>", unsafe_allow_html=True)
 
