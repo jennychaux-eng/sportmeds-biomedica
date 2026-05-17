@@ -803,7 +803,7 @@ elif "Tecnovigilancia" in modulo:
             d_otro_cual = st.text_input(
                 "Si marcó Otro, especifique el desenlace:",
                 placeholder="Describa el otro desenlace aquí...",
-                disabled=not d_otro
+                key="d_otro_cual_input"
             )
 
             st.markdown("---")
