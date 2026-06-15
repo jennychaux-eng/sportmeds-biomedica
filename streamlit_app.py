@@ -48,7 +48,7 @@ def login_page():
 # ESTILOS
 # =====================================================
 
-background_image = get_base64_image("fondo_sportmeds.png")
+    background_image = get_base64_image("fondo_sportmeds.png")
 
 st.markdown(f"""
 <style>
