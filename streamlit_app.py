@@ -480,7 +480,11 @@ div[data-testid="collapsedControl"],
 button[title*="sidebar"],
 button[aria-label*="sidebar"],
 button[aria-label*="Sidebar"],
-button[title*="Sidebar"] {
+button[title*="Sidebar"],
+button[title*="toggle"],
+button[aria-label*="toggle"],
+button[aria-label*="Toggle"],
+button[title*="Toggle"] {
     position: relative !important;
     background: linear-gradient(135deg, #0D2B52, #1a8fd1) !important;
     border-radius: 999px !important;
@@ -503,7 +507,11 @@ div[data-testid="collapsedControl"]:hover,
 button[title*="sidebar"]:hover,
 button[aria-label*="sidebar"]:hover,
 button[aria-label*="Sidebar"]:hover,
-button[title*="Sidebar"]:hover {
+button[title*="Sidebar"]:hover,
+button[title*="toggle"]:hover,
+button[aria-label*="toggle"]:hover,
+button[aria-label*="Toggle"]:hover,
+button[title*="Toggle"]:hover {
     background: linear-gradient(135deg, #1a8fd1, #0D2B52) !important;
     transform: translateX(2px) !important;
 }
@@ -516,7 +524,11 @@ div[data-testid="collapsedControl"] span,
 button[title*="sidebar"] svg,
 button[aria-label*="sidebar"] svg,
 button[aria-label*="Sidebar"] svg,
-button[title*="Sidebar"] svg {
+button[title*="Sidebar"] svg,
+button[title*="toggle"] svg,
+button[aria-label*="toggle"] svg,
+button[aria-label*="Toggle"] svg,
+button[title*="Toggle"] svg {
     display: none !important;
 }
 [data-testid="collapsedControl"]::before,
@@ -526,13 +538,10 @@ button[title*="sidebar"]::before,
 button[aria-label*="sidebar"]::before,
 button[aria-label*="Sidebar"]::before,
 button[title*="Sidebar"]::before,
-[data-testid="collapsedControl"]::after,
-button[data-testid="collapsedControl"]::after,
-div[data-testid="collapsedControl"]::after,
-button[title*="sidebar"]::after,
-button[aria-label*="sidebar"]::after,
-button[aria-label*="Sidebar"]::after,
-button[title*="Sidebar"]::after {
+button[title*="toggle"]::before,
+button[aria-label*="toggle"]::before,
+button[aria-label*="Toggle"]::before,
+button[title*="Toggle"]::before {
     content: none !important;
 }
 
@@ -542,7 +551,11 @@ div[data-testid="collapsedControl"]::after,
 button[title*="sidebar"]::after,
 button[aria-label*="sidebar"]::after,
 button[aria-label*="Sidebar"]::after,
-button[title*="Sidebar"]::after {
+button[title*="Sidebar"]::after,
+button[title*="toggle"]::after,
+button[aria-label*="toggle"]::after,
+button[aria-label*="Toggle"]::after,
+button[title*="Toggle"]::after {
     content: "☰" !important;
     position: absolute !important;
     font-size: 1.2rem !important;
