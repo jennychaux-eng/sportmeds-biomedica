@@ -82,7 +82,7 @@ def login_page():
 .titulo-principal {{
     font-size: 2.2rem;
     font-weight: 700;
-    color: white;
+    color: #000000;
     margin-top: 30px;
 }}
 
