@@ -78,11 +78,11 @@ def login_page():
     box-shadow: 0 12px 40px rgba(0,0,0,0.18);
     /* larger rectangular background on the right */
     position: absolute;
-    right: 10px;
+    right: calc(1% - 2px);
     top: 10%;
-    max-width: 2800px;
+    max-width: 900px;
     min-height: 500px;
-    width: 100%;
+    width: 80%;
     box-sizing: border-box;
     z-index: 0;
 }}
