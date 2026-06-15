@@ -229,8 +229,18 @@ def login_page():
                 key="reg_password"
             )
 
+            genero = st.selectbox(
+                "Género",
+                [
+                    "Femenino",
+                    "Masculino",
+                    "Otro",
+                ],
+                key="reg_genero"
+            )
+
             rol = st.selectbox(
-                "Cargo",
+                "Rol",
                 [
                     "Gerente",
                     "Ingeniero biomédico/a",
@@ -274,6 +284,7 @@ def login_page():
                                 "nombre": nombre,
                                 "email": correo,
                                 "password": clave,
+                                "genero": genero,
                                 "rol": rol
                             }
                         ).execute()
