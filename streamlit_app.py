@@ -48,11 +48,10 @@ def login_page():
 
     st.markdown("<br>", unsafe_allow_html=True)
 
-    st.title("Sistema de Gestión Biomédica")
+    st.title("Sistema de Gestión Tecnológica Hospitalaria")
 
     st.caption(
-        "Gestión de Riesgo y Mantenimiento Preventivo "
-        "de Equipos Biomédicos"
+        "Inventario • Gestión de Riesgo • Mantenimiento • Tecnovigilancia"
     )
 
     st.markdown("<br>", unsafe_allow_html=True)
