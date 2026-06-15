@@ -45,29 +45,14 @@ def login_page():
     with col2:
         if os.path.exists(LOGO_PATH):
             st.image(LOGO_PATH, width=450)
+            
+ st.markdown("<br>", unsafe_allow_html=True)
 
-   st.markdown("""
-<h1 style="
-    text-align:center;
-    color:#0D2B52;
-    font-size:42px;
-    font-weight:700;
-    margin-bottom:0px;
-">
-Sistema de Gestión Tecnológica Hospitalaria
-</h1>
-""", unsafe_allow_html=True)
+    st.title("Sistema de Gestión Tecnológica Hospitalaria")
 
-st.markdown("""
-<p style="
-    text-align:center;
-    color:#8a9bb5;
-    font-size:18px;
-    margin-top:0px;
-">
-Inventario • Gestión de Riesgo • Mantenimiento • Tecnovigilancia
-</p>
-""", unsafe_allow_html=True)
+    st.caption(
+        "Inventario • Gestión de Riesgo • Mantenimiento • Tecnovigilancia"
+    )
 
     st.markdown("<br>", unsafe_allow_html=True)
 
