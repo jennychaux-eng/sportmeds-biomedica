@@ -81,7 +81,7 @@ def login_page():
     right: 5%;
     top: 8%;
     max-width: 900px;
-    min-height: 900px;
+    min-height: 300px;
     width: 48%;
     box-sizing: border-box;
     z-index: 0;
