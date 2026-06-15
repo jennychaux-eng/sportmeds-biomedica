@@ -179,7 +179,7 @@ st.markdown("""
 
 .main .block-container {
     background-color: #ffffff !important;
-    padding-top: 1.2rem !important;
+    padd-top: 1.2rem !important;
     max-width: 100% !important;
 }
 .main { background-color: #ffffff !important; }
@@ -521,7 +521,7 @@ def topbar(titulo, ruta):
             <div class="topbar-title">{titulo}</div>
             <div class="topbar-crumb">INICIO › {ruta}</div>
         </div>
-        <div class="topbar-user">👤 Ing. Biomédico &nbsp;🔒</div>
+        <div class="topbar-user">👤 &nbsp; </div>
     </div>
     """, unsafe_allow_html=True)
 
