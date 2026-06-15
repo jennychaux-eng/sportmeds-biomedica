@@ -40,11 +40,11 @@ if "user_email" not in st.session_state:
 
 def login_page():
 
-    col1, col2, col3 = st.columns([1,2,1])
+    col1, col2, col3 = st.columns([2,2,1])
 
     with col2:
         if os.path.exists(LOGO_PATH):
-            st.image(LOGO_PATH, width=320)
+            st.image(LOGO_PATH, width=400)
 
     st.markdown("<br>", unsafe_allow_html=True)
 
