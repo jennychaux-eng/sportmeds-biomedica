@@ -80,7 +80,9 @@ def login_page():
     min-height: 420px;
     width: 100%;
     box-sizing: border-box;
-    z-index: 10;
+    position: relative;
+    overflow: visible;
+    z-index: 9999;
 }}
 
 .titulo-principal {{
