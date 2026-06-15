@@ -2,9 +2,14 @@ import streamlit as st
 import os
 import pandas as pd
 import plotly.graph_objects as go
+import base64
 from datetime import date, timedelta
 from supabase import create_client, Client
 
+def get_base64_image(path):
+    with open(path, "rb") as img:
+        return base64.b64encode(img.read()).decode()
+        
 # ─────────────────────────────────────────
 # RUTAS
 # ─────────────────────────────────────────
@@ -39,15 +44,16 @@ if "user_email" not in st.session_state:
 
 def login_page():
 
-    # =====================================================
-    # ESTILOS
-    # =====================================================
+   # =====================================================
+# ESTILOS
+# =====================================================
+
 background_image = get_base64_image("fondo_sportmeds.png")
 
-    st.markdown(f"""
-    <style>
+st.markdown(f"""
+<style>
 
-    .stApp{
+.stApp {{
     background-image:
     linear-gradient(
         rgba(255,255,255,0.75),
@@ -59,69 +65,63 @@ background_image = get_base64_image("fondo_sportmeds.png")
     background-position: center;
     background-repeat: no-repeat;
     background-attachment: fixed;
-}
+}}
 
-    .titulo-principal{
-        font-size:64px;
-        font-weight:700;
-        color:#082B63;
-        line-height:1.1;
-        margin-top:20px;
-        margin-bottom:25px;
-    }
+.titulo-principal {{
+    font-size: 64px;
+    font-weight: 700;
+    color: #082B63;
+    line-height: 1.1;
+    margin-top: 20px;
+    margin-bottom: 25px;
+}}
 
-    .subtitulo{
-        font-size:28px;
-        color:#5E6B84;
-        line-height:1.5;
-    }
+.subtitulo {{
+    font-size: 28px;
+    color: #5E6B84;
+    line-height: 1.5;
+}}
 
-    div[data-testid="stTextInput"] input{
-        border-radius:12px;
-        height:55px;
-        border:1px solid #d8dee9;
-    }
+.login-card {{
+    background: rgba(255,255,255,0.96);
+    border-radius: 30px;
+    padding: 35px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+}}
 
-    .stButton button{
-        width:100%;
-        height:55px;
-        border-radius:12px;
-        background:#0B84E8;
-        color:white;
-        font-size:18px;
-        font-weight:600;
-        border:none;
-    }
+div[data-testid="stTextInput"] input {{
+    border-radius: 12px;
+    height: 55px;
+    border: 1px solid #d8dee9;
+}}
 
-    .stButton button:hover{
-        background:#086fc3;
-        color:white;
-    }
+.stButton button {{
+    width: 100%;
+    height: 55px;
+    border-radius: 12px;
+    background: #0B84E8;
+    color: white;
+    font-size: 18px;
+    font-weight: 600;
+    border: none;
+}}
 
-    div[data-baseweb="tab-list"]{
-        gap:20px;
-    }
+.stButton button:hover {{
+    background: #086fc3;
+    color: white;
+}}
 
-    div[data-baseweb="tab"]{
-        font-size:17px;
-        font-weight:600;
-    }
-    div[data-baseweb="tab"]{
-        font-size:17px;
-        font-weight:600;
-    }
+div[data-baseweb="tab-list"] {{
+    gap: 20px;
+}}
 
-    .login-card{
-        background: rgba(255,255,255,0.96);
-        border-radius: 30px;
-        padding: 35px;
-        box-shadow: 0 15px 40px rgba(0,0,0,0.15);
-    }
+div[data-baseweb="tab"] {{
+    font-size: 17px;
+    font-weight: 600;
+}}
 
-    </style>
-    """, unsafe_allow_html=True)
-    </style>
-    """, unsafe_allow_html=True)
+</style>
+""", unsafe_allow_html=True)
 
     # =====================================================
     # LAYOUT PRINCIPAL
@@ -158,14 +158,24 @@ background_image = get_base64_image("fondo_sportmeds.png")
     # PANEL DERECHO
     # =====================================================
 
-    with derecha:
-st.markdown('<div class="login-card">', unsafe_allow_html=True)
+   with derecha:
 
-        st.markdown("<br><br><br>", unsafe_allow_html=True)
+    st.markdown(
+        '<div class="login-card">',
+        unsafe_allow_html=True
+    )
 
-        tab_login, tab_register = st.tabs(
-            ["Iniciar sesión", "Registrarse"]
-        )
+    tab_login, tab_register = st.tabs(
+        ["Iniciar sesión", "Registrarse"]
+    )
+
+    # Tu código de login
+    # Tu código de registro
+
+    st.markdown(
+        '</div>',
+        unsafe_allow_html=True
+    )
 
         # ======================================
         # LOGIN
