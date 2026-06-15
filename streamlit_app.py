@@ -40,32 +40,26 @@ if "user_email" not in st.session_state:
 
 def login_page():
 
-    # Logo centrado
     col1, col2, col3 = st.columns([1,2,1])
 
     with col2:
-
         if os.path.exists(LOGO_PATH):
             st.image(LOGO_PATH, width=320)
 
- st.markdown("<br>", unsafe_allow_html=True)
+    st.markdown("<br>", unsafe_allow_html=True)
 
-st.title("Sistema de Gestión Biomédica")
+    st.title("Sistema de Gestión Biomédica")
 
-st.caption(
-    "Gestión de Riesgo y Mantenimiento Preventivo "
-    "de Equipos Biomédicos"
-)
-
-st.markdown("<br>", unsafe_allow_html=True)
-
-    tab_login, tab_register = st.tabs(
-        [
-            "🔑 Iniciar sesión",
-            "📝 Registrarse"
-        ]
+    st.caption(
+        "Gestión de Riesgo y Mantenimiento Preventivo "
+        "de Equipos Biomédicos"
     )
 
+    st.markdown("<br>", unsafe_allow_html=True)
+
+    tab_login, tab_register = st.tabs(
+        ["🔑 Iniciar sesión", "📝 Registrarse"]
+    )
     # ======================================
     # LOGIN
     # ======================================
