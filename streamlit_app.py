@@ -232,10 +232,13 @@ def login_page():
             rol = st.selectbox(
                 "Rol",
                 [
-                    "Administrador",
-                    "Ingeniero Biomédico",
-                    "Técnico Biomédico",
-                    "Consulta"
+                    "Gerente",
+                    "Ingeniero biomédico/a",
+                    "Cirujano/a",
+                    "Médico/a",
+                    "Enfermero/a",
+                    "Instrumentador quirurgico/a",
+                    "Encargado del mantenimiento",
                 ],
                 key="reg_rol"
             )
@@ -641,16 +644,7 @@ st.sidebar.markdown("### Menú Principal")
 
 ROL_MENUS = {
 
-    "Administrador": [
-        "🏠  Panel de Control",
-        "📦  Inventario",
-        "🔍  Tecnovigilancia",
-        "📋  Casos reportados",
-        "⚠️  Gestión de Riesgos",
-        "🔧  Mantenimiento",
-    ],
-
-    "Ingeniero Biomédico": [
+    "Gerente": [
         "🏠  Panel de Control",
         "📦  Inventario",
         "🔍  Tecnovigilancia",
@@ -697,13 +691,31 @@ ROL_MENUS = {
         "🔧  Mantenimiento",
     ],
 
-    "Consulta": [
-        "🏠  Panel de Control",
-    ]
 }
 
+def normalize_role(role: str) -> str:
+    if not role:
+        return ""
+    role_key = role.strip().lower()
+    normalized = {
+        "ingeniero biomédico": "Ingeniero biomédico/a",
+        "ingeniero biomedico": "Ingeniero biomédico/a",
+        "ingeniero biomédico/a": "Ingeniero biomédico/a",
+        "cirujano/a": "Cirujano/a",
+        "médico/a": "Médico/a",
+        "medico/a": "Médico/a",
+        "enfermero/a": "Enfermero/a",
+        "instrumentador quirurgico/a": "Instrumentador quirurgico/a",
+        "encargado del mantenimiento": "Encargado del mantenimiento",
+        "técnico biomédico": "Técnico Biomédico",
+        "tecnico biomedico": "Técnico Biomédico",
+        "administrador": "Administrador",
+        "consulta": "Consulta",
+    }
+    return normalized.get(role_key, role)
+
 menu_usuario = ROL_MENUS.get(
-    st.session_state.user_role,
+    normalize_role(st.session_state.user_role),
     ["🏠  Panel de Control"]
 )
 
