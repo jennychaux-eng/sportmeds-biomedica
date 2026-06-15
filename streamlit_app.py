@@ -78,9 +78,9 @@ def login_page():
     box-shadow: 0 12px 40px rgba(0,0,0,0.18);
     /* larger rectangular background on the right */
     position: absolute;
-    right: 5%;
+    right: 2%;
     top: 8%;
-    max-width: 1900px;
+    max-width: 1700px;
     min-height: 300px;
     width: 100%;
     box-sizing: border-box;
