@@ -230,7 +230,7 @@ def login_page():
             )
 
             rol = st.selectbox(
-                "Rol",
+                "Cargo",
                 [
                     "Gerente",
                     "Ingeniero biomédico/a",
