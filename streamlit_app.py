@@ -6,6 +6,12 @@ from datetime import date, timedelta
 from supabase import create_client, Client
 
 # ─────────────────────────────────────────
+# RUTAS
+# ─────────────────────────────────────────
+BASE_DIR  = os.path.dirname(os.path.abspath(__file__))
+LOGO_PATH = os.path.join(BASE_DIR, "assets", "Logo_sportmeds.png")
+
+# ─────────────────────────────────────────
 # CONEXIÓN SUPABASE
 # ─────────────────────────────────────────
 @st.cache_resource
@@ -409,12 +415,6 @@ footer    { visibility: hidden; }
 }
 </style>
 """, unsafe_allow_html=True)
-
-# ─────────────────────────────────────────
-# RUTAS
-# ─────────────────────────────────────────
-BASE_DIR  = os.path.dirname(os.path.abspath(__file__))
-LOGO_PATH = os.path.join(BASE_DIR, "assets", "Logo_sportmeds.png")
 
 # ─────────────────────────────────────────
 # CAUSAS NTC 5736:2009 (reutilizable)
