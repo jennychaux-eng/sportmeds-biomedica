@@ -42,22 +42,24 @@ def login_page():
     # =====================================================
     # ESTILOS
     # =====================================================
+background_image = get_base64_image("fondo_sportmeds.png")
 
-    st.markdown("""
+    st.markdown(f"""
     <style>
 
     .stApp{
-        background-image:
-        linear-gradient(
-            rgba(255,255,255,0.82),
-            rgba(255,255,255,0.82)
-        ),
-        url("https://images.unsplash.com/photo-1586773860418-d37222d8fce3");
+    background-image:
+    linear-gradient(
+        rgba(255,255,255,0.75),
+        rgba(255,255,255,0.75)
+    ),
+    url("data:image/png;base64,{background_image}");
 
-        background-size: cover;
-        background-position: center;
-        background-attachment: fixed;
-    }
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
 
     .titulo-principal{
         font-size:64px;
@@ -104,7 +106,20 @@ def login_page():
         font-size:17px;
         font-weight:600;
     }
+    div[data-baseweb="tab"]{
+        font-size:17px;
+        font-weight:600;
+    }
 
+    .login-card{
+        background: rgba(255,255,255,0.96);
+        border-radius: 30px;
+        padding: 35px;
+        box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+    }
+
+    </style>
+    """, unsafe_allow_html=True)
     </style>
     """, unsafe_allow_html=True)
 
@@ -144,6 +159,7 @@ def login_page():
     # =====================================================
 
     with derecha:
+st.markdown('<div class="login-card">', unsafe_allow_html=True)
 
         st.markdown("<br><br><br>", unsafe_allow_html=True)
 
@@ -276,6 +292,8 @@ def login_page():
             except Exception as e:
 
                 st.error(f"Error: {e}")
+                
+st.markdown('</div>', unsafe_allow_html=True)
 # ─────────────────────────────────────────
 # CONFIGURACIÓN
 # ─────────────────────────────────────────
