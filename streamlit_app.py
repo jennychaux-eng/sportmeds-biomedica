@@ -73,16 +73,16 @@ def login_page():
 
 .login-card {{
     background: rgba(255,255,255,0.98);
-    padding: 28px 30px;
-    border-radius: 20px;
-    box-shadow: 0 8px 25px rgba(0,0,0,0.2);
-    /* position the card visually on the right side as a background */
+    padding: 36px 34px;
+    border-radius: 18px;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.18);
+    /* larger rectangular background on the right */
     position: absolute;
-    right: 6%;
-    top: 12%;
-    max-width: 480px;
-    min-height: 420px;
-    width: calc(30% + 60px);
+    right: 5%;
+    top: 8%;
+    max-width: 900px;
+    min-height: 560px;
+    width: 48%;
     box-sizing: border-box;
     z-index: 0;
 }}
