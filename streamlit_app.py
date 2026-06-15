@@ -44,7 +44,7 @@ def login_page():
 
     with col2:
         if os.path.exists(LOGO_PATH):
-            st.image(LOGO_PATH, width=400)
+            st.image(LOGO_PATH, width=450)
 
     st.markdown("<br>", unsafe_allow_html=True)
 
