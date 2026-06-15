@@ -44,84 +44,16 @@ if "user_email" not in st.session_state:
 
 def login_page():
 
-   # =====================================================
-# ESTILOS
-# =====================================================
+    # =====================================================
+    # ESTILOS
+    # =====================================================
 
     background_image = get_base64_image("fondo_sportmeds.png")
 
-st.markdown(f"""
-<style>
-
-.stApp {{
-    background-image:
-    linear-gradient(
-        rgba(255,255,255,0.75),
-        rgba(255,255,255,0.75)
-    ),
-    url("data:image/png;base64,{background_image}");
-
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-}}
-
-.titulo-principal {{
-    font-size: 64px;
-    font-weight: 700;
-    color: #082B63;
-    line-height: 1.1;
-    margin-top: 20px;
-    margin-bottom: 25px;
-}}
-
-.subtitulo {{
-    font-size: 28px;
-    color: #5E6B84;
-    line-height: 1.5;
-}}
-
-.login-card {{
-    background: rgba(255,255,255,0.96);
-    border-radius: 30px;
-    padding: 35px;
-    box-shadow: 0 15px 40px rgba(0,0,0,0.15);
-}}
-
-div[data-testid="stTextInput"] input {{
-    border-radius: 12px;
-    height: 55px;
-    border: 1px solid #d8dee9;
-}}
-
-.stButton button {{
-    width: 100%;
-    height: 55px;
-    border-radius: 12px;
-    background: #0B84E8;
-    color: white;
-    font-size: 18px;
-    font-weight: 600;
-    border: none;
-}}
-
-.stButton button:hover {{
-    background: #086fc3;
-    color: white;
-}}
-
-div[data-baseweb="tab-list"] {{
-    gap: 20px;
-}}
-
-div[data-baseweb="tab"] {{
-    font-size: 17px;
-    font-weight: 600;
-}}
-
-</style>
-""", unsafe_allow_html=True)
+    st.markdown(f"""
+    <style>
+    </style>
+    """, unsafe_allow_html=True)
 
     # =====================================================
     # LAYOUT PRINCIPAL
@@ -158,24 +90,16 @@ div[data-baseweb="tab"] {{
     # PANEL DERECHO
     # =====================================================
 
-   with derecha:
+    with derecha:
 
-    st.markdown(
-        '<div class="login-card">',
-        unsafe_allow_html=True
-    )
+        st.markdown(
+            '<div class="login-card">',
+            unsafe_allow_html=True
+        )
 
-    tab_login, tab_register = st.tabs(
-        ["Iniciar sesión", "Registrarse"]
-    )
-
-    # Tu código de login
-    # Tu código de registro
-
-    st.markdown(
-        '</div>',
-        unsafe_allow_html=True
-    )
+        tab_login, tab_register = st.tabs(
+            ["Iniciar sesión", "Registrarse"]
+        )
 
         # ======================================
         # LOGIN
@@ -228,6 +152,85 @@ div[data-baseweb="tab"] {{
                 except Exception as e:
 
                     st.error(f"Error: {e}")
+
+        # ======================================
+        # REGISTRO
+        # ======================================
+
+        with tab_register:
+
+            nombre = st.text_input(
+                "Nombre completo",
+                key="reg_nombre"
+            )
+
+            correo = st.text_input(
+                "Correo electrónico",
+                key="reg_correo"
+            )
+
+            clave = st.text_input(
+                "Contraseña",
+                type="password",
+                key="reg_password"
+            )
+
+            rol = st.selectbox(
+                "Rol",
+                [
+                    "Administrador",
+                    "Ingeniero Biomédico",
+                    "Técnico Biomédico",
+                    "Consulta"
+                ]
+            )
+
+            if st.button(
+                "Crear cuenta",
+                use_container_width=True
+            ):
+
+                try:
+
+                    existe = (
+                        supabase
+                        .table("usuarios")
+                        .select("*")
+                        .eq("email", correo)
+                        .execute()
+                    )
+
+                    if existe.data:
+
+                        st.warning(
+                            "Ya existe una cuenta con ese correo"
+                        )
+
+                    else:
+
+                        supabase.table(
+                            "usuarios"
+                        ).insert(
+                            {
+                                "nombre": nombre,
+                                "email": correo,
+                                "password": clave,
+                                "rol": rol
+                            }
+                        ).execute()
+
+                        st.success(
+                            "Usuario creado correctamente"
+                        )
+
+                except Exception as e:
+
+                    st.error(f"Error: {e}")
+
+        st.markdown(
+            '</div>',
+            unsafe_allow_html=True
+        )
                     
     # ======================================
     # REGISTRO
