@@ -88,7 +88,7 @@ def login_page():
 
 .subtitulo {{
     font-size: 1.1rem;
-    color: white;
+    color: #6b7280;
     margin-top: 15px;
 }}
 
