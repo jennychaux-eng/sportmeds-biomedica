@@ -601,7 +601,7 @@ if st.session_state.logged_in:
 
     st.markdown(f"""
     <div style='text-align:center; margin:0 0 1rem 0;'>
-        <span style='font-size:1.35rem; font-weight:700; color:#2C307A;'>
+        <span style='font-size:1.35rem; font-weight:700; color:0094D9;'>
             {saludo} {st.session_state.user_name}
         </span>
     </div>
