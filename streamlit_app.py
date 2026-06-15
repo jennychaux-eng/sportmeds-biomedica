@@ -48,27 +48,16 @@ def login_page():
         if os.path.exists(LOGO_PATH):
             st.image(LOGO_PATH, width=320)
 
-    st.markdown("<br>", unsafe_allow_html=True)
+ st.markdown("<br>", unsafe_allow_html=True)
 
- st.markdown(
-    """
-    <div style='text-align:center;'>
+st.title("Sistema de Gestión Biomédica")
 
-        <h2 style='color:#0D2B52; margin-bottom:0;'>
-            Sistema de Gestión Biomédica
-        </h2>
-
-        <p style='color:#8a9bb5; font-size:16px;'>
-            Gestión de Riesgo y Mantenimiento Preventivo
-            de Equipos Biomédicos
-        </p>
-
-    </div>
-    """,
-    unsafe_allow_html=True
+st.caption(
+    "Gestión de Riesgo y Mantenimiento Preventivo "
+    "de Equipos Biomédicos"
 )
 
-    st.markdown("<br>", unsafe_allow_html=True)
+st.markdown("<br>", unsafe_allow_html=True)
 
     tab_login, tab_register = st.tabs(
         [
