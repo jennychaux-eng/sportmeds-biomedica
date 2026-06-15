@@ -34,24 +34,65 @@ if "user_email" not in st.session_state:
 
 def login_page():
 
-    st.title("⚕️ SPORTMEDS")
-    st.subheader("Sistema de Gestión Biomédica")
+    # Logo centrado
+    col1, col2, col3 = st.columns([1,2,1])
+
+    with col2:
+
+        if os.path.exists(LOGO_PATH):
+            st.image(LOGO_PATH, width=320)
+
+    st.markdown("<br>", unsafe_allow_html=True)
+
+    st.markdown("""
+    <div style='text-align:center;'>
+
+        <h2 style='color:#0D2B52;
+                   margin-bottom:0;'>
+
+            Sistema de Gestión Biomédica
+
+        </h2>
+
+        <p style='color:#8a9bb5;
+                  font-size:16px;'>
+
+            Gestión de Riesgo y Mantenimiento Preventivo
+            de Equipos Biomédicos
+
+        </p>
+
+    </div>
+    """, unsafe_allow_html=True)
+
+    st.markdown("<br>", unsafe_allow_html=True)
 
     tab_login, tab_register = st.tabs(
-        ["🔑 Iniciar sesión", "📝 Registrarse"]
+        [
+            "🔑 Iniciar sesión",
+            "📝 Registrarse"
+        ]
     )
 
+    # ======================================
     # LOGIN
+    # ======================================
+
     with tab_login:
 
-        email = st.text_input("Correo electrónico")
+        email = st.text_input(
+            "Correo electrónico"
+        )
 
         password = st.text_input(
             "Contraseña",
             type="password"
         )
 
-        if st.button("Ingresar", use_container_width=True):
+        if st.button(
+            "Ingresar",
+            use_container_width=True
+        ):
 
             try:
 
@@ -76,12 +117,19 @@ def login_page():
                     st.rerun()
 
                 else:
-                    st.error("Usuario o contraseña incorrectos")
+
+                    st.error(
+                        "Usuario o contraseña incorrectos"
+                    )
 
             except Exception as e:
+
                 st.error(f"Error: {e}")
 
+    # ======================================
     # REGISTRO
+    # ======================================
+
     with tab_register:
 
         nombre = st.text_input(
@@ -90,7 +138,7 @@ def login_page():
         )
 
         correo = st.text_input(
-            "Correo",
+            "Correo electrónico",
             key="reg_correo"
         )
 
@@ -149,8 +197,8 @@ def login_page():
                     )
 
             except Exception as e:
+
                 st.error(f"Error: {e}")
-                
 # ─────────────────────────────────────────
 # CONFIGURACIÓN
 # ─────────────────────────────────────────
@@ -164,7 +212,21 @@ st.set_page_config(
 # BLOQUEO DE ACCESO
 # ==========================================
 
+# ==========================================
+# BLOQUEO DE ACCESO
+# ==========================================
+
+
 if not st.session_state.logged_in:
+
+    st.markdown("""
+    <style>
+    section[data-testid="stSidebar"]{
+        display:none;
+    }
+    </style>
+    """, unsafe_allow_html=True)
+
     login_page()
     st.stop()
     
