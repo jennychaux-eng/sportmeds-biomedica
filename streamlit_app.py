@@ -50,11 +50,22 @@ def login_page():
 
     st.markdown("<br>", unsafe_allow_html=True)
 
-  st.markdown("## Sistema de Gestión Biomédica")
+ st.markdown(
+    """
+    <div style='text-align:center;'>
 
-st.caption(
-    "Gestión de Riesgo y Mantenimiento Preventivo "
-    "de Equipos Biomédicos"
+        <h2 style='color:#0D2B52; margin-bottom:0;'>
+            Sistema de Gestión Biomédica
+        </h2>
+
+        <p style='color:#8a9bb5; font-size:16px;'>
+            Gestión de Riesgo y Mantenimiento Preventivo
+            de Equipos Biomédicos
+        </p>
+
+    </div>
+    """,
+    unsafe_allow_html=True
 )
 
     st.markdown("<br>", unsafe_allow_html=True)
