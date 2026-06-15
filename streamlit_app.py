@@ -600,10 +600,10 @@ if st.session_state.logged_in:
         saludo = "BIENVENID@"
 
     st.markdown(f"""
-    <div style='background:#ffffff; border-radius:12px; padding:1rem 1.25rem; margin:0 0 1rem 0; box-shadow:0 2px 18px rgba(13,43,82,0.08);'>
-        <div style='font-size:1.35rem; font-weight:700; color:#0D2B52; margin:0;'>
+    <div style='text-align:center; margin:0 0 1rem 0;'>
+        <span style='font-size:1.35rem; font-weight:700; color:#0D2B52;'>
             {saludo} {st.session_state.user_name}
-        </div>
+        </span>
     </div>
     """, unsafe_allow_html=True)
 
