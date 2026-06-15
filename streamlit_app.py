@@ -336,8 +336,12 @@ section[data-testid="stSidebar"] {
     border-right: 1px solid #e8edf5 !important;
 }
 section[data-testid="stSidebar"] * { color: #0D2B52 !important; }
-section[data-testid="stSidebar"] .stButton > button {
+section[data-testid="stSidebar"] button,
+section[data-testid="stSidebar"] button * {
     color: white !important;
+}
+section[data-testid="stSidebar"] .stButton > button,
+section[data-testid="stSidebar"] button {
     background: linear-gradient(135deg, #0D2B52, #1a8fd1) !important;
     border: none !important;
 }
@@ -613,7 +617,7 @@ st.sidebar.write(st.session_state.user_name)
 st.sidebar.write(st.session_state.user_role)
 
 if st.sidebar.button(
-    "🚪 Cerrar sesión",
+    "Cerrar sesión",
     use_container_width=True
 ):
 
