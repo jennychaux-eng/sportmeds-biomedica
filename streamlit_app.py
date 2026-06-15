@@ -172,14 +172,6 @@ if not st.session_state.logged_in:
 # ESTILOS
 # ─────────────────────────────────────────
 st.markdown("""
-/* Botón cerrar sesión en blanco */
-section[data-testid="stSidebar"] .stButton > button {
-    color: white !important;
-}
-
-section[data-testid="stSidebar"] .stButton > button p {
-    color: white !important;
-}
 <style>
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&display=swap');
 
