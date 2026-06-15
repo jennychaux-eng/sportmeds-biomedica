@@ -48,7 +48,9 @@ def login_page():
     # ESTILOS
     # =====================================================
 
-   background_image = get_base64_image("fondo_sportmeds.png")
+   background_image = get_base64_image(
+       "fondo_sportmeds.png"
+    )
 
 st.markdown(f"""
 <style>
@@ -262,7 +264,7 @@ st.markdown(f"""
         except Exception as e:
 
             st.error(f"Error: {e}")
-            
+
 st.markdown('</div>', unsafe_allow_html=True)
 # ─────────────────────────────────────────
 # CONFIGURACIÓN
@@ -277,9 +279,6 @@ st.set_page_config(
 # BLOQUEO DE ACCESO
 # ==========================================
 
-# ==========================================
-# BLOQUEO DE ACCESO
-# ==========================================
 
 
 if not st.session_state.logged_in:
