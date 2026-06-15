@@ -476,16 +476,20 @@ footer    { visibility: hidden; }
 
 [data-testid="collapsedControl"],
 button[data-testid="collapsedControl"],
-div[data-testid="collapsedControl"] {
+div[data-testid="collapsedControl"],
+button[title*="sidebar"],
+button[aria-label*="sidebar"],
+button[aria-label*="Sidebar"],
+button[title*="Sidebar"] {
     position: relative !important;
     background: linear-gradient(135deg, #0D2B52, #1a8fd1) !important;
     border-radius: 999px !important;
     padding: 0 !important;
-    box-shadow: 0 12px 30px rgba(13, 43, 82, 0.25) !important;
+    box-shadow: 0 14px 32px rgba(13, 43, 82, 0.24) !important;
     overflow: visible !important;
-    width: 48px !important;
-    height: 48px !important;
-    min-width: 48px !important;
+    width: 52px !important;
+    height: 52px !important;
+    min-width: 52px !important;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
@@ -495,7 +499,11 @@ div[data-testid="collapsedControl"] {
 }
 [data-testid="collapsedControl"]:hover,
 button[data-testid="collapsedControl"]:hover,
-div[data-testid="collapsedControl"]:hover {
+div[data-testid="collapsedControl"]:hover,
+button[title*="sidebar"]:hover,
+button[aria-label*="sidebar"]:hover,
+button[aria-label*="Sidebar"]:hover,
+button[title*="Sidebar"]:hover {
     background: linear-gradient(135deg, #1a8fd1, #0D2B52) !important;
     transform: translateX(2px) !important;
 }
@@ -504,36 +512,49 @@ div[data-testid="collapsedControl"]:hover {
 button[data-testid="collapsedControl"] svg,
 button[data-testid="collapsedControl"] span,
 div[data-testid="collapsedControl"] svg,
-div[data-testid="collapsedControl"] span {
+div[data-testid="collapsedControl"] span,
+button[title*="sidebar"] svg,
+button[aria-label*="sidebar"] svg,
+button[aria-label*="Sidebar"] svg,
+button[title*="Sidebar"] svg {
     display: none !important;
 }
 [data-testid="collapsedControl"]::before,
 button[data-testid="collapsedControl"]::before,
 div[data-testid="collapsedControl"]::before,
+button[title*="sidebar"]::before,
+button[aria-label*="sidebar"]::before,
+button[aria-label*="Sidebar"]::before,
+button[title*="Sidebar"]::before,
 [data-testid="collapsedControl"]::after,
 button[data-testid="collapsedControl"]::after,
-div[data-testid="collapsedControl"]::after {
-    content: "";
-    position: absolute;
-    width: 18px;
-    height: 2px;
-    background: white;
-    border-radius: 99px;
+div[data-testid="collapsedControl"]::after,
+button[title*="sidebar"]::after,
+button[aria-label*="sidebar"]::after,
+button[aria-label*="Sidebar"]::after,
+button[title*="Sidebar"]::after {
+    content: none !important;
 }
-[data-testid="collapsedControl"]::before,
-button[data-testid="collapsedControl"]::before,
-div[data-testid="collapsedControl"]::before {
-    top: 34%;
-    left: 50%;
-    transform: translateX(-50%);
-    box-shadow: 0 8px 0 white;
-}
+
 [data-testid="collapsedControl"]::after,
 button[data-testid="collapsedControl"]::after,
-div[data-testid="collapsedControl"]::after {
-    top: 62%;
-    left: 50%;
-    transform: translateX(-50%);
+div[data-testid="collapsedControl"]::after,
+button[title*="sidebar"]::after,
+button[aria-label*="sidebar"]::after,
+button[aria-label*="Sidebar"]::after,
+button[title*="Sidebar"]::after {
+    content: "☰" !important;
+    position: absolute !important;
+    font-size: 1.2rem !important;
+    color: white !important;
+    width: auto !important;
+    height: auto !important;
+    line-height: 1 !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    background: none !important;
+    box-shadow: none !important;
 }
 </style>
 """, unsafe_allow_html=True)
