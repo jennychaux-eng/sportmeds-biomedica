@@ -659,6 +659,39 @@ ROL_MENUS = {
         "🔧  Mantenimiento",
     ],
 
+    "Ingeniero biomédico/a": [
+        "🏠  Panel de Control",
+        "📦  Inventario",
+        "🔍  Tecnovigilancia",
+        "📋  Casos reportados",
+        "⚠️  Gestión de Riesgos",
+        "🔧  Mantenimiento",
+    ],
+
+    "Cirujano/a": [
+        "🏠  Panel de Control",
+        "🔍  Tecnovigilancia",
+    ],
+
+    "Médico/a": [
+        "🏠  Panel de Control",
+        "🔍  Tecnovigilancia",
+    ],
+
+    "Enfermero/a": [
+        "🏠  Panel de Control",
+        "🔍  Tecnovigilancia",
+    ],
+
+    "Instrumentador quirurgico/a": [
+        "🏠  Panel de Control",
+        "🔍  Tecnovigilancia",
+    ],
+
+    "Encargado del mantenimiento": [
+        "🔧  Mantenimiento",
+    ],
+
     "Técnico Biomédico": [
         "🏠  Panel de Control",
         "🔧  Mantenimiento",
