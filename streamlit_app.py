@@ -39,78 +39,170 @@ if "user_email" not in st.session_state:
 
 def login_page():
 
-    col1, col2, col3 = st.columns([2,2,2])
+    # =====================================================
+    # ESTILOS
+    # =====================================================
 
-    with col2:
+    st.markdown("""
+    <style>
+
+    .stApp{
+        background-image:
+        linear-gradient(
+            rgba(255,255,255,0.82),
+            rgba(255,255,255,0.82)
+        ),
+        url("https://images.unsplash.com/photo-1586773860418-d37222d8fce3");
+
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+    }
+
+    .titulo-principal{
+        font-size:64px;
+        font-weight:700;
+        color:#082B63;
+        line-height:1.1;
+        margin-top:20px;
+        margin-bottom:25px;
+    }
+
+    .subtitulo{
+        font-size:28px;
+        color:#5E6B84;
+        line-height:1.5;
+    }
+
+    div[data-testid="stTextInput"] input{
+        border-radius:12px;
+        height:55px;
+        border:1px solid #d8dee9;
+    }
+
+    .stButton button{
+        width:100%;
+        height:55px;
+        border-radius:12px;
+        background:#0B84E8;
+        color:white;
+        font-size:18px;
+        font-weight:600;
+        border:none;
+    }
+
+    .stButton button:hover{
+        background:#086fc3;
+        color:white;
+    }
+
+    div[data-baseweb="tab-list"]{
+        gap:20px;
+    }
+
+    div[data-baseweb="tab"]{
+        font-size:17px;
+        font-weight:600;
+    }
+
+    </style>
+    """, unsafe_allow_html=True)
+
+    # =====================================================
+    # LAYOUT PRINCIPAL
+    # =====================================================
+
+    izquierda, derecha = st.columns([1.3, 1])
+
+    # =====================================================
+    # PANEL IZQUIERDO
+    # =====================================================
+
+    with izquierda:
+
+        st.markdown("<br><br>", unsafe_allow_html=True)
+
         if os.path.exists(LOGO_PATH):
-            st.image(LOGO_PATH, width=450)
+            st.image(LOGO_PATH, width=500)
 
-    st.markdown("<br>", unsafe_allow_html=True)
+        st.markdown("""
+        <div class="titulo-principal">
+        Sistema de Gestión<br>
+        Tecnológica Hospitalaria
+        </div>
+        """, unsafe_allow_html=True)
 
-    st.title("Sistema de Gestión Tecnológica Hospitalaria")
+        st.markdown("""
+        <div class="subtitulo">
+        Innovación y tecnología al servicio
+        de tu salud y bienestar.
+        </div>
+        """, unsafe_allow_html=True)
 
-    st.caption(
-        "Inventario • Gestión de Riesgo • Mantenimiento • Tecnovigilancia"
-    )
+    # =====================================================
+    # PANEL DERECHO
+    # =====================================================
 
-    st.markdown("<br>", unsafe_allow_html=True)
+    with derecha:
 
-    tab_login, tab_register = st.tabs(
-        ["🔑 Iniciar sesión", "📝 Registrarse"]
-    )
-    
-    # ======================================
-    # LOGIN
-    # ======================================
+        st.markdown("<br><br><br>", unsafe_allow_html=True)
 
-    with tab_login:
-
-        email = st.text_input(
-            "Correo electrónico"
+        tab_login, tab_register = st.tabs(
+            ["Iniciar sesión", "Registrarse"]
         )
 
-        password = st.text_input(
-            "Contraseña",
-            type="password"
-        )
+        # ======================================
+        # LOGIN
+        # ======================================
 
-        if st.button(
-            "Ingresar",
-            use_container_width=True
-        ):
+        with tab_login:
 
-            try:
+            email = st.text_input(
+                "Correo electrónico"
+            )
 
-                result = (
-                    supabase
-                    .table("usuarios")
-                    .select("*")
-                    .eq("email", email)
-                    .eq("password", password)
-                    .execute()
-                )
+            password = st.text_input(
+                "Contraseña",
+                type="password"
+            )
 
-                if result.data:
+            if st.button(
+                "Ingresar",
+                use_container_width=True
+            ):
 
-                    usuario = result.data[0]
+                try:
 
-                    st.session_state.logged_in = True
-                    st.session_state.user_name = usuario["nombre"]
-                    st.session_state.user_role = usuario["rol"]
-                    st.session_state.user_email = usuario["email"]
-
-                    st.rerun()
-
-                else:
-
-                    st.error(
-                        "Usuario o contraseña incorrectos"
+                    result = (
+                        supabase
+                        .table("usuarios")
+                        .select("*")
+                        .eq("email", email)
+                        .eq("password", password)
+                        .execute()
                     )
 
-            except Exception as e:
+                    if result.data:
 
-                st.error(f"Error: {e}")
+                        usuario = result.data[0]
 
+                        st.session_state.logged_in = True
+                        st.session_state.user_name = usuario["nombre"]
+                        st.session_state.user_role = usuario["rol"]
+                        st.session_state.user_email = usuario["email"]
+
+                        st.rerun()
+
+                    else:
+
+                        st.error(
+                            "Usuario o contraseña incorrectos"
+                        )
+
+                except Exception as e:
+
+                    st.error(f"Error: {e}")
+                    
     # ======================================
     # REGISTRO
     # ======================================
