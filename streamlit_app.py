@@ -26,21 +26,6 @@ def init_supabase():
     return create_client(url, key)
 
 supabase: Client = init_supabase()
-# ==========================================
-# AUTENTICACIÓN
-# ==========================================
-
-if "logged_in" not in st.session_state:
-    st.session_state.logged_in = False
-
-if "user_name" not in st.session_state:
-    st.session_state.user_name = ""
-
-if "user_role" not in st.session_state:
-    st.session_state.user_role = ""
-
-if "user_email" not in st.session_state:
-    st.session_state.user_email = ""
 
 def login_page():
 
