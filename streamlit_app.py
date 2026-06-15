@@ -48,12 +48,50 @@ def login_page():
     # ESTILOS
     # =====================================================
 
-    background_image = get_base64_image("fondo_sportmeds.png")
+   background_image = get_base64_image("fondo_sportmeds.png")
 
-    st.markdown(f"""
-    <style>
-    </style>
-    """, unsafe_allow_html=True)
+st.markdown(f"""
+<style>
+
+.stApp {{
+    background-image: url("data:image/png;base64,{background_image}");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}}
+
+[data-testid="stHeader"] {{
+    background: rgba(0,0,0,0);
+}}
+
+[data-testid="stToolbar"] {{
+    right: 2rem;
+}}
+
+.login-card {{
+    background: rgba(255,255,255,0.95);
+    padding: 35px;
+    border-radius: 20px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+    margin-top: 60px;
+}}
+
+.titulo-principal {{
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: white;
+    margin-top: 30px;
+}}
+
+.subtitulo {{
+    font-size: 1.1rem;
+    color: white;
+    margin-top: 15px;
+}}
+
+</style>
+""", unsafe_allow_html=True)
 
     # =====================================================
     # LAYOUT PRINCIPAL
@@ -153,7 +191,78 @@ def login_page():
 
                     st.error(f"Error: {e}")
 
-                
+                with tab_register:
+
+    nombre = st.text_input(
+        "Nombre completo",
+        key="reg_nombre"
+    )
+
+    correo = st.text_input(
+        "Correo electrónico",
+        key="reg_correo"
+    )
+
+    clave = st.text_input(
+        "Contraseña",
+        type="password",
+        key="reg_password"
+    )
+
+    rol = st.selectbox(
+        "Rol",
+        [
+            "Administrador",
+            "Ingeniero Biomédico",
+            "Técnico Biomédico",
+            "Consulta"
+        ],
+        key="reg_rol"
+    )
+
+    if st.button(
+        "Crear cuenta",
+        use_container_width=True,
+        key="btn_registro"
+    ):
+
+        try:
+
+            existe = (
+                supabase
+                .table("usuarios")
+                .select("*")
+                .eq("email", correo)
+                .execute()
+            )
+
+            if existe.data:
+
+                st.warning(
+                    "Ya existe una cuenta con ese correo"
+                )
+
+            else:
+
+                supabase.table(
+                    "usuarios"
+                ).insert(
+                    {
+                        "nombre": nombre,
+                        "email": correo,
+                        "password": clave,
+                        "rol": rol
+                    }
+                ).execute()
+
+                st.success(
+                    "Usuario creado correctamente"
+                )
+
+        except Exception as e:
+
+            st.error(f"Error: {e}")
+            
 st.markdown('</div>', unsafe_allow_html=True)
 # ─────────────────────────────────────────
 # CONFIGURACIÓN
