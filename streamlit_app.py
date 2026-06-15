@@ -336,6 +336,11 @@ section[data-testid="stSidebar"] {
     border-right: 1px solid #e8edf5 !important;
 }
 section[data-testid="stSidebar"] * { color: #0D2B52 !important; }
+section[data-testid="stSidebar"] .stButton > button {
+    color: white !important;
+    background: linear-gradient(135deg, #0D2B52, #1a8fd1) !important;
+    border: none !important;
+}
 section[data-testid="stSidebar"] .stSelectbox > div > div {
     background: #F0F4F9 !important;
     border: 1px solid #dce5f0 !important;
