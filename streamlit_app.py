@@ -80,7 +80,7 @@ def login_page():
     position: absolute;
     right: 10px;
     top: 10%;
-    max-width: 2500px;
+    max-width: 2800px;
     min-height: 500px;
     width: 100%;
     box-sizing: border-box;
