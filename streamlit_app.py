@@ -2,19 +2,8 @@ import streamlit as st
 import os
 import pandas as pd
 import plotly.graph_objects as go
-import base64
 from datetime import date, timedelta
 from supabase import create_client, Client
-
-def get_base64_image(path):
-    with open(path, "rb") as img:
-        return base64.b64encode(img.read()).decode()
-        
-# ─────────────────────────────────────────
-# RUTAS
-# ─────────────────────────────────────────
-BASE_DIR  = os.path.dirname(os.path.abspath(__file__))
-LOGO_PATH = os.path.join(BASE_DIR, "assets", "Logo_sportmeds.png")
 
 # ─────────────────────────────────────────
 # CONEXIÓN SUPABASE
@@ -26,284 +15,7 @@ def init_supabase():
     return create_client(url, key)
 
 supabase: Client = init_supabase()
-# ==========================================
-# AUTENTICACIÓN
-# ==========================================
 
-if "logged_in" not in st.session_state:
-    st.session_state.logged_in = False
-
-if "user_name" not in st.session_state:
-    st.session_state.user_name = ""
-
-if "user_role" not in st.session_state:
-    st.session_state.user_role = ""
-
-if "user_email" not in st.session_state:
-    st.session_state.user_email = ""
-
-def login_page():
-
-   # =====================================================
-# ESTILOS
-# =====================================================
-
-    background_image = get_base64_image("fondo_sportmeds.png")
-
-st.markdown(f"""
-<style>
-
-.stApp {{
-    background-image:
-    linear-gradient(
-        rgba(255,255,255,0.75),
-        rgba(255,255,255,0.75)
-    ),
-    url("data:image/png;base64,{background_image}");
-
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-}}
-
-.titulo-principal {{
-    font-size: 64px;
-    font-weight: 700;
-    color: #082B63;
-    line-height: 1.1;
-    margin-top: 20px;
-    margin-bottom: 25px;
-}}
-
-.subtitulo {{
-    font-size: 28px;
-    color: #5E6B84;
-    line-height: 1.5;
-}}
-
-.login-card {{
-    background: rgba(255,255,255,0.96);
-    border-radius: 30px;
-    padding: 35px;
-    box-shadow: 0 15px 40px rgba(0,0,0,0.15);
-}}
-
-div[data-testid="stTextInput"] input {{
-    border-radius: 12px;
-    height: 55px;
-    border: 1px solid #d8dee9;
-}}
-
-.stButton button {{
-    width: 100%;
-    height: 55px;
-    border-radius: 12px;
-    background: #0B84E8;
-    color: white;
-    font-size: 18px;
-    font-weight: 600;
-    border: none;
-}}
-
-.stButton button:hover {{
-    background: #086fc3;
-    color: white;
-}}
-
-div[data-baseweb="tab-list"] {{
-    gap: 20px;
-}}
-
-div[data-baseweb="tab"] {{
-    font-size: 17px;
-    font-weight: 600;
-}}
-
-</style>
-""", unsafe_allow_html=True)
-
-    # =====================================================
-    # LAYOUT PRINCIPAL
-    # =====================================================
-
-    izquierda, derecha = st.columns([1.3, 1])
-
-    # =====================================================
-    # PANEL IZQUIERDO
-    # =====================================================
-
-    with izquierda:
-
-        st.markdown("<br><br>", unsafe_allow_html=True)
-
-        if os.path.exists(LOGO_PATH):
-            st.image(LOGO_PATH, width=500)
-
-        st.markdown("""
-        <div class="titulo-principal">
-        Sistema de Gestión<br>
-        Tecnológica Hospitalaria
-        </div>
-        """, unsafe_allow_html=True)
-
-        st.markdown("""
-        <div class="subtitulo">
-        Innovación y tecnología al servicio
-        de tu salud y bienestar.
-        </div>
-        """, unsafe_allow_html=True)
-
-    # =====================================================
-    # PANEL DERECHO
-    # =====================================================
-
-   with derecha:
-
-    st.markdown(
-        '<div class="login-card">',
-        unsafe_allow_html=True
-    )
-
-    tab_login, tab_register = st.tabs(
-        ["Iniciar sesión", "Registrarse"]
-    )
-
-    # Tu código de login
-    # Tu código de registro
-
-    st.markdown(
-        '</div>',
-        unsafe_allow_html=True
-    )
-
-        # ======================================
-        # LOGIN
-        # ======================================
-
-        with tab_login:
-
-            email = st.text_input(
-                "Correo electrónico"
-            )
-
-            password = st.text_input(
-                "Contraseña",
-                type="password"
-            )
-
-            if st.button(
-                "Ingresar",
-                use_container_width=True
-            ):
-
-                try:
-
-                    result = (
-                        supabase
-                        .table("usuarios")
-                        .select("*")
-                        .eq("email", email)
-                        .eq("password", password)
-                        .execute()
-                    )
-
-                    if result.data:
-
-                        usuario = result.data[0]
-
-                        st.session_state.logged_in = True
-                        st.session_state.user_name = usuario["nombre"]
-                        st.session_state.user_role = usuario["rol"]
-                        st.session_state.user_email = usuario["email"]
-
-                        st.rerun()
-
-                    else:
-
-                        st.error(
-                            "Usuario o contraseña incorrectos"
-                        )
-
-                except Exception as e:
-
-                    st.error(f"Error: {e}")
-                    
-    # ======================================
-    # REGISTRO
-    # ======================================
-
-    with tab_register:
-
-        nombre = st.text_input(
-            "Nombre completo",
-            key="reg_nombre"
-        )
-
-        correo = st.text_input(
-            "Correo electrónico",
-            key="reg_correo"
-        )
-
-        clave = st.text_input(
-            "Contraseña",
-            type="password",
-            key="reg_password"
-        )
-
-        rol = st.selectbox(
-            "Rol",
-            [
-                "Administrador",
-                "Ingeniero Biomédico",
-                "Técnico Biomédico",
-                "Consulta"
-            ]
-        )
-
-        if st.button(
-            "Crear cuenta",
-            use_container_width=True
-        ):
-
-            try:
-
-                existe = (
-                    supabase
-                    .table("usuarios")
-                    .select("*")
-                    .eq("email", correo)
-                    .execute()
-                )
-
-                if existe.data:
-
-                    st.warning(
-                        "Ya existe una cuenta con ese correo"
-                    )
-
-                else:
-
-                    supabase.table(
-                        "usuarios"
-                    ).insert(
-                        {
-                            "nombre": nombre,
-                            "email": correo,
-                            "password": clave,
-                            "rol": rol
-                        }
-                    ).execute()
-
-                    st.success(
-                        "Usuario creado correctamente"
-                    )
-
-            except Exception as e:
-
-                st.error(f"Error: {e}")
-                
-st.markdown('</div>', unsafe_allow_html=True)
 # ─────────────────────────────────────────
 # CONFIGURACIÓN
 # ─────────────────────────────────────────
@@ -313,28 +25,7 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="expanded"
 )
-# ==========================================
-# BLOQUEO DE ACCESO
-# ==========================================
 
-# ==========================================
-# BLOQUEO DE ACCESO
-# ==========================================
-
-
-if not st.session_state.logged_in:
-
-    st.markdown("""
-    <style>
-    section[data-testid="stSidebar"]{
-        display:none;
-    }
-    </style>
-    """, unsafe_allow_html=True)
-
-    login_page()
-    st.stop()
-    
 # ─────────────────────────────────────────
 # ESTILOS
 # ─────────────────────────────────────────
@@ -346,7 +37,7 @@ st.markdown("""
 
 .main .block-container {
     background-color: #ffffff !important;
-    padd-top: 1.2rem !important;
+    padding-top: 1.2rem !important;
     max-width: 100% !important;
 }
 .main { background-color: #ffffff !important; }
@@ -516,6 +207,12 @@ footer    { visibility: hidden; }
 """, unsafe_allow_html=True)
 
 # ─────────────────────────────────────────
+# RUTAS
+# ─────────────────────────────────────────
+BASE_DIR  = os.path.dirname(os.path.abspath(__file__))
+LOGO_PATH = os.path.join(BASE_DIR, "assets", "Logo_sportmeds.png")
+
+# ─────────────────────────────────────────
 # CAUSAS NTC 5736:2009 (reutilizable)
 # ─────────────────────────────────────────
 CAUSAS_NTC = [
@@ -582,72 +279,16 @@ else:
 st.sidebar.markdown("<hr>", unsafe_allow_html=True)
 st.sidebar.markdown("### Menú Principal")
 
-ROL_MENUS = {
-
-    "Administrador": [
-        "🏠  Panel de Control",
-        "📦  Inventario",
-        "🔍  Tecnovigilancia",
-        "📋  Casos reportados",
-        "⚠️  Gestión de Riesgos",
-        "🔧  Mantenimiento",
-    ],
-
-    "Ingeniero Biomédico": [
-        "🏠  Panel de Control",
-        "📦  Inventario",
-        "🔍  Tecnovigilancia",
-        "📋  Casos reportados",
-        "⚠️  Gestión de Riesgos",
-        "🔧  Mantenimiento",
-    ],
-
-    "Técnico Biomédico": [
-        "🏠  Panel de Control",
-        "🔧  Mantenimiento",
-    ],
-
-    "Consulta": [
-        "🏠  Panel de Control",
-    ]
-}
-
-menu_usuario = ROL_MENUS.get(
-    st.session_state.user_role,
-    ["🏠  Panel de Control"]
-)
-
 modulo = st.sidebar.selectbox(
     "Seleccione un módulo",
-    menu_usuario
-)
-
-st.sidebar.markdown("<hr>", unsafe_allow_html=True)
-
-st.sidebar.divider()
-
-st.sidebar.write("Usuario")
-st.sidebar.write(st.session_state.user_name)
-st.sidebar.write(st.session_state.user_role)
-
-if st.sidebar.button(
-    "🚪 Cerrar sesión",
-    use_container_width=True
-):
-
-    st.session_state.logged_in = False
-    st.session_state.user_name = ""
-    st.session_state.user_role = ""
-    st.session_state.user_email = ""
-
-    st.rerun()
-
-st.sidebar.markdown("<hr>", unsafe_allow_html=True)
-
-st.sidebar.markdown(
-    "<div style='font-size:0.65rem;color:rgba(13,43,82,0.35);text-align:center;'>"
-    "Gestión Biomédica v1.0<br>© 2025 SPORTMEDS Centro Médico</div>",
-    unsafe_allow_html=True
+    [
+        "🏠  Panel de Control",
+        "📦  Inventario",
+        "🔍  Tecnovigilancia",
+        "📋  Casos reportados",
+        "⚠️  Gestión de Riesgos",
+        "🔧  Mantenimiento",
+    ]
 )
 
 st.sidebar.markdown("<hr>", unsafe_allow_html=True)
@@ -682,7 +323,7 @@ def topbar(titulo, ruta):
             <div class="topbar-title">{titulo}</div>
             <div class="topbar-crumb">INICIO › {ruta}</div>
         </div>
-        <div class="topbar-user">👤 &nbsp; </div>
+        <div class="topbar-user">👤 Ing. Biomédico &nbsp;🔒</div>
     </div>
     """, unsafe_allow_html=True)
 
