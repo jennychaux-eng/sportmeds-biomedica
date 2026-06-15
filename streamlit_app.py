@@ -42,6 +42,9 @@ if "user_role" not in st.session_state:
 if "user_email" not in st.session_state:
     st.session_state.user_email = ""
 
+if "user_gender" not in st.session_state:
+    st.session_state.user_gender = ""
+
 def login_page():
 
     # =====================================================
@@ -81,7 +84,7 @@ def login_page():
     right: 1%;
     top: 10%;
     max-width: 2500px;
-    min-height: 550px;
+    min-height: 500px;
     width: 100%;
     box-sizing: border-box;
     z-index: 0;
@@ -198,6 +201,7 @@ def login_page():
                         st.session_state.user_name = usuario["nombre"]
                         st.session_state.user_role = usuario["rol"]
                         st.session_state.user_email = usuario["email"]
+                        st.session_state.user_gender = usuario.get("genero", "")
 
                         st.rerun()
 
@@ -586,6 +590,23 @@ button[title*="Toggle"]::after {
 </style>
 """, unsafe_allow_html=True)
 
+if st.session_state.logged_in:
+    genero = st.session_state.user_gender.strip().lower()
+    if genero == "femenino":
+        saludo = "BIENVENIDA"
+    elif genero == "masculino":
+        saludo = "BIENVENIDO"
+    else:
+        saludo = "BIENVENID@"
+
+    st.markdown(f"""
+    <div style='background:#ffffff; border-radius:12px; padding:1rem 1.25rem; margin:0 0 1rem 0; box-shadow:0 2px 18px rgba(13,43,82,0.08);'>
+        <div style='font-size:1.35rem; font-weight:700; color:#0D2B52; margin:0;'>
+            {saludo} {st.session_state.user_name}
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
+
 # ─────────────────────────────────────────
 # CAUSAS NTC 5736:2009 (reutilizable)
 # ─────────────────────────────────────────
@@ -752,6 +773,7 @@ if st.sidebar.button(
     st.session_state.user_name = ""
     st.session_state.user_role = ""
     st.session_state.user_email = ""
+    st.session_state.user_gender = ""
 
     st.rerun()
 
