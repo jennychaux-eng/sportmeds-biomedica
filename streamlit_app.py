@@ -475,28 +475,44 @@ section[data-testid="stSidebar"] h3 {
 footer    { visibility: hidden; }
 
 [data-testid="collapsedControl"] {
-    background: #0D2B52 !important;
-    border-radius: 0 10px 10px 0 !important;
-    padding: 14px 10px !important;
-    box-shadow: 3px 0 12px rgba(0,0,0,0.25) !important;
+    position: relative !important;
+    background: linear-gradient(135deg, #0D2B52, #1a8fd1) !important;
+    border-radius: 999px !important;
+    padding: 0 !important;
+    box-shadow: 0 12px 30px rgba(13, 43, 82, 0.25) !important;
     overflow: hidden !important;
-    width: 44px !important;
+    width: 48px !important;
+    height: 48px !important;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
+    transition: transform .2s ease, background .2s ease !important;
 }
-[data-testid="collapsedControl"]:hover { background: #1a8fd1 !important; }
+[data-testid="collapsedControl"]:hover {
+    background: linear-gradient(135deg, #1a8fd1, #0D2B52) !important;
+    transform: translateX(2px) !important;
+}
 [data-testid="collapsedControl"] svg,
 [data-testid="collapsedControl"] span { display: none !important; }
+[data-testid="collapsedControl"]::before,
 [data-testid="collapsedControl"]::after {
     content: "";
-    display: block;
-    width: 22px;
+    position: absolute;
+    width: 18px;
     height: 2px;
     background: white;
-    border-radius: 2px;
-    box-shadow: 0 7px 0 white, 0 14px 0 white;
-    margin: 0 auto;
+    border-radius: 99px;
+}
+[data-testid="collapsedControl"]::before {
+    top: 36%;
+    left: 50%;
+    transform: translateX(-50%);
+    box-shadow: 0 8px 0 white;
+}
+[data-testid="collapsedControl"]::after {
+    top: 64%;
+    left: 50%;
+    transform: translateX(-50%);
 }
 </style>
 """, unsafe_allow_html=True)
