@@ -72,11 +72,15 @@ def login_page():
 }}
 
 .login-card {{
-    background: rgba(255,255,255,0.95);
-    padding: 35px;
+    background: rgba(255,255,255,0.98);
+    padding: 28px 30px;
     border-radius: 20px;
     box-shadow: 0 8px 25px rgba(0,0,0,0.2);
-    margin-top: 60px;
+    margin-top: 40px;
+    min-height: 420px;
+    width: 100%;
+    box-sizing: border-box;
+    z-index: 10;
 }}
 
 .titulo-principal {{
