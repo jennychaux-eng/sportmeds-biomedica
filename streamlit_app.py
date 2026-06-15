@@ -514,6 +514,17 @@ def base_layout(h=220):
     return dict(height=h, margin=dict(l=0, r=0, t=4, b=0),
                 plot_bgcolor="white", paper_bgcolor="white")
 
+def topbar(titulo, ruta):
+    st.markdown(f"""
+    <div class="topbar">
+        <div>
+            <div class="topbar-title">{titulo}</div>
+            <div class="topbar-crumb">INICIO › {ruta}</div>
+        </div>
+        <div class="topbar-user">👤 Ing. Biomédico &nbsp;🔒</div>
+    </div>
+    """, unsafe_allow_html=True)
+
 # ══════════════════════════════════════════
 # MÓDULO: PANEL DE CONTROL
 # ══════════════════════════════════════════
