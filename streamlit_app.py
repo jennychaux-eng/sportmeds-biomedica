@@ -37,7 +37,6 @@ if "user_role" not in st.session_state:
 if "user_email" not in st.session_state:
     st.session_state.user_email = ""
 
-
 def login_page():
 
     col1, col2, col3 = st.columns([2,2,2])
@@ -45,8 +44,8 @@ def login_page():
     with col2:
         if os.path.exists(LOGO_PATH):
             st.image(LOGO_PATH, width=450)
-            
- st.markdown("<br>", unsafe_allow_html=True)
+
+    st.markdown("<br>", unsafe_allow_html=True)
 
     st.title("Sistema de Gestión Tecnológica Hospitalaria")
 
@@ -59,6 +58,7 @@ def login_page():
     tab_login, tab_register = st.tabs(
         ["🔑 Iniciar sesión", "📝 Registrarse"]
     )
+    
     # ======================================
     # LOGIN
     # ======================================
