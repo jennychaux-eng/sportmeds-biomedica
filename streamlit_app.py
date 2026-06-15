@@ -463,38 +463,12 @@ modulo = st.sidebar.selectbox(
 
 st.sidebar.markdown("<hr>", unsafe_allow_html=True)
 
-st.sidebar.markdown(
-    f"""
-    <div style='padding: 0.2rem 0;'>
+st.sidebar.divider()
 
-        <div style='font-size:0.67rem;
-                    color:rgba(13,43,82,0.5);
-                    text-transform:uppercase;
-                    letter-spacing:.08em;'>
+st.sidebar.write("Usuario")
+st.sidebar.write(st.session_state.user_name)
+st.sidebar.write(st.session_state.user_role)
 
-            Usuario
-
-        </div>
-
-        <div style='font-size:0.9rem;
-                    font-weight:600;
-                    margin-top:3px;'>
-
-            {st.session_state.user_name}
-
-        </div>
-
-        <div style='font-size:0.7rem;
-                    color:rgba(13,43,82,0.45);'>
-
-            {st.session_state.user_role}
-
-        </div>
-
-    </div>
-    """,
-    unsafe_allow_html=True
-)
 if st.sidebar.button(
     "🚪 Cerrar sesión",
     use_container_width=True
