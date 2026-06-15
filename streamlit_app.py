@@ -76,14 +76,16 @@ def login_page():
     padding: 28px 30px;
     border-radius: 20px;
     box-shadow: 0 8px 25px rgba(0,0,0,0.2);
-    margin-top: 40px;
+    /* position the card visually on the right side as a background */
+    position: absolute;
+    right: 6%;
+    top: 12%;
+    max-width: 480px;
     min-height: 420px;
-    width: 100%;
+    width: calc(30% + 60px);
     box-sizing: border-box;
-    position: relative;
-    overflow: visible;
-    z-index: 9999;
-}}
+    z-index: 0;
+}
 
 .titulo-principal {{
     font-size: 2.2rem;
@@ -97,6 +99,16 @@ def login_page():
     color: #6b7280;
     margin-top: 15px;
 }}
+
+/* Ensure Streamlit interactive controls render above the white card */
+[data-testid="stTabs"],
+.stTextInput,
+.stButton > button,
+.stSelectbox,
+.stTextArea textarea {
+    position: relative;
+    z-index: 1;
+}
 
 </style>
 """, unsafe_allow_html=True)
