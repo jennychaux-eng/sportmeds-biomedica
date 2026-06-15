@@ -15,7 +15,142 @@ def init_supabase():
     return create_client(url, key)
 
 supabase: Client = init_supabase()
+# ==========================================
+# AUTENTICACIÓN
+# ==========================================
 
+if "logged_in" not in st.session_state:
+    st.session_state.logged_in = False
+
+if "user_name" not in st.session_state:
+    st.session_state.user_name = ""
+
+if "user_role" not in st.session_state:
+    st.session_state.user_role = ""
+
+if "user_email" not in st.session_state:
+    st.session_state.user_email = ""
+
+
+def login_page():
+
+    st.title("⚕️ SPORTMEDS")
+    st.subheader("Sistema de Gestión Biomédica")
+
+    tab_login, tab_register = st.tabs(
+        ["🔑 Iniciar sesión", "📝 Registrarse"]
+    )
+
+    # LOGIN
+    with tab_login:
+
+        email = st.text_input("Correo electrónico")
+
+        password = st.text_input(
+            "Contraseña",
+            type="password"
+        )
+
+        if st.button("Ingresar", use_container_width=True):
+
+            try:
+
+                result = (
+                    supabase
+                    .table("usuarios")
+                    .select("*")
+                    .eq("email", email)
+                    .eq("password", password)
+                    .execute()
+                )
+
+                if result.data:
+
+                    usuario = result.data[0]
+
+                    st.session_state.logged_in = True
+                    st.session_state.user_name = usuario["nombre"]
+                    st.session_state.user_role = usuario["rol"]
+                    st.session_state.user_email = usuario["email"]
+
+                    st.rerun()
+
+                else:
+                    st.error("Usuario o contraseña incorrectos")
+
+            except Exception as e:
+                st.error(f"Error: {e}")
+
+    # REGISTRO
+    with tab_register:
+
+        nombre = st.text_input(
+            "Nombre completo",
+            key="reg_nombre"
+        )
+
+        correo = st.text_input(
+            "Correo",
+            key="reg_correo"
+        )
+
+        clave = st.text_input(
+            "Contraseña",
+            type="password",
+            key="reg_password"
+        )
+
+        rol = st.selectbox(
+            "Rol",
+            [
+                "Administrador",
+                "Ingeniero Biomédico",
+                "Técnico Biomédico",
+                "Consulta"
+            ]
+        )
+
+        if st.button(
+            "Crear cuenta",
+            use_container_width=True
+        ):
+
+            try:
+
+                existe = (
+                    supabase
+                    .table("usuarios")
+                    .select("*")
+                    .eq("email", correo)
+                    .execute()
+                )
+
+                if existe.data:
+
+                    st.warning(
+                        "Ya existe una cuenta con ese correo"
+                    )
+
+                else:
+
+                    supabase.table(
+                        "usuarios"
+                    ).insert(
+                        {
+                            "nombre": nombre,
+                            "email": correo,
+                            "password": clave,
+                            "rol": rol
+                        }
+                    ).execute()
+
+                    st.success(
+                        "Usuario creado correctamente"
+                    )
+
+            except Exception as e:
+                st.error(f"Error: {e}")
+                
 # ─────────────────────────────────────────
 # CONFIGURACIÓN
 # ─────────────────────────────────────────
@@ -25,7 +160,14 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="expanded"
 )
+# ==========================================
+# BLOQUEO DE ACCESO
+# ==========================================
 
+if not st.session_state.logged_in:
+    login_page()
+    st.stop()
+    
 # ─────────────────────────────────────────
 # ESTILOS
 # ─────────────────────────────────────────
@@ -279,16 +421,96 @@ else:
 st.sidebar.markdown("<hr>", unsafe_allow_html=True)
 st.sidebar.markdown("### Menú Principal")
 
-modulo = st.sidebar.selectbox(
-    "Seleccione un módulo",
-    [
+ROL_MENUS = {
+
+    "Administrador": [
         "🏠  Panel de Control",
         "📦  Inventario",
         "🔍  Tecnovigilancia",
         "📋  Casos reportados",
         "⚠️  Gestión de Riesgos",
         "🔧  Mantenimiento",
+    ],
+
+    "Ingeniero Biomédico": [
+        "🏠  Panel de Control",
+        "📦  Inventario",
+        "🔍  Tecnovigilancia",
+        "📋  Casos reportados",
+        "⚠️  Gestión de Riesgos",
+        "🔧  Mantenimiento",
+    ],
+
+    "Técnico Biomédico": [
+        "🏠  Panel de Control",
+        "🔧  Mantenimiento",
+    ],
+
+    "Consulta": [
+        "🏠  Panel de Control",
     ]
+}
+
+menu_usuario = ROL_MENUS.get(
+    st.session_state.user_role,
+    ["🏠  Panel de Control"]
+)
+
+modulo = st.sidebar.selectbox(
+    "Seleccione un módulo",
+    menu_usuario
+)
+
+st.sidebar.markdown("<hr>", unsafe_allow_html=True)
+
+st.sidebar.markdown(f"""
+<div style='padding: 0.2rem 0;'>
+
+    <div style='font-size:0.67rem;
+                color:rgba(13,43,82,0.5);
+                text-transform:uppercase;
+                letter-spacing:.08em;'>
+
+        Usuario
+
+    </div>
+
+    <div style='font-size:0.9rem;
+                font-weight:600;
+                margin-top:3px;'>
+
+        {st.session_state.user_name}
+
+    </div>
+
+    <div style='font-size:0.7rem;
+                color:rgba(13,43,82,0.45);'>
+
+        {st.session_state.user_role}
+
+    </div>
+
+</div>
+""", unsafe_allow_html=True)
+
+if st.sidebar.button(
+    "🚪 Cerrar sesión",
+    use_container_width=True
+):
+
+    st.session_state.logged_in = False
+    st.session_state.user_name = ""
+    st.session_state.user_role = ""
+    st.session_state.user_email = ""
+
+    st.rerun()
+
+st.sidebar.markdown("<hr>", unsafe_allow_html=True)
+
+st.sidebar.markdown(
+    "<div style='font-size:0.65rem;color:rgba(13,43,82,0.35);text-align:center;'>"
+    "Gestión Biomédica v1.0<br>© 2025 SPORTMEDS Centro Médico</div>",
+    unsafe_allow_html=True
 )
 
 st.sidebar.markdown("<hr>", unsafe_allow_html=True)
