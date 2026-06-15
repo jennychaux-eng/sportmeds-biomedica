@@ -85,7 +85,7 @@ def login_page():
     width: calc(30% + 60px);
     box-sizing: border-box;
     z-index: 0;
-}
+}}
 
 .titulo-principal {{
     font-size: 2.2rem;
@@ -105,10 +105,10 @@ def login_page():
 .stTextInput,
 .stButton > button,
 .stSelectbox,
-.stTextArea textarea {
+.stTextArea textarea {{
     position: relative;
     z-index: 1;
-}
+}}
 
 </style>
 """, unsafe_allow_html=True)
