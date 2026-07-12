@@ -1685,8 +1685,8 @@ elif "Casos reportados" in modulo:
             )
 
         if "descripcion_evento" in df_tabla.columns:
-            df_tabla["Descripción del evento"] = df_tabla["descripcion_evento"].apply(
-                lambda x: (str(x)[:140] + "...") if isinstance(x, str) and len(x) > 140 else (x if x is not None else "")
+            df_tabla["D5. Descripción detallada del evento o incidente adverso *"] = df_tabla["descripcion_evento"].apply(
+                lambda x: (str(x)[:180] + "...") if isinstance(x, str) and len(x) > 180 else (x if x is not None else "")
             )
 
         st.dataframe(
@@ -1698,9 +1698,9 @@ elif "Casos reportados" in modulo:
                 "clasificacion":         "Clasificación",
                 "fecha_evento":          "Fecha evento",
                 "reportante_nombre":     "Reportante",
-                "descripcion_evento":   "Descripción completa",
+                "descripcion_evento":   "D5. Descripción detallada del evento o incidente adverso *",
                 "causa_codigo":          "Cód. causa (E1)",
-                "Descripción del evento": "Descripción del evento",
+                "D5. Descripción detallada del evento o incidente adverso *": "D5. Descripción detallada del evento o incidente adverso *",
             }),
             use_container_width=True, hide_index=True,
             column_config={
