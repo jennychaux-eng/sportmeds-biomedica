@@ -901,7 +901,7 @@ if "Panel" in modulo:
         if pendientes > 0:
             st.markdown(f"""
             <div style="background: linear-gradient(90deg, #bf0606 0%, #700909 100%); border: 1px solid #f39c12; border-radius: 12px; padding: 0.95rem 1rem; margin-bottom: 1rem;">
-                <div style="font-weight:700; color:#ffffff;">🔔 TECNOVIGILANCIA</div>
+                <div style="font-weight:700; color:#ffffff;">🔔 Recordatorio de tecnovigilancia</div>
                 <div style="margin-top:0.25rem; color:#ffffff;">Tienes <b>{pendientes}</b> caso(s) pendiente(s) por dar solución.</div>
             </div>
             """, unsafe_allow_html=True)
@@ -1704,14 +1704,26 @@ elif "Casos reportados" in modulo:
         st.markdown('<div class="card"><div class="card-title">🔧 E. Gestión realizada — Ing. Biomédico</div>',
                     unsafe_allow_html=True)
 
+        df_pendientes = df_tv.copy()
+        if "causa_codigo" in df_pendientes.columns:
+            df_pendientes = df_pendientes[
+                df_pendientes["causa_codigo"].isna() |
+                df_pendientes["causa_codigo"].astype(str).str.strip().eq("")
+            ]
+
+        if df_pendientes.empty:
+            st.info("No hay casos pendientes por gestionar.")
+            st.markdown('</div>', unsafe_allow_html=True)
+            st.stop()
+
         opciones_casos = [
             f"{str(row['id'])[:8]}... | {row.get('nombre_generico','—')} | "
             f"{row.get('fecha_evento','—')} | {row.get('clasificacion','—')}"
-            for _, row in df_tv.iterrows()
+            for _, row in df_pendientes.iterrows()
         ]
         caso_label = st.selectbox("Seleccione el caso a gestionar", opciones_casos)
         caso_idx   = opciones_casos.index(caso_label)
-        caso_sel   = df_tv.iloc[caso_idx]
+        caso_sel   = df_pendientes.iloc[caso_idx]
         caso_id    = caso_sel["id"]
 
         # ── Resumen del caso ──
