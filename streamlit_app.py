@@ -42,6 +42,15 @@ if "user_role" not in st.session_state:
 if "user_email" not in st.session_state:
     st.session_state.user_email = ""
 
+if "user_profesion" not in st.session_state:
+    st.session_state.user_profesion = ""
+
+if "user_telefono" not in st.session_state:
+    st.session_state.user_telefono = ""
+
+if "user_area" not in st.session_state:
+    st.session_state.user_area = ""
+
 if "user_gender" not in st.session_state:
     st.session_state.user_gender = ""
 
@@ -201,6 +210,9 @@ def login_page():
                         st.session_state.user_name = usuario["nombre"]
                         st.session_state.user_role = usuario["rol"]
                         st.session_state.user_email = usuario["email"]
+                        st.session_state.user_profesion = usuario.get("profesion", "")
+                        st.session_state.user_telefono = usuario.get("telefono", "")
+                        st.session_state.user_area = usuario.get("area", "")
                         st.session_state.user_gender = usuario.get("genero", "")
 
                         st.rerun()
@@ -314,6 +326,12 @@ def login_page():
                                 "rol": rol
                             }
                         ).execute()
+
+                        st.session_state.user_name = nombre
+                        st.session_state.user_email = correo
+                        st.session_state.user_profesion = profesion
+                        st.session_state.user_telefono = telefono
+                        st.session_state.user_area = area
 
                         st.success(
                             "Usuario creado correctamente"
@@ -1329,17 +1347,32 @@ elif "Tecnovigilancia" in modulo:
 
             cf1, cf2, cf3 = st.columns(3)
             with cf1:
-                rep_nombre = st.text_input("F1. Nombre completo *")
-                rep_prof   = st.text_input("F2. Profesión *",
-                                           placeholder="ej. Médico, Enfermero, Ing. Biomédico")
-                rep_org    = st.text_input("F3. Organización o área a la que pertenece")
+                rep_nombre = st.text_input(
+                    "F1. Nombre completo *",
+                    value=st.session_state.get("user_name", st.session_state.get("reg_nombre", ""))
+                )
+                rep_prof   = st.text_input(
+                    "F2. Profesión *",
+                    value=st.session_state.get("user_profesion", st.session_state.get("reg_profesion", "")),
+                    placeholder="ej. Médico, Enfermero, Ing. Biomédico"
+                )
+                rep_org    = st.text_input(
+                    "F3. Organización o área a la que pertenece",
+                    value=st.session_state.get("user_area", st.session_state.get("reg_area", ""))
+                )
             with cf2:
                 rep_dir   = st.text_input("F4. Dirección de la organización")
-                rep_tel   = st.text_input("F5. Teléfono de contacto")
+                rep_tel   = st.text_input(
+                    "F5. Teléfono de contacto",
+                    value=st.session_state.get("user_telefono", st.session_state.get("reg_telefono", ""))
+                )
                 rep_depto = st.text_input("F6. Departamento", value="Valle del Cauca")
             with cf3:
                 rep_ciudad = st.text_input("F7. Ciudad", value="Cali")
-                rep_email  = st.text_input("F8. Correo electrónico institucional")
+                rep_email  = st.text_input(
+                    "F8. Correo electrónico institucional",
+                    value=st.session_state.get("user_email", st.session_state.get("reg_correo", ""))
+                )
                 fecha_noti = st.date_input("F9. Fecha de notificación", value=date.today())
                 autoriza   = st.radio(
                     "F10. ¿Autoriza divulgación del origen del reporte?",
