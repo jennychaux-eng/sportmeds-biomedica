@@ -1672,7 +1672,8 @@ elif "Casos reportados" in modulo:
                     unsafe_allow_html=True)
 
         cols_tabla = ["id","created_at","numero_inventario","nombre_generico",
-                      "clasificacion","fecha_evento","reportante_nombre","causa_codigo"]
+                      "clasificacion","fecha_evento","reportante_nombre",
+                      "descripcion_evento","causa_codigo"]
         cols_ok    = [c for c in cols_tabla if c in df_tv.columns]
         df_tabla   = df_tv[cols_ok].copy()
 
@@ -1683,18 +1684,33 @@ elif "Casos reportados" in modulo:
                 else "⏳ Pendiente"
             )
 
+        if "descripcion_evento" in df_tabla.columns:
+            df_tabla["Descripción del evento"] = df_tabla["descripcion_evento"].apply(
+                lambda x: (str(x)[:140] + "...") if isinstance(x, str) and len(x) > 140 else (x if x is not None else "")
+            )
+
         st.dataframe(
             df_tabla.rename(columns={
-                "id":                "ID",
-                "created_at":        "Fecha registro",
-                "numero_inventario": "Inventario",
-                "nombre_generico":   "Dispositivo",
-                "clasificacion":     "Clasificación",
-                "fecha_evento":      "Fecha evento",
-                "reportante_nombre": "Reportante",
-                "causa_codigo":      "Cód. causa (E1)",
+                "id":                    "ID",
+                "created_at":            "Fecha registro",
+                "numero_inventario":     "Inventario",
+                "nombre_generico":       "Dispositivo",
+                "clasificacion":         "Clasificación",
+                "fecha_evento":          "Fecha evento",
+                "reportante_nombre":     "Reportante",
+                "descripcion_evento":   "Descripción completa",
+                "causa_codigo":          "Cód. causa (E1)",
+                "Descripción del evento": "Descripción del evento",
             }),
-            use_container_width=True, hide_index=True
+            use_container_width=True, hide_index=True,
+            column_config={
+                "Descripción del evento": st.column_config.TextColumn(
+                    "Descripción del evento",
+                    width="large"
+                ),
+                "Clasificación": st.column_config.TextColumn(width="medium"),
+                "Reportante": st.column_config.TextColumn(width="medium"),
+            }
         )
         st.markdown('</div>', unsafe_allow_html=True)
 
