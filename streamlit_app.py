@@ -3,8 +3,13 @@ import os
 import pandas as pd
 import plotly.graph_objects as go
 import base64
-from datetime import date, timedelta
+from datetime import date, datetime, timedelta
+from zoneinfo import ZoneInfo
 from supabase import create_client, Client
+
+
+def get_fecha_local():
+    return datetime.now(ZoneInfo("America/Bogota")).date()
 
 def get_base64_image(path):
     with open(path, "rb") as img:
@@ -1291,12 +1296,17 @@ elif "Tecnovigilancia" in modulo:
 
             cd1, cd2, cd3 = st.columns(3)
             with cd1:
-                fecha_evento = st.date_input("D1. Fecha del evento / incidente *",
-                                             value=date.today())
+                fecha_evento = st.date_input(
+                    "D1. Fecha del evento / incidente *",
+                    value=get_fecha_local()
+                )
             with cd2:
-                fecha_reporte = date.today()
-                st.text_input("D2. Fecha de elaboración del reporte",
-                              value=fecha_reporte.strftime("%d/%m/%Y"), disabled=True)
+                fecha_reporte = get_fecha_local()
+                st.text_input(
+                    "D2. Fecha de elaboración del reporte",
+                    value=fecha_reporte.strftime("%d/%m/%Y"),
+                    disabled=True
+                )
             with cd3:
                 deteccion = st.selectbox("D3. Detección del evento / incidente", [
                     "Antes del uso del dispositivo médico",
@@ -1382,7 +1392,7 @@ elif "Tecnovigilancia" in modulo:
                     value=st.session_state.get("user_email", st.session_state.get("reg_correo", "")),
                     disabled=True
                 )
-                fecha_noti = date.today()
+                fecha_noti = get_fecha_local()
                 st.text_input(
                     "F9. Fecha de notificación",
                     value=fecha_noti.strftime("%d/%m/%Y"),
