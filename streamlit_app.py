@@ -1689,23 +1689,28 @@ elif "Casos reportados" in modulo:
                 lambda x: (str(x)[:180] + "...") if isinstance(x, str) and len(x) > 180 else (x if x is not None else "")
             )
 
+        df_tabla_renombrada = df_tabla.rename(columns={
+            "id":                "ID",
+            "created_at":        "Fecha registro",
+            "numero_inventario": "Inventario",
+            "nombre_generico":   "Dispositivo",
+            "clasificacion":     "Clasificación",
+            "fecha_evento":      "Fecha evento",
+            "reportante_nombre": "Reportante",
+            "causa_codigo":      "Cód. causa (E1)",
+        })
+
+        if "D5. Descripción detallada del evento o incidente adverso *" in df_tabla_renombrada.columns:
+            df_tabla_renombrada = df_tabla_renombrada.rename(columns={
+                "D5. Descripción detallada del evento o incidente adverso *": "D5. Descripción detallada del evento o incidente adverso *"
+            })
+
         st.dataframe(
-            df_tabla.rename(columns={
-                "id":                    "ID",
-                "created_at":            "Fecha registro",
-                "numero_inventario":     "Inventario",
-                "nombre_generico":       "Dispositivo",
-                "clasificacion":         "Clasificación",
-                "fecha_evento":          "Fecha evento",
-                "reportante_nombre":     "Reportante",
-                "descripcion_evento":   "D5. Descripción detallada del evento o incidente adverso *",
-                "causa_codigo":          "Cód. causa (E1)",
-                "D5. Descripción detallada del evento o incidente adverso *": "D5. Descripción detallada del evento o incidente adverso *",
-            }),
+            df_tabla_renombrada,
             use_container_width=True, hide_index=True,
             column_config={
-                "Descripción del evento": st.column_config.TextColumn(
-                    "Descripción del evento",
+                "D5. Descripción detallada del evento o incidente adverso *": st.column_config.TextColumn(
+                    "D5. Descripción detallada del evento o incidente adverso *",
                     width="large"
                 ),
                 "Clasificación": st.column_config.TextColumn(width="medium"),
