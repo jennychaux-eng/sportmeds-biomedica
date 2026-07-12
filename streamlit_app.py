@@ -900,8 +900,8 @@ if "Panel" in modulo:
 
         if pendientes > 0:
             st.markdown(f"""
-            <div style="background: linear-gradient(90deg, #fff4e5 0%, #ffe6cc 100%); border: 1px solid #f39c12; border-radius: 12px; padding: 0.95rem 1rem; margin-bottom: 1rem;">
-                <div style="font-weight:700; color:#cc0404;">🔔 Recordatorio de tecnovigilancia</div>
+            <div style="background: linear-gradient(90deg, #bf0606 0%, #700909 100%); border: 1px solid #f39c12; border-radius: 12px; padding: 0.95rem 1rem; margin-bottom: 1rem;">
+                <div style="font-weight:700; color:#ffffff;">🔔 Recordatorio de tecnovigilancia</div>
                 <div style="margin-top:0.25rem; color:#ffffff;">Tienes <b>{pendientes}</b> caso(s) pendiente(s) por dar solución.</div>
             </div>
             """, unsafe_allow_html=True)
