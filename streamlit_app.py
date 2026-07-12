@@ -1382,7 +1382,11 @@ elif "Tecnovigilancia" in modulo:
                     value=st.session_state.get("user_email", st.session_state.get("reg_correo", "")),
                     disabled=True
                 )
-                fecha_noti = st.date_input("F9. Fecha de notificación", value=date.today(), disabled=True)
+                fecha_noti = st.date_input(
+                    "F9. Fecha de notificación",
+                    value=date.today(),
+                    disabled=True
+                )
                 autoriza   = st.radio(
                     "F10. ¿Autoriza divulgación del origen del reporte?",
                     ["No", "Sí"], horizontal=True
