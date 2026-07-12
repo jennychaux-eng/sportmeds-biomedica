@@ -796,9 +796,16 @@ menu_usuario = ROL_MENUS.get(
     ["🏠  Panel de Control"]
 )
 
+if "sidebar_modulo" not in st.session_state:
+    st.session_state.sidebar_modulo = menu_usuario[0] if menu_usuario else "🏠  Panel de Control"
+
+if st.session_state.sidebar_modulo not in menu_usuario:
+    st.session_state.sidebar_modulo = menu_usuario[0] if menu_usuario else "🏠  Panel de Control"
+
 modulo = st.sidebar.selectbox(
     "Seleccione un módulo",
-    menu_usuario
+    menu_usuario,
+    key="sidebar_modulo"
 )
 
 st.sidebar.markdown("<hr>", unsafe_allow_html=True)
@@ -871,6 +878,33 @@ def topbar(titulo, ruta):
 # ══════════════════════════════════════════
 if "Panel" in modulo:
     topbar("Panel de Control", "Panel de Control")
+
+    if normalize_role(st.session_state.user_role) == "Ingeniero biomédico/a":
+        try:
+            tv_data = supabase.table("Tecnovigilancia").select("*").execute().data or []
+            if tv_data:
+                df_tv = pd.DataFrame(tv_data)
+                gestionados = len(df_tv[
+                    df_tv["causa_codigo"].notna() &
+                    (df_tv["causa_codigo"].astype(str).str.strip() != "")
+                ]) if "causa_codigo" in df_tv.columns else 0
+                pendientes = len(df_tv) - gestionados
+            else:
+                pendientes = 0
+        except Exception:
+            pendientes = 0
+
+        if pendientes > 0:
+            st.markdown(f"""
+            <div style="background: linear-gradient(90deg, #fff4e5 0%, #ffe6cc 100%); border: 1px solid #f39c12; border-radius: 12px; padding: 0.95rem 1rem; margin-bottom: 1rem;">
+                <div style="font-weight:700; color:#8a4b00;">🔔 Recordatorio de tecnovigilancia</div>
+                <div style="margin-top:0.25rem; color:#6b3f00;">Tienes <b>{pendientes}</b> caso(s) pendiente(s) por dar solución.</div>
+            </div>
+            """, unsafe_allow_html=True)
+
+            if st.button("📋 Ir a Casos reportados", key="btn_ir_casos_pendientes"):
+                st.session_state.sidebar_modulo = "📋  Casos reportados"
+                st.rerun()
 
     try:
         inv_data = supabase.table("Inventario").select("*").execute().data
