@@ -222,9 +222,24 @@ def login_page():
                 key="reg_nombre"
             )
 
+            profesion = st.text_input(
+                "Profesión",
+                key="reg_profesion"
+            )
+
+            telefono = st.text_input(
+                "Telefono de contacto",
+                key="reg_telefono"
+            )
+
             correo = st.text_input(
-                "Correo electrónico",
+                "Correo",
                 key="reg_correo"
+            )
+
+            area = st.text_input(
+                "Área a la que pertenece",
+                key="reg_area"
             )
 
             clave = st.text_input(
@@ -286,7 +301,10 @@ def login_page():
                         ).insert(
                             {
                                 "nombre": nombre,
+                                "profesion": profesion,
+                                "telefono": telefono,
                                 "email": correo,
+                                "area": area,
                                 "password": clave,
                                 "genero": genero,
                                 "rol": rol
