@@ -799,6 +799,10 @@ menu_usuario = ROL_MENUS.get(
 if "sidebar_modulo" not in st.session_state:
     st.session_state.sidebar_modulo = menu_usuario[0] if menu_usuario else "🏠  Panel de Control"
 
+if "go_to_module" in st.session_state and st.session_state.go_to_module in menu_usuario:
+    st.session_state.sidebar_modulo = st.session_state.go_to_module
+    del st.session_state.go_to_module
+
 if st.session_state.sidebar_modulo not in menu_usuario:
     st.session_state.sidebar_modulo = menu_usuario[0] if menu_usuario else "🏠  Panel de Control"
 
@@ -903,7 +907,7 @@ if "Panel" in modulo:
             """, unsafe_allow_html=True)
 
             if st.button("📋 Ir a Casos reportados", key="btn_ir_casos_pendientes"):
-                st.session_state.sidebar_modulo = "📋  Casos reportados"
+                st.session_state.go_to_module = "📋  Casos reportados"
                 st.rerun()
 
     try:
