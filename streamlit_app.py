@@ -1349,34 +1349,44 @@ elif "Tecnovigilancia" in modulo:
             with cf1:
                 rep_nombre = st.text_input(
                     "F1. Nombre completo *",
-                    value=st.session_state.get("user_name", st.session_state.get("reg_nombre", ""))
+                    value=st.session_state.get("user_name", st.session_state.get("reg_nombre", "")),
+                    disabled=True
                 )
                 rep_prof   = st.text_input(
                     "F2. Profesión *",
                     value=st.session_state.get("user_profesion", st.session_state.get("reg_profesion", "")),
-                    placeholder="ej. Médico, Enfermero, Ing. Biomédico"
+                    placeholder="ej. Médico, Enfermero, Ing. Biomédico",
+                    disabled=True
                 )
                 rep_org    = st.text_input(
                     "F3. Organización o área a la que pertenece",
-                    value=st.session_state.get("user_area", st.session_state.get("reg_area", ""))
+                    value=st.session_state.get("user_area", st.session_state.get("reg_area", "")),
+                    disabled=True
                 )
             with cf2:
-                rep_dir   = st.text_input("F4. Dirección de la organización")
+                rep_dir   = st.text_input(
+                    "F4. Dirección de la organización",
+                    value="Cra. 103 #13a-23",
+                    disabled=True
+                )
                 rep_tel   = st.text_input(
                     "F5. Teléfono de contacto",
-                    value=st.session_state.get("user_telefono", st.session_state.get("reg_telefono", ""))
+                    value=st.session_state.get("user_telefono", st.session_state.get("reg_telefono", "")),
+                    disabled=True
                 )
-                rep_depto = st.text_input("F6. Departamento", value="Valle del Cauca")
+                rep_depto = st.text_input("F6. Departamento", value="Valle del Cauca", disabled=True)
             with cf3:
-                rep_ciudad = st.text_input("F7. Ciudad", value="Cali")
+                rep_ciudad = st.text_input("F7. Ciudad", value="Cali", disabled=True)
                 rep_email  = st.text_input(
                     "F8. Correo electrónico institucional",
-                    value=st.session_state.get("user_email", st.session_state.get("reg_correo", ""))
+                    value=st.session_state.get("user_email", st.session_state.get("reg_correo", "")),
+                    disabled=True
                 )
-                fecha_noti = st.date_input("F9. Fecha de notificación", value=date.today())
+                fecha_noti = st.date_input("F9. Fecha de notificación", value=date.today(), disabled=True)
                 autoriza   = st.radio(
                     "F10. ¿Autoriza divulgación del origen del reporte?",
-                    ["No", "Sí"], horizontal=True
+                    ["No", "Sí"], horizontal=True,
+                    disabled=True
                 )
 
             st.markdown("<br>", unsafe_allow_html=True)
