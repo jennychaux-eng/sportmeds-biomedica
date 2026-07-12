@@ -217,60 +217,64 @@ def login_page():
 
         with tab_register:
 
-            nombre = st.text_input(
-                "Nombre completo",
-                key="reg_nombre"
-            )
+            col1, col2 = st.columns(2)
 
-            profesion = st.text_input(
-                "Profesión",
-                key="reg_profesion"
-            )
+            with col1:
+                nombre = st.text_input(
+                    "Nombre completo",
+                    key="reg_nombre"
+                )
 
-            telefono = st.text_input(
-                "Telefono de contacto",
-                key="reg_telefono"
-            )
+                profesion = st.text_input(
+                    "Profesión",
+                    key="reg_profesion"
+                )
 
-            correo = st.text_input(
-                "Correo",
-                key="reg_correo"
-            )
+                telefono = st.text_input(
+                    "Telefono de contacto",
+                    key="reg_telefono"
+                )
 
-            area = st.text_input(
-                "Área a la que pertenece",
-                key="reg_area"
-            )
+                correo = st.text_input(
+                    "Correo",
+                    key="reg_correo"
+                )
 
-            clave = st.text_input(
-                "Contraseña",
-                type="password",
-                key="reg_password"
-            )
+            with col2:
+                area = st.text_input(
+                    "Área a la que pertenece",
+                    key="reg_area"
+                )
 
-            genero = st.selectbox(
-                "Género",
-                [
-                    "Femenino",
-                    "Masculino",
-                    "Otro",
-                ],
-                key="reg_genero"
-            )
+                clave = st.text_input(
+                    "Contraseña",
+                    type="password",
+                    key="reg_password"
+                )
 
-            rol = st.selectbox(
-                "Rol",
-                [
-                    "Gerente",
-                    "Ingeniero biomédico/a",
-                    "Cirujano/a",
-                    "Médico/a",
-                    "Enfermero/a",
-                    "Instrumentador quirurgico/a",
-                    "Encargado del mantenimiento",
-                ],
-                key="reg_rol"
-            )
+                genero = st.selectbox(
+                    "Género",
+                    [
+                        "Femenino",
+                        "Masculino",
+                        "Otro",
+                    ],
+                    key="reg_genero"
+                )
+
+                rol = st.selectbox(
+                    "Rol",
+                    [
+                        "Gerente",
+                        "Ingeniero biomédico/a",
+                        "Cirujano/a",
+                        "Médico/a",
+                        "Enfermero/a",
+                        "Instrumentador quirurgico/a",
+                        "Encargado del mantenimiento",
+                    ],
+                    key="reg_rol"
+                )
 
             if st.button(
                 "Crear cuenta",
