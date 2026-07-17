@@ -1,3 +1,11 @@
+import streamlit as st
+import pandas as pd
+
+from datetime import date
+
+from config.config import supabase
+from components.topbar import topbar
+
 def render():
     topbar("Tecnovigilancia", "Tecnovigilancia")
 
