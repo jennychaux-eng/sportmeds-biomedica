@@ -1,3 +1,11 @@
+from config.config import (
+    supabase,
+    LOGO_PATH,
+    BASE_DIR,
+    get_fecha_local,
+    get_base64_image
+)
+
 import streamlit as st
 import os
 import pandas as pd
