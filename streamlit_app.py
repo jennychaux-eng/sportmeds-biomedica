@@ -14,7 +14,6 @@ from datetime import date, datetime, timedelta
 from zoneinfo import ZoneInfo
 from supabase import create_client, Client
 from inventario.view import render as inventario_view
-from navegation.router import render_module
 
 # ==========================================
 # AUTENTICACIÓN
