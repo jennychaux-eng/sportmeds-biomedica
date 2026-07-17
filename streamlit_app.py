@@ -13,7 +13,7 @@ import base64
 from datetime import date, datetime, timedelta
 from zoneinfo import ZoneInfo
 from supabase import create_client, Client
- from inventario.view import render as inventario_view
+from inventario.view import render as inventario_view
 
 # ==========================================
 # AUTENTICACIÓN
