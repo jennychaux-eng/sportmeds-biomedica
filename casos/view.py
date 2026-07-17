@@ -11,7 +11,12 @@ from config.config import (
 def render():
     st.write("Entré a casos")
     topbar("Casos reportados — Gestión Ing. Biomédico", "Casos reportados")
-
+    
+elif "Casos reportados" in modulo:
+    try:
+        casos_view()
+    except Exception as e:
+        st.exception(e)
     try:
         st.write("Datos cargados")
         tv_data = supabase.table("Tecnovigilancia").select("*").order("created_at", desc=True).execute().data
