@@ -484,7 +484,8 @@ if "Panel" in modulo:
 # ══════════════════════════════════════════
 # MÓDULO: INVENTARIO
 # ══════════════════════════════════════════
-render_module(modulo)
+elif "Inventario" in modulo:
+    inventario_view()
 
 # ══════════════════════════════════════════
 # MÓDULO: TECNOVIGILANCIA
