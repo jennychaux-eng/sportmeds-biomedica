@@ -57,8 +57,6 @@ st.set_page_config(
 # BLOQUEO DE ACCESO
 # ==========================================
 
-
-
 if not st.session_state.logged_in:
 
     st.markdown("""
