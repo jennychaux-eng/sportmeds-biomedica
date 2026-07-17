@@ -1,7 +1,18 @@
 # ══════════════════════════════════════════
 # MÓDULO: INVENTARIO
 # ══════════════════════════════════════════
+import streamlit as st
+import pandas as pd
+
+from datetime import date
+
+from config.config import supabase
+from components.topbar import topbar
+
 elif "Inventario" in modulo:
+
+def render():
+    
     topbar("Inventario Biomédico", "Inventario")
     tab1, tab2 = st.tabs(["➕  Registrar equipo", "📋  Listado de equipos"])
 
