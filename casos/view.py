@@ -115,7 +115,7 @@ def render():
         if df_pendientes.empty:
             st.info("No hay casos pendientes por gestionar.")
             st.markdown('</div>', unsafe_allow_html=True)
-            st.stop()
+            return
 
         opciones_casos = [
             f"{str(row['id'])[:8]}... | {row.get('nombre_generico','—')} | "
