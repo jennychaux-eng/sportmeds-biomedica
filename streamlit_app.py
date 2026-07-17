@@ -446,8 +446,10 @@ elif "Tecnovigilancia" in modulo:
 # ══════════════════════════════════════════
 # MÓDULO: CASOS REPORTADOS
 # ══════════════════════════════════════════
-elif "Casos Reportados" in modulo:
+elif "Casos reportados" in modulo:
+    st.write("Entré al módulo Casos")
     casos_view()
+    st.write("Salí del módulo Casos")
     
 # ══════════════════════════════════════════
 # MÓDULO: GESTIÓN DE RIESGOS
