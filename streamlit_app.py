@@ -13,6 +13,7 @@ import base64
 from datetime import date, datetime, timedelta
 from zoneinfo import ZoneInfo
 from supabase import create_client, Client
+ from inventario.view import render as inventario_view
 
 # ==========================================
 # AUTENTICACIÓN
@@ -484,7 +485,7 @@ if "Panel" in modulo:
 # ══════════════════════════════════════════
 elif "Inventario" in modulo:
     inventario_view()
-   from inventario.view import render as inventario_view
+
 
 # ══════════════════════════════════════════
 # MÓDULO: TECNOVIGILANCIA
