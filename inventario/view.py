@@ -9,8 +9,6 @@ from datetime import date
 from config.config import supabase
 from components.topbar import topbar
 
-elif "Inventario" in modulo:
-
 def render():
     
     topbar("Inventario Biomédico", "Inventario")
