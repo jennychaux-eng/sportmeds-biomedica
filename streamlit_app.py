@@ -486,7 +486,6 @@ if "Panel" in modulo:
 elif "Inventario" in modulo:
     inventario_view()
 
-
 # ══════════════════════════════════════════
 # MÓDULO: TECNOVIGILANCIA
 # Secciones A, B, C, D, F  (solo el reportante)
