@@ -8,11 +8,12 @@ from config.config import (
     supabase,
     get_fecha_local,
 )
-
 def render():
+    st.write("Entré a casos")
     topbar("Casos reportados — Gestión Ing. Biomédico", "Casos reportados")
 
     try:
+        st.write("Datos cargados")
         tv_data = supabase.table("Tecnovigilancia").select("*").order("created_at", desc=True).execute().data
     except Exception as e:
         st.error(f"❌ Error al cargar casos: {e}")
@@ -22,6 +23,7 @@ def render():
         st.info("No hay casos reportados aún.")
     else:
         df_tv = pd.DataFrame(tv_data)
+        st.write("DataFrame creado")
 
         # ── KPIs ──
         total       = len(df_tv)
@@ -151,6 +153,7 @@ def render():
         disp_env_actual   = bool(caso_sel.get("dispositivo_enviado",    False))
 
         causa_index = 0
+        st.write("Voy a usar CAUSAS_NTC")
         for i, c in enumerate(CAUSAS_NTC):
             if c.startswith(causa_actual):
                 causa_index = i
