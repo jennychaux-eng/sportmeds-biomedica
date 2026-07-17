@@ -14,7 +14,7 @@ from datetime import date, datetime, timedelta
 from zoneinfo import ZoneInfo
 from supabase import create_client, Client
 from inventario.view import render as inventario_view
-from navigation.router import render_module
+from navegation.router import render_module
 
 # ==========================================
 # AUTENTICACIÓN
@@ -484,8 +484,7 @@ if "Panel" in modulo:
 # ══════════════════════════════════════════
 # MÓDULO: INVENTARIO
 # ══════════════════════════════════════════
-elif "Inventario" in modulo:
-    inventario_view()
+render_module(modulo)
 
 # ══════════════════════════════════════════
 # MÓDULO: TECNOVIGILANCIA
